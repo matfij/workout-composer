@@ -1,0 +1,36 @@
+.wrapperNavbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 1;
+    background: var(--light-3);
+    padding: 10px;
+    border-top: 1px solid var(--dark-3);
+}
+
+.wrapperNavbar nav {
+    max-width: 600px;
+    margin: auto;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.itemNav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    list-style: none;
+    cursor: pointer;
+}
+
+.item:hover {
+    background: var(--blue-1);
+    color: var(--light-3);
+}
+
+.itemNav a {
+    text-decoration: none;
+    color: var(--dark-3);
+}
