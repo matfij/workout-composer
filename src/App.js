@@ -1,4 +1,3 @@
-import "./App.css";
 import { Routes, Route } from "react-router-dom";
 import Board from "./pages/Board";
 import Gallery from "./pages/Gallery";

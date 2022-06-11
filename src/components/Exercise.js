@@ -1,5 +1,7 @@
+import localStyle from './Exercise.module.css';
 import { useState } from "react";
 import Modal from "./Modal";
+import Card from './Card';
 
 const Exercise = (props) => {
   const [displayModal, setDisplayModal] = useState(false);
@@ -13,13 +15,14 @@ const Exercise = (props) => {
   }
 
   return (
-    <div className="item-card">
+    <Card>
       <h3>{ props.name }</h3>
-      <p>Sets x Reps: { props.sets + " x " + props.reps }</p>
+      <p>{ props.sets + " x " + props.reps }</p>
+      <button className="btn-base">Favorite</button>
       <button onClick={removeExercise} className="btn-base">Remove</button>
 
       { displayModal && <Modal name={props.name} onCancel={closeModal} /> }
-    </div>
+    </Card>
   );
 };
 

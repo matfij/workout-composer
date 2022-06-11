@@ -1,12 +1,23 @@
-import Exercise from "../components/Exercise";
+import localStyle from "./Board.module.css";
+import ExerciseList from "../components/ExerciseList";
+import ExerciseAdd from "../components/ExerciseAdd";
+
+const DAYS = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday"];
+const DUMMY_DATA = [
+  { key: "x1", name: "Squat", sets: 5, reps: 5 },
+  { key: "x2", name: "Bench Press", sets: 5, reps: 5 },
+  { key: "x3", name: "Deadlift", sets: 5, reps: 5 },
+];
 
 const Board = (props) => {
   return (
     <div>
-      <div className="wrapper-cards">
-        Monday
-        <Exercise name="Pull-up" sets="3" reps="5" />
-        <Exercise name="Push-up" sets="3" reps="12" />
+      <ExerciseAdd />
+
+      <div className={localStyle.wrapperBoard}>
+        {DAYS.map((day) => (
+          <ExerciseList key={day} name={day} exercises={DUMMY_DATA} />
+        ))}
       </div>
     </div>
   );
