@@ -1,11 +1,13 @@
 import { useRef } from "react";
+import { useNavigate } from "react-router-dom";
 import Card from "./Card";
-import localStyle from "./ExerciseAdd.module.css";
 
 const ExerciseAdd = (props) => {
   const nameInputRef = useRef();
   const setsInputRef = useRef();
   const repsInputRef = useRef();
+
+  const navi = useNavigate();
 
   const addExercise = (event) => {
     event.preventDefault();
@@ -14,7 +16,18 @@ const ExerciseAdd = (props) => {
     const sets = setsInputRef.current.value;
     const reps = repsInputRef.current.value;
 
-    console.log(name, sets, reps);
+    const baseUrl =
+      "https://react-test-36f75-default-rtdb.europe-west1.firebasedatabase.app";
+    const url = `${baseUrl}/exercises.json`;
+    const data = JSON.stringify({ name, sets, reps });
+
+    fetch(url, {
+      method: "POST",
+      body: data,
+      headers: {
+        "Content-Type": "application/json",
+      },
+    }).then(() => navi('/gallery'));
   };
 
   return (
