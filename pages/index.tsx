@@ -5,7 +5,6 @@ import { Fragment } from "react";
 const HomePage: NextPage = () => {
   return (
     <Fragment>
-      {" "}
       <h1>Workout Composer</h1>
       <ul>
         <li>

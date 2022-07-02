@@ -1,13 +1,16 @@
 import { NextPage } from "next";
-import Link from "next/link";
-import { Fragment } from "react";
+import ExerciseList from "../../components/ExerciseList";
+
+const DUMMY_EXERCISES = [
+    { name: "Pull-ups", sets: 5, reps: 10 },
+    { name: "Push-ups", sets: 4, reps: 24 },
+    { name: "Squats", sets: 3, reps: 8 },
+];
 
 const ExercisesPage: NextPage = () => {
-  return (
-    <Fragment>
-      <h1>Exercise Board</h1>
-    </Fragment>
-  );
+  return <>
+    <ExerciseList exercises={DUMMY_EXERCISES} />
+  </>;
 };
 
 export default ExercisesPage;
