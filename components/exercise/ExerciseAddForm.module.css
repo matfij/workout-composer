@@ -1,0 +1,14 @@
+.exerciseForm {
+    width: 100%;
+    max-width: 600px;
+    margin: auto;
+
+    display: flex;
+    flex-direction: column;
+}
+
+.exerciseForm label {
+    margin-top: 10px;
+    font-size: 14px;
+    font-weight: 600;
+}

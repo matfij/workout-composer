@@ -1,3 +1,4 @@
+import localStyle from "./Layout.module.css";
 import { FunctionComponent, ReactNode } from "react";
 import Navigation from "./Navigation";
 
@@ -9,7 +10,7 @@ const Layout: FunctionComponent<Props> = (props: Props) => {
   return (
     <>
       <Navigation></Navigation>
-      <main>{props.children}</main>
+      <main className={localStyle.mainWrapper}>{props.children}</main>
     </>
   );
 };

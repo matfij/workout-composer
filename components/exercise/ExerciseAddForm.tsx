@@ -1,3 +1,4 @@
+import localStyle from "./ExerciseAddForm.module.css";
 import { FunctionComponent, useRef } from "react";
 
 const ExerciseAddForm: FunctionComponent = () => {
@@ -16,7 +17,7 @@ const ExerciseAddForm: FunctionComponent = () => {
   };
 
   return (
-    <form onSubmit={addExercise}>
+    <form onSubmit={addExercise} className={localStyle.exerciseForm}>
       <label htmlFor="name">Name</label>
       <input ref={nameRef} type="text" required id="name" />
       <label htmlFor="sets">Sets</label>
@@ -24,7 +25,7 @@ const ExerciseAddForm: FunctionComponent = () => {
       <label htmlFor="reps">Reps</label>
       <input ref={repsRef} type="reps" required id="reps" />
 
-      <button className="btn-base">Add</button>
+      <button className="baseBtn mt-20">Add</button>
     </form>
   );
 };

@@ -1,6 +1,7 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
 import { DUMMY_EXERCISES } from ".";
+import ExerciseDetails from "../../components/exercise/ExerciseDetails";
 
 const ExerciseDetailPage: NextPage = () => {
   const router = useRouter();
@@ -12,11 +13,7 @@ const ExerciseDetailPage: NextPage = () => {
     DUMMY_EXERCISES[0];
 
   return (
-    <>
-      <h1>{exercise.name} Details</h1>
-      <p>Sets: {exercise.sets}</p>
-      <p>Reps: {exercise.reps}</p>
-    </>
+    <ExerciseDetails {...exercise} />
   );
 };
 

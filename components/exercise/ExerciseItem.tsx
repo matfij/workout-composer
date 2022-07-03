@@ -14,16 +14,16 @@ const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
   const router = useRouter();
 
   const showDetails = () => {
+    navigator.clipboard.writeText(props.name);
     router.push(`/exercises/${props.name}`);
   }
 
   return (
     <div className={localStyle.exerciseItem}>
       <p className={localStyle.nameLabel}>{props.name}</p>
-      <p>Sets: {props.sets}</p>
-      <p>Reps: {props.reps}</p>
+      <p>Sets: {props.sets} | Reps: {props.reps}</p>
 
-      <button onClick={showDetails}>Details</button>
+      <button className="baseBtn" onClick={showDetails}>Details</button>
     </div>
   );
 };

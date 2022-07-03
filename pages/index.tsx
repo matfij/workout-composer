@@ -1,11 +1,12 @@
 import { NextPage } from "next";
-import Link from "next/link";
-import { Fragment } from "react";
+import { CSSProperties, Fragment } from "react";
 
 const HomePage: NextPage = () => {
+  const titleStyle: CSSProperties = { textAlign: 'center' };
+
   return (
     <Fragment>
-      <h1>Workout Composer</h1>
+      <h1 style={titleStyle}>Workout Composer</h1>
       
     </Fragment>
   );

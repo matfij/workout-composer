@@ -1,0 +1,19 @@
+.gone {
+    display: none;
+}
+
+.center {
+    text-align: center;
+}
+
+.ma {
+    margin: auto;
+}
+
+.mt-10 {
+    margin-top: 10px;
+}
+
+.mt-20 {
+    margin-top: 20px;
+}
