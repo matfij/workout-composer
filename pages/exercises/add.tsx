@@ -1,5 +1,5 @@
 import { NextPage } from "next";
-import ExerciseAddForm from "../../components/ExerciseAddForm";
+import ExerciseAddForm from "../../components/exercise/ExerciseAddForm";
 
 const ExerciseAddPage: NextPage = () => {
   return (

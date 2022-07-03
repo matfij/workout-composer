@@ -1,7 +1,6 @@
 import { NextPage } from "next";
 import { useRouter } from "next/router";
-
-const DUMMY_EXERCISES = [{ name: "Pull-ups", sets: 5, reps: 10 }];
+import { DUMMY_EXERCISES } from ".";
 
 const ExerciseDetailPage: NextPage = () => {
   const router = useRouter();
