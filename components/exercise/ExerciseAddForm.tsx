@@ -1,7 +1,12 @@
 import localStyle from "./ExerciseAddForm.module.css";
 import { FunctionComponent, useRef } from "react";
+import { Exercise } from "./ExerciseItem";
 
-const ExerciseAddForm: FunctionComponent = () => {
+type Props = {
+  addExercise: (exercise: Exercise) => void,
+}
+
+const ExerciseAddForm: FunctionComponent<Props> = (props: Props) => {
   const nameRef = useRef<HTMLInputElement>(null);
   const setsRef = useRef<HTMLInputElement>(null);
   const repsRef = useRef<HTMLInputElement>(null);
@@ -10,10 +15,17 @@ const ExerciseAddForm: FunctionComponent = () => {
     event.preventDefault();
 
     const name = nameRef.current?.value;
-    const sets = setsRef.current?.value;
-    const reps = repsRef.current?.value;
+    const sets = +(setsRef.current?.value || 0);
+    const reps = +(repsRef.current?.value || 0);
 
-    console.log(name, sets, reps);
+    // todo - validation
+    const exercise: Exercise = {
+      name: name!,
+      sets: sets!,
+      reps: reps!,
+    };
+
+    props.addExercise(exercise);
   };
 
   return (
