@@ -3,7 +3,7 @@ import { FunctionComponent } from "react";
 import { useRouter } from "next/router";
 
 export interface Exercise {
-  id: string;
+  id?: string;
   name: string;
   reps: number;
   sets: number;
@@ -15,7 +15,7 @@ const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
   const router = useRouter();
 
   const showDetails = () => {
-    navigator.clipboard.writeText(props.id);
+    navigator.clipboard.writeText(props.id!);
     router.push(`/exercises/${props.id}`);
   }
 
