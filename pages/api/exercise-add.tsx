@@ -1,4 +1,3 @@
-import { NOTFOUND } from "dns";
 import { MongoClient } from "mongodb";
 import { NextApiRequest, NextApiResponse } from "next";
 

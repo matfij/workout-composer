@@ -1,15 +1,9 @@
+import { MongoClient } from "mongodb";
 import { NextPage } from "next";
 import { BaseContext } from "next/dist/shared/lib/utils";
 import { Context } from "react";
 import { Exercise } from "../../components/exercise/ExerciseItem";
 import ExerciseList from "../../components/exercise/ExerciseList";
-
-export const DUMMY_EXERCISES = [
-  { name: "Pull-ups", sets: 5, reps: 10 },
-  { name: "Push-ups", sets: 4, reps: 24 },
-  { name: "Squats", sets: 3, reps: 8 },
-  { name: "Dips", sets: 2, reps: 6 },
-];
 
 type Props = {
   exercises: Exercise[];
@@ -33,8 +27,28 @@ const ExercisesPage: NextPage<Props> = (props: Props) => {
 // called before component rendering - preparung required props (async) and then renders component
 // this code is executed on server side - backend capabilities
 export const getStaticProps = async () => {
+  const dbHost = process.env.DB_HOST;
+  const dbUser = process.env.DB_USER;
+  const dbPassword = process.env.DB_PASSWORD;
+  
+  const client = await MongoClient.connect(
+    `mongodb+srv://${dbUser}:${dbPassword}@${dbHost}/?retryWrites=true&w=majority`
+  );
+  const db = client.db();
+
+  const exerciseCollection = db.collection("exercises");
+
+  const exercises = (await exerciseCollection.find().toArray()).map(exercise => {
+    return {
+      id: exercise._id.toString(),
+      name: exercise.name,
+      sets: exercise.sets,
+      reps: exercise.reps,
+    };
+  });
+
   const propsData: Props = {
-    exercises: DUMMY_EXERCISES,
+    exercises: exercises,
   };
   return { 
     props: propsData,
