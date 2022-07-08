@@ -1,8 +1,0 @@
-.mainWrapper {
-    width: 100%;
-    max-width: 1200px;
-    min-height: 80vh;
-    margin: 0 auto;
-    padding: 10px;
-    background: var(--light-3);
-}
