@@ -1,4 +1,4 @@
 ## Workout Composer
 
-Helps you plan your workout schedule.
+This app will allow you to create a training plan in just a few seconds.
 

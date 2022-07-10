@@ -1,3 +1,7 @@
+:root {
+  --clr-green-500: rgb(34 197 94);
+}
+
 html,
 body {
   padding: 0;
@@ -13,4 +17,8 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+*::selection {
+  background: var(--clr-green-500);
 }
