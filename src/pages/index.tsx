@@ -1,8 +1,10 @@
-import type { NextPage } from 'next';
+import type { GetServerSideProps, NextPage } from 'next';
 import Head from 'next/head';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { resetServerContext } from 'react-beautiful-dnd';
 import ExerciseAdd from '../components/exercise-add';
-import ExerciseItem, { Exercise } from '../components/exercise-item';
+import ExerciseBoard from '../components/exercise-board';
+import { Exercise } from '../components/exercise-item';
 
 export const BASE_EXERCISES: Exercise[] = [
   { name: 'push-ups', sets: 4, reps: 12, rest: '2min' },
@@ -11,9 +13,22 @@ export const BASE_EXERCISES: Exercise[] = [
   { name: 'squats', sets: 4, reps: 16 },
 ];
 
-const Home: NextPage = () => {
-  const [exercises, setExercises] = useState<Exercise[]>([]);
+type Props = {
+  exercises: Exercise[];
+};
+
+const Home: NextPage<Props> = (props: Props) => {
+  // const [exercises, setExercises] = useState<Exercise[]>([]);
+  const [winReady, setwinReady] = useState(false);
   const [displayExerciseAdd, setDisplayExerciseAdd] = useState(false);
+
+  // useEffect(() => {
+  //   setExercises(BASE_EXERCISES);
+  // }, []);
+
+  useEffect(() => {
+    setwinReady(true);
+  }, []);
 
   const toggleExerciseAdd = () => {
     setDisplayExerciseAdd(!displayExerciseAdd);
@@ -30,9 +45,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="../public/favicon.ico" />
       </Head>
 
-      {BASE_EXERCISES.map((exercise) => (
-        <ExerciseItem key={exercise.name} {...exercise} />
-      ))}
+      {winReady ? <ExerciseBoard exercises={props.exercises} /> : null}
 
       <button onClick={toggleExerciseAdd} className="btnBase">
         Add exercise
@@ -41,6 +54,12 @@ const Home: NextPage = () => {
       {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />}
     </>
   );
+};
+
+export const getServerSideProps: GetServerSideProps<Props> = async () => {
+  resetServerContext(); // <-- CALL RESET SERVER CONTEXT, SERVER SIDE
+
+  return { props: { exercises: BASE_EXERCISES } };
 };
 
 export default Home;
