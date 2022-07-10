@@ -1,10 +1,14 @@
 import style from './exercise-add.module.css';
 import { FunctionComponent } from 'react';
 
-const ExerciseAdd: FunctionComponent = () => {
+type Props = {
+  onCancel: () => void;
+};
+
+const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
   return (
-    <section className={style.modalBackdrop}>
-      <div className={style.modalWrapper}>
+    <section onClick={props.onCancel} className={style.modalBackdrop}>
+      <div onClick={(e) => e.stopPropagation()} className={style.modalWrapper}>
         <div className="flex items-center p-4">
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
             Add a new exercise
@@ -42,7 +46,7 @@ const ExerciseAdd: FunctionComponent = () => {
         </form>
 
         <div className="flex items-center p-4 space-x-2">
-          <button type="button" className={style.formBtnCancel}>
+          <button onClick={props.onCancel} type="button" className={style.formBtnCancel}>
             Cancel
           </button>
           <button type="button" className={style.formBtnSubmit}>
