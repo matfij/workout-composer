@@ -5,6 +5,7 @@ import { resetServerContext } from 'react-beautiful-dnd';
 import ExerciseAdd from '../components/exercise-add';
 import ExerciseBoard from '../components/exercise-board';
 import { Exercise } from '../components/exercise-item';
+import { BoardDataProvider } from '../context/BoardContext';
 
 export const BASE_EXERCISES: Exercise[] = [
   { name: 'push-ups', sets: 4, reps: 12, rest: '2min' },
@@ -45,13 +46,15 @@ const Home: NextPage<Props> = (props: Props) => {
         <link rel="icon" href="../public/favicon.ico" />
       </Head>
 
-      {winReady ? <ExerciseBoard exercises={props.exercises} /> : null}
+      <BoardDataProvider>
+        {winReady ? <ExerciseBoard /> : null}
 
-      <button onClick={toggleExerciseAdd} className="btnBase">
-        Add exercise
-      </button>
+        <button onClick={toggleExerciseAdd} className="btnBase">
+          Add exercise
+        </button>
 
-      {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />}
+        {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />}
+      </BoardDataProvider>
     </>
   );
 };

@@ -1,53 +1,49 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { Fragment, FunctionComponent, useEffect, useState } from 'react';
 import {
   DragDropContext,
   Droppable,
   DroppableProvided,
   DropResult,
 } from 'react-beautiful-dnd';
+import { useBoardData } from '../context/BoardContext';
 import ExerciseItem from './exercise-item';
 
-export interface Exercise {
-  name: string;
-  reps?: number;
-  sets?: number;
-  rest?: string;
-}
+const ExerciseBoard: FunctionComponent = () => {
+  const boardData = useBoardData();
+  // const setExercises = useBoardDataUpdate();
 
-type Props = {
-  exercises: Exercise[];
-};
-
-const ExerciseBoard: FunctionComponent<Props> = (props: Props) => {
-  const [exercises, setExercises] = useState<Exercise[]>([]);
-
-  useEffect(() => {
-    setExercises(props.exercises);
-  }, [props.exercises]);
+  // useEffect(() => {
+  //   setExercises(props.exercises);
+  // }, [props.exercises]);
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
-    const items = Array.from(exercises);
-    const [reorderedItem] = items.splice(result.source.index, 1);
-    items.splice(result.destination.index, 0, reorderedItem);
+    // const items = Array.from(exercises);
+    // const [reorderedItem] = items.splice(result.source.index, 1);
+    // items.splice(result.destination.index, 0, reorderedItem);
 
-    setExercises(items);
+    // setExercises(items);
   };
 
   return (
     <>
       <DragDropContext onDragEnd={onDragEnd}>
-        <Droppable droppableId="exercises">
-          {(provided: DroppableProvided) => (
-            <div {...provided.droppableProps} ref={provided.innerRef}>
-              {exercises.map((exercise, index) => (
-                <ExerciseItem {...exercise} index={index} key={index} />
-              ))}
-              {provided.placeholder}
-            </div>
-          )}
-        </Droppable>
+        {boardData.days.map((day) => (
+          <div key={day.day}>
+            <h2>{day.day}</h2>
+            <Droppable droppableId={day.day}>
+              {(provided: DroppableProvided) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {day.exercises.map((exercise, index) => (
+                    <ExerciseItem {...exercise} index={index} key={index} />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </div>
+        ))}
       </DragDropContext>
     </>
   );
