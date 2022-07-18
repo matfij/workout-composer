@@ -1,4 +1,4 @@
-import { createContext, ReactNode, useContext, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { Exercise } from '../components/exercise-item';
 
 export interface DayData {
@@ -8,6 +8,7 @@ export interface DayData {
 
 export interface BoardData {
   days: DayData[];
+  standby: Exercise[];
 }
 
 const initialBoardData: BoardData = {
@@ -34,8 +35,14 @@ const initialBoardData: BoardData = {
       ],
     },
   ],
+  standby: [
+    { name: 'Full planche', sets: 1, reps: 1 },
+    { name: 'Front lever', sets: 1, reps: 1 },
+  ],
 };
-const setInitialBoardData = (data: BoardData) => { console.log(data); };
+const setInitialBoardData = (data: BoardData) => {
+  console.log(data);
+};
 
 const BoardDataContext = createContext<BoardData>(initialBoardData);
 const SetBoardDataContext = createContext<(data: BoardData) => void>(setInitialBoardData);
@@ -44,15 +51,12 @@ export const BoardDataProvider = ({ children }: any): JSX.Element => {
   const [boardData, setBoardData] = useState<BoardData>(initialBoardData);
 
   const updateBoard = (data: BoardData) => {
-    console.log(data)
     setBoardData(data);
   };
 
   return (
     <BoardDataContext.Provider value={boardData}>
-      <SetBoardDataContext.Provider value={updateBoard}>
-        {children}
-      </SetBoardDataContext.Provider>
+      <SetBoardDataContext.Provider value={updateBoard}>{children}</SetBoardDataContext.Provider>
     </BoardDataContext.Provider>
   );
 };
@@ -63,4 +67,4 @@ export const useBoardData = (): BoardData => {
 
 export const useSetBoardDataContext = () => {
   return useContext(SetBoardDataContext);
-}
+};
