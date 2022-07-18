@@ -1,29 +1,49 @@
-import { Fragment, FunctionComponent, useEffect, useState } from 'react';
+import { FunctionComponent } from 'react';
 import {
   DragDropContext,
   Droppable,
   DroppableProvided,
   DropResult,
 } from 'react-beautiful-dnd';
-import { useBoardData } from '../context/BoardContext';
+import {
+  BoardData,
+  useBoardData,
+  useSetBoardDataContext,
+} from '../context/BoardContext';
 import ExerciseItem from './exercise-item';
 
 const ExerciseBoard: FunctionComponent = () => {
   const boardData = useBoardData();
-  // const setExercises = useBoardDataUpdate();
-
-  // useEffect(() => {
-  //   setExercises(props.exercises);
-  // }, [props.exercises]);
+  const updateBoardData = useSetBoardDataContext();
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
 
-    // const items = Array.from(exercises);
-    // const [reorderedItem] = items.splice(result.source.index, 1);
-    // items.splice(result.destination.index, 0, reorderedItem);
+    // get change
+    console.log(result.source.droppableId);
+    const startDay = result.source.droppableId;
+    const startIndex = result.source.index;
+    const endDay = result.destination?.droppableId;
+    const endIndex = result.destination.index;
 
-    // setExercises(items);
+    const changedExercise = boardData.days.find((day) => day.day === startDay)
+      ?.exercises[startIndex];
+
+    const newBoardData: BoardData = {
+      days: [
+        ...boardData.days.map((day) => {
+          if (day.day === startDay) {
+            day.exercises.splice(startIndex, 1);
+          } 
+          if (day.day === endDay && changedExercise) {
+            day.exercises.splice(endIndex, 0, changedExercise);
+          }
+          return day;
+        }),
+      ],
+    };
+
+    updateBoardData(newBoardData);
   };
 
   return (
