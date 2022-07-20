@@ -1,5 +1,6 @@
 import { createContext, useContext, useState } from 'react';
 import { Exercise } from '../components/exercise-item';
+import { initialBoardData } from './exercise-data';
 
 export interface DayData {
   day: string;
@@ -11,35 +12,6 @@ export interface BoardData {
   standby: Exercise[];
 }
 
-const initialBoardData: BoardData = {
-  days: [
-    {
-      day: 'Monday',
-      exercises: [
-        { name: 'Push-up', sets: 5, reps: 20 },
-        { name: 'Pull-up', sets: 4, reps: 8 },
-      ],
-    },
-    {
-      day: 'Wednesday',
-      exercises: [
-        { name: 'Hollow body', sets: 5, reps: 1 },
-        { name: 'Plank', sets: 5, reps: 1 },
-      ],
-    },
-    {
-      day: 'Friday',
-      exercises: [
-        { name: 'Pistol squats', sets: 5, reps: 5 },
-        { name: 'Sprints', sets: 5, reps: 1 },
-      ],
-    },
-  ],
-  standby: [
-    { name: 'Full planche', sets: 1, reps: 1 },
-    { name: 'Front lever', sets: 1, reps: 1 },
-  ],
-};
 const setInitialBoardData = (data: BoardData) => {
   console.log(data);
 };

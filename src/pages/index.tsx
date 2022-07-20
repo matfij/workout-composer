@@ -28,6 +28,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="../public/favicon.ico" />
       </Head>
 
+      <h1>Workout Composer</h1>
       <BoardDataProvider>
         {winReady ? <ExerciseBoard /> : null}
 
