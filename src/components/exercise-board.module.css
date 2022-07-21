@@ -9,9 +9,14 @@
     width: 100%;
 }
 
-.standbyWrapper {
-    @apply w-full sm:w-1/3 m-auto p-4 text-center;
+.dayWrapper:nth-child(n) > div {
+    height: 100%;
+}
 
+.standbyWrapper {
+    @apply w-full sm:w-1/3 m-auto mt-2 p-2 text-center;
+
+    max-width: 400px;
     max-height: 400px;
     overflow-y: scroll;
 }

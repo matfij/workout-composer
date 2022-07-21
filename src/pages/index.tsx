@@ -28,13 +28,17 @@ const Home: NextPage = () => {
         <link rel="icon" href="../public/favicon.ico" />
       </Head>
 
-      <h1>Workout Composer</h1>
+      <h1 className="w-full text-center p-3 sm:p-6 text-xl sm:text-3xl text-teal-600">Workout Composer</h1>
       <BoardDataProvider>
-        {winReady ? <ExerciseBoard /> : null}
+        <div className="flex flex-col">
+          {winReady ? <ExerciseBoard /> : null}
 
-        <button onClick={toggleExerciseAdd} className="btnBase">
-          Add exercise
-        </button>
+          <div className="w-full max-w-sm m-auto pt-6">
+            <button onClick={toggleExerciseAdd} className="btnPrimary btnFloat sm:w-72">
+              New
+            </button>
+          </div>
+        </div>
 
         {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />}
       </BoardDataProvider>

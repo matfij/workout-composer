@@ -1,5 +1,7 @@
 .modalBackdrop {
-    @apply overflow-x-hidden bg-black fixed top-0 right-0 left-0 z-50 w-full h-full flex p-4 opacity-80;
+    @apply overflow-x-hidden fixed top-0 right-0 left-0 z-50 w-full h-full flex p-4;
+
+    background: rgba(0, 0, 0, 0.8)
 } 
 
 .modalWrapper {

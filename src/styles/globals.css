@@ -1,5 +1,5 @@
 :root {
-  --clr-green-500: rgb(34 197 94);
+  --clr-green-500: rgb(13 148 136);
 }
 
 html,
@@ -21,4 +21,9 @@ a {
 
 *::selection {
   background: var(--clr-green-500);
+  color: white;
 }
+
+/* * {
+  outline: 1px solid violet;
+} */
