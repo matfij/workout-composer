@@ -2,6 +2,7 @@ import { FunctionComponent } from 'react';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 
 export interface Exercise {
+  id: string;
   name: string;
   reps?: number;
   sets?: number;
@@ -14,7 +15,7 @@ interface Props extends Exercise {
 
 const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
   return (
-    <Draggable key={props.name} draggableId={props.name} index={props.index}>
+    <Draggable key={props.id} draggableId={props.id} index={props.index}>
       {(provided: DraggableProvided) => (
         <div
           {...provided.draggableProps}
