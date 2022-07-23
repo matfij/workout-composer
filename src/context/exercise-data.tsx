@@ -26,11 +26,7 @@ export const initialBoardData: BoardData = {
     },
   ],
   standby: [
-    { id: uuidv4(), name: 'Front lever I', sets: 1, reps: 1 },
-    { id: uuidv4(), name: 'Front lever I', sets: 1, reps: 1 },
-    { id: uuidv4(), name: 'Front lever III', sets: 1, reps: 1 },
-    { id: uuidv4(), name: 'Front lever IV', sets: 1, reps: 1 },
-    { id: uuidv4(), name: 'Front lever V', sets: 1, reps: 1 },
-    { id: uuidv4(), name: 'Front lever VI', sets: 1, reps: 1 },
+    { id: uuidv4(), name: 'Front lever', sets: 1, reps: 1 },
+    { id: uuidv4(), name: 'Straddle planche', sets: 1, reps: 1 },
   ],
 };
