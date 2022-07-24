@@ -28,5 +28,7 @@ export const initialBoardData: BoardData = {
   standby: [
     { id: uuidv4(), name: 'Front lever', sets: 1, reps: 1 },
     { id: uuidv4(), name: 'Straddle planche', sets: 1, reps: 1 },
+    { id: uuidv4(), name: 'Back lever', sets: 1, reps: 1 },
+    { id: uuidv4(), name: 'Supine planche', sets: 1, reps: 1 },
   ],
 };

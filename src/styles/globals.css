@@ -24,6 +24,20 @@ a {
   color: white;
 }
 
+::-webkit-scrollbar {
+  height: 10px;
+  width: 10px;
+  border: 1px solid white;
+  background: var(--clr-green-500);
+}
+::-webkit-scrollbar-thumb {
+  background-color: yellow;
+  border: 2px solid black;
+}
+::-webkit-scrollbar-thumb:hover {
+  background-color: yellowgreen;
+}
+
 /* * {
-  outline: 1px solid violet;
+  outline: 1px solid yellowgreen;
 } */

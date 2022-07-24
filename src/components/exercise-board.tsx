@@ -45,7 +45,7 @@ const ExerciseBoard: FunctionComponent = () => {
   };
 
   return (
-    <section className="">
+    <section>
       <DragDropContext onDragEnd={onDragEnd}>
         <section className={style.daysWrapper}>
           {boardData.days.map((day) => (
@@ -65,13 +65,13 @@ const ExerciseBoard: FunctionComponent = () => {
           ))}
         </section>
         <section>
-          <div className="w-full">
+          <div>
             <h3 className="text-center text-lg font-bold">Standby</h3>
-            <Droppable droppableId={STANDBY_ID}>
+            <Droppable droppableId={STANDBY_ID} direction="horizontal">
               {(provided: DroppableProvided) => (
                 <div {...provided.droppableProps} ref={provided.innerRef} className={style.standbyWrapper}>
                   {boardData.standby.map((exercise, index) => (
-                    <div key={index} className="w-full m-auto block">
+                    <div key={index} className={style.standbyItem}>
                       <ExerciseItem {...exercise} index={index} />
                     </div>
                   ))}
