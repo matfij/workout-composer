@@ -27,6 +27,8 @@ function Home() {
         standby: loadedBoardData.standby.map((exercise) => ({ ...exercise, id: uuidv4() })),
       };
       updateBoardData(savedBoardData);
+
+      window.history.pushState({}, document.title, '/');
     } catch (ex) {}
   }, [router.query]);
 

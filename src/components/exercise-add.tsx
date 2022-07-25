@@ -20,6 +20,7 @@ const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
 
   const addExercise: SubmitHandler<Partial<Exercise>> = (data: Partial<Exercise>) => {
     if (!data.name || !data.sets || !data.reps) return;
+
     const newExercise: Exercise = {
       id: uuidv4(),
       name: data.name,
@@ -30,6 +31,8 @@ const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
     const newBoardData = boardData;
     newBoardData.standby.push(newExercise);
     updateBoardData(newBoardData);
+
+    props.onCancel();
   };
 
   return (

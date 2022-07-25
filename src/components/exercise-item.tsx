@@ -1,5 +1,6 @@
 import { FunctionComponent } from 'react';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
+import { BoardData, useBoardData, useSetBoardDataContext } from '../context/BoardContext';
 
 export interface Exercise {
   id: string;
@@ -11,9 +12,23 @@ export interface Exercise {
 
 interface Props extends Exercise {
   index: number;
-};
+}
 
 const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
+  const boardData = useBoardData();
+  const updateBoardData = useSetBoardDataContext();
+
+  const removeExercise = () => {
+    const newBoardData: BoardData = {
+      days: boardData.days.map((day) => ({
+        day: day.day,
+        exercises: day.exercises.filter((exercise) => exercise.id !== props.id),
+      })),
+      standby: boardData.standby.filter((exercise) => exercise.id !== props.id),
+    };
+    updateBoardData(newBoardData);
+  };
+
   return (
     <Draggable key={props.id} draggableId={props.id} index={props.index}>
       {(provided: DraggableProvided) => (
@@ -21,6 +36,7 @@ const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
           {...provided.draggableProps}
           {...provided.dragHandleProps}
           ref={provided.innerRef}
+          className="relative"
         >
           <div className="p-4 w-full m-auto bg-white border shadow-sm flex flex-col items-center font-semibold">
             <p className="text-xl text-teal-600">{props.name}</p>
@@ -28,6 +44,9 @@ const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
               {props.sets} x {props.reps}
             </p>
             <p>{props.rest ? `${props.rest} rest` : ''}</p>
+            <div onDoubleClick={removeExercise} className="absolute top-2 right-2 cursor-pointer">
+              ❌
+            </div>
           </div>
         </div>
       )}
