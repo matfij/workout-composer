@@ -5,6 +5,7 @@ import ExerciseAdd from '../components/exercise-add';
 import ExerciseBoard from '../components/exercise-board';
 import { BoardData, useBoardData, useSetBoardDataContext } from '../context/BoardContext';
 import { v4 as uuidv4 } from 'uuid';
+import pako from 'pako';
 
 function Home() {
   const boardData = useBoardData();
@@ -18,7 +19,15 @@ function Home() {
 
     const { bdata } = router.query;
     try {
-      const loadedBoardData = JSON.parse(decodeURIComponent(bdata as string)) as BoardData;
+      const bdataTempArr = new Uint8Array(
+        (bdata || '')
+          .toString()
+          .split(',')
+          .map((x: string) => +x)
+      );
+      const decompressedBoardData = pako.inflate(bdataTempArr, { to: 'string' });
+      const loadedBoardData = JSON.parse(decompressedBoardData) as BoardData;
+
       const savedBoardData: BoardData = {
         days: loadedBoardData.days.map((day) => ({
           day: day.day,
@@ -29,7 +38,9 @@ function Home() {
       updateBoardData(savedBoardData);
 
       window.history.pushState({}, document.title, '/');
-    } catch (ex) {}
+    } catch (ex) {
+      // console.log(ex)
+    }
   }, [router.query]);
 
   const toggleExerciseAdd = () => {
@@ -44,8 +55,10 @@ function Home() {
       })),
       standby: boardData.standby.map((exercise) => ({ ...exercise, id: '' })),
     };
+
+    const compressedBoardData = pako.deflate(JSON.stringify(minBoardData));
     navigator.clipboard.writeText(
-      `${window.location.href}?bdata=${encodeURIComponent(JSON.stringify(minBoardData))}`
+      `${window.location.href}?bdata=${encodeURIComponent(compressedBoardData.toString())}`
     );
   };
 
