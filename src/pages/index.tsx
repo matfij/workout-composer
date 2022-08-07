@@ -108,19 +108,16 @@ export const getServerSideProps = async () => {
   };
   initializeApp(clientCredentials, 'workout-composer');
   const firestore = getFirestore(getApp('workout-composer'));
-  const colRef = collection(firestore, 'workouts');
   const docRef = doc(firestore, 'workouts', '5QUmEegrn8aQfZ60oNU3');
-
+  
+  // read data
   const docSnap = await (getDoc(docRef));
   console.log(docSnap.data())
-
-
-
-  // getDocs(colRef).then(e => console.log(e.docs));
-  // (await getDoc(colRef)).data
   
+  // write data
+  const colRef = collection(firestore, 'workouts');
+  // getDocs(colRef).then(e => console.log(e.docs));
   // addDoc(colRef, {data: 'test data'})
-
 
   const props: Props = {
     workoutData: 'colRef',
