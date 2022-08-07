@@ -1,13 +1,20 @@
 import Head from 'next/head';
 import { useRouter } from 'next/router';
-import { useEffect, useState } from 'react';
+import { FunctionComponent, useEffect, useState } from 'react';
 import ExerciseAdd from '../components/exercise-add';
 import ExerciseBoard from '../components/exercise-board';
 import { BoardData, useBoardData, useSetBoardDataContext } from '../context/BoardContext';
 import { v4 as uuidv4 } from 'uuid';
 import pako from 'pako';
+import { addDoc, collection, CollectionReference, doc, DocumentReference, getDoc, getDocs, getFirestore } from 'firebase/firestore';
+import { FirebaseOptions, getApp, initializeApp } from 'firebase/app';
+import { BaseContext } from 'next/dist/shared/lib/utils';
 
-function Home() {
+interface Props {
+  workoutData: string
+}
+
+const Home: FunctionComponent<Props> = (props: Props) => {
   const boardData = useBoardData();
   const updateBoardData = useSetBoardDataContext();
   const [winReady, setwinReady] = useState(false);
@@ -38,9 +45,7 @@ function Home() {
       updateBoardData(savedBoardData);
 
       window.history.pushState({}, document.title, '/');
-    } catch (ex) {
-      // console.log(ex)
-    }
+    } catch (ex) {}
   }, [router.query]);
 
   const toggleExerciseAdd = () => {
@@ -90,6 +95,39 @@ function Home() {
       {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />}
     </>
   );
+}
+
+export const getServerSideProps = async () => {
+  const clientCredentials: FirebaseOptions = {
+    apiKey: process.env.FIREBASE_API_KEY,
+    authDomain: process.env.FIREBASE_AUTH_DOMAIN,
+    projectId: process.env.FIREBASE_PROJECT_ID,
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET,
+    messagingSenderId: process.env.FIREBASE_MESSAGING_SENDER_ID,
+    appId: process.env.FIREBASE_APP_ID,
+  };
+  initializeApp(clientCredentials, 'workout-composer');
+  const firestore = getFirestore(getApp('workout-composer'));
+  const colRef = collection(firestore, 'workouts');
+  const docRef = doc(firestore, 'workouts', '5QUmEegrn8aQfZ60oNU3');
+
+  const docSnap = await (getDoc(docRef));
+  console.log(docSnap.data())
+
+
+
+  // getDocs(colRef).then(e => console.log(e.docs));
+  // (await getDoc(colRef)).data
+  
+  // addDoc(colRef, {data: 'test data'})
+
+
+  const props: Props = {
+    workoutData: 'colRef',
+  }
+  return {
+    props: props,
+  };
 }
 
 export default Home;
