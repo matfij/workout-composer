@@ -25,6 +25,7 @@ const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
         exercises: day.exercises.filter((exercise) => exercise.id !== props.id),
       })),
       standby: boardData.standby.filter((exercise) => exercise.id !== props.id),
+      locked: boardData.locked,
     };
     updateBoardData(newBoardData);
   };

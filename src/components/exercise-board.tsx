@@ -39,6 +39,7 @@ const ExerciseBoard: FunctionComponent = () => {
         }),
       ],
       standby: boardData.standby,
+      locked: boardData.locked,
     };
 
     updateBoardData(newBoardData);

@@ -10,6 +10,7 @@ export interface DayData {
 export interface BoardData {
   days: DayData[];
   standby: Exercise[];
+  locked: boolean;
 }
 
 const setInitialBoardData = (data: BoardData) => {
@@ -19,7 +20,7 @@ const setInitialBoardData = (data: BoardData) => {
 const BoardDataContext = createContext<BoardData>(initialBoardData);
 const SetBoardDataContext = createContext<(data: BoardData) => void>(setInitialBoardData);
 
-export const BoardDataProvider = ({ children }: any): JSX.Element => {
+export const BoardDataProvider = ({ children }: { children: React.ReactNode }): JSX.Element => {
   const [boardData, setBoardData] = useState<BoardData>(initialBoardData);
 
   const updateBoard = (data: BoardData) => {
