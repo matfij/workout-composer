@@ -34,7 +34,7 @@ export const BoardDataProvider = ({ children }: { children: React.ReactNode }): 
   );
 };
 
-export const useBoardData = (): BoardData => {
+export const useBoardDataContext = (): BoardData => {
   return useContext(BoardDataContext);
 };
 

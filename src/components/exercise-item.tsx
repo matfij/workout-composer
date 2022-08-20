@@ -1,6 +1,6 @@
 import { FunctionComponent } from 'react';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
-import { BoardData, useBoardData, useSetBoardDataContext } from '../context/BoardContext';
+import { BoardData, useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
 
 export interface Exercise {
   id: string;
@@ -15,7 +15,7 @@ interface Props extends Exercise {
 }
 
 const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
-  const boardData = useBoardData();
+  const boardData = useBoardDataContext();
   const updateBoardData = useSetBoardDataContext();
 
   const removeExercise = () => {
@@ -31,7 +31,7 @@ const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
   };
 
   return (
-    <Draggable key={props.id} draggableId={props.id} index={props.index}>
+    <Draggable key={props.id} draggableId={props.id} index={props.index} isDragDisabled={boardData.locked}>
       {(provided: DraggableProvided) => (
         <div
           {...provided.draggableProps}

@@ -2,7 +2,7 @@ import style from './exercise-add.module.css';
 import { FunctionComponent } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Exercise } from './exercise-item';
-import { useBoardData, useSetBoardDataContext } from '../context/BoardContext';
+import { useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
 import { v4 as uuidv4 } from 'uuid';
 
 type Props = {
@@ -10,7 +10,7 @@ type Props = {
 };
 
 const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
-  const boardData = useBoardData();
+  const boardData = useBoardDataContext();
   const updateBoardData = useSetBoardDataContext();
   const {
     register,
