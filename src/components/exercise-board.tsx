@@ -1,13 +1,13 @@
 import style from './exercise-board.module.css';
 import { FunctionComponent } from 'react';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
-import { BoardData, useBoardData, useSetBoardDataContext } from '../context/BoardContext';
+import { BoardData, useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
 import ExerciseItem from './exercise-item';
 
 export const STANDBY_ID = 'item-standby';
 
 const ExerciseBoard: FunctionComponent = () => {
-  const boardData = useBoardData();
+  const boardData = useBoardDataContext();
   const updateBoardData = useSetBoardDataContext();
 
   const onDragEnd = (result: DropResult) => {
@@ -39,6 +39,7 @@ const ExerciseBoard: FunctionComponent = () => {
         }),
       ],
       standby: boardData.standby,
+      locked: boardData.locked,
     };
 
     updateBoardData(newBoardData);

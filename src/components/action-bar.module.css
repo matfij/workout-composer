@@ -1,0 +1,14 @@
+.actionBarWrapper {
+    height: 4rem;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    background-color: #aaa;
+    border-top: 1px solid black;
+    padding: 0 10px;
+}
