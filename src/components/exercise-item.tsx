@@ -19,6 +19,8 @@ const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
   const updateBoardData = useSetBoardDataContext();
 
   const removeExercise = () => {
+    if (boardData.locked) return;
+
     const newBoardData: BoardData = {
       days: boardData.days.map((day) => ({
         day: day.day,

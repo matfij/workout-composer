@@ -30,9 +30,8 @@ const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
     };
     const newBoardData = boardData;
     newBoardData.standby.push(newExercise);
-    updateBoardData(newBoardData);
 
-    props.onCancel();
+    updateBoardData({ ...newBoardData });
   };
 
   return (

@@ -1,6 +1,6 @@
 import style from './action-bar.module.css';
 import { FunctionComponent, useState } from 'react';
-import { useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
+import { BoardData, useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
 import ExerciseAdd from './exercise-add';
 
 const ActionBar: FunctionComponent = () => {
