@@ -2,6 +2,7 @@ import style from './action-bar.module.css';
 import { FunctionComponent, useState } from 'react';
 import { useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
 import ExerciseAdd from './exercise-add';
+import { toast } from 'react-toastify';
 
 const ActionBar: FunctionComponent = () => {
   const boardData = useBoardDataContext();
@@ -25,11 +26,32 @@ const ActionBar: FunctionComponent = () => {
         'Content-Type': 'application/json',
       },
     });
+    setIsCopying(false);
+
+    if (res.status !== 201) {
+      toast.error('Failed to save the workout, please try again later', {
+        position: 'top-center',
+        autoClose: 3000,
+        hideProgressBar: false,
+        closeOnClick: true,
+        pauseOnHover: true,
+        draggable: true,
+      });
+      return;
+    }
     const workoutId = await res.json();
 
     window.history.pushState({}, document.title, '/');
     navigator.clipboard.writeText(`${window.location.href}?id=${workoutId}`);
-    setIsCopying(false);
+
+    toast('✨ Workout link copied!', {
+      position: 'top-center',
+      autoClose: 3000,
+      hideProgressBar: false,
+      closeOnClick: true,
+      pauseOnHover: true,
+      draggable: true,
+    });
   };
 
   const toggleBoardLock = (locked: boolean) => {
@@ -61,6 +83,8 @@ const ActionBar: FunctionComponent = () => {
       )}
 
       {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />}
+
+      
     </div>
   );
 };

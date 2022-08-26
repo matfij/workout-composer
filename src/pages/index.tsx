@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { getWorkoutData, initializeFirebaseApp } from '../firebase/firebase-utils';
 import { BaseContext } from 'next/dist/shared/lib/utils';
 import ActionBar from '../components/action-bar';
+import { ToastContainer } from 'react-toastify';
 
 interface Props {
   workoutData?: string;
@@ -19,7 +20,7 @@ const Home: FunctionComponent<Props> = (props: Props) => {
     if (props.workoutData) {
       try {
         const loadedBoardData = JSON.parse(props.workoutData) as Partial<BoardData>;
-      
+
         if (loadedBoardData.days && loadedBoardData.standby) {
           const savedBoardData: BoardData = {
             days: loadedBoardData.days.map((day) => ({
@@ -33,7 +34,7 @@ const Home: FunctionComponent<Props> = (props: Props) => {
         }
       } catch (e) {}
     }
-  }, [props.workoutData])
+  }, [props.workoutData]);
 
   useEffect(() => {
     setwinReady(true);
@@ -50,6 +51,8 @@ const Home: FunctionComponent<Props> = (props: Props) => {
         <link rel="icon" href="../public/favicon.ico" />
       </Head>
 
+      <ToastContainer />
+
       <h1 className="w-full text-center p-3 sm:p-6 text-xl sm:text-3xl text-teal-600">Workout Composer</h1>
       <div className="flex flex-col">
         {winReady ? <ExerciseBoard /> : null}
@@ -65,7 +68,7 @@ export const getServerSideProps = async (context: BaseContext) => {
   const id = context.query.id;
   let data = '';
   if (id) {
-    data = await getWorkoutData(id) ?? '';
+    data = (await getWorkoutData(id)) ?? '';
   }
 
   const props: Props = {
