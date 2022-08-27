@@ -3,10 +3,10 @@ import { FunctionComponent, useEffect, useState } from 'react';
 import ExerciseBoard from '../components/exercise-board';
 import { BoardData, useSetBoardDataContext } from '../context/BoardContext';
 import { v4 as uuidv4 } from 'uuid';
-import { getWorkoutData, initializeFirebaseApp } from '../firebase/firebase-utils';
 import { BaseContext } from 'next/dist/shared/lib/utils';
 import ActionBar from '../components/action-bar';
 import { ToastContainer } from 'react-toastify';
+import FirebaseService from '../services/FirebaseService';
 
 interface Props {
   workoutData?: string;
@@ -63,12 +63,13 @@ const Home: FunctionComponent<Props> = (props: Props) => {
 };
 
 export const getServerSideProps = async (context: BaseContext) => {
-  initializeFirebaseApp();
+  const firebaseService = FirebaseService.getInstance();
+  firebaseService.initializeFirebaseApp();
 
   const id = context.query.id;
   let data = '';
   if (id) {
-    data = (await getWorkoutData(id)) ?? '';
+    data = (await firebaseService.getWorkoutData(id)) ?? '';
   }
 
   const props: Props = {

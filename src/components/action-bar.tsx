@@ -3,6 +3,7 @@ import { FunctionComponent, useState } from 'react';
 import { useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
 import ExerciseAdd from './exercise-add';
 import { toast } from 'react-toastify';
+import ToastService from '../services/ToastService';
 
 const ActionBar: FunctionComponent = () => {
   const boardData = useBoardDataContext();
@@ -29,29 +30,14 @@ const ActionBar: FunctionComponent = () => {
     setIsCopying(false);
 
     if (res.status !== 201) {
-      toast.error('Failed to save the workout, please try again later', {
-        position: 'top-center',
-        autoClose: 3000,
-        hideProgressBar: false,
-        closeOnClick: true,
-        pauseOnHover: true,
-        draggable: true,
-      });
+      ToastService.showError('Failed to save the workout, please try again later');
       return;
     }
     const workoutId = await res.json();
 
     window.history.pushState({}, document.title, '/');
     navigator.clipboard.writeText(`${window.location.href}?id=${workoutId}`);
-
-    toast('✨ Workout link copied!', {
-      position: 'top-center',
-      autoClose: 3000,
-      hideProgressBar: false,
-      closeOnClick: true,
-      pauseOnHover: true,
-      draggable: true,
-    });
+    ToastService.showInfo('✨ Workout link copied!');
   };
 
   const toggleBoardLock = (locked: boolean) => {
