@@ -26,7 +26,7 @@ const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
       name: data.name,
       sets: data.sets,
       reps: data.reps,
-      rest: data.rest,
+      description: data.description,
     };
     const newBoardData = boardData;
     newBoardData.standby.push(newExercise);
@@ -83,9 +83,9 @@ const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
           </div>
           <fieldset className="mb-4">
             <label className={style.formLabel} htmlFor="rest">
-              Rest time (optional)
+              Description (optional)
             </label>
-            <input {...register('rest')} className={style.formInput} id="rest" type="text" />
+            <input {...register('description')} className={style.formInput} id="rest" type="text" />
           </fieldset>
 
           <div className="flex items-center pt-4 space-x-2">

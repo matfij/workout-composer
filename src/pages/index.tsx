@@ -53,7 +53,7 @@ const Home: FunctionComponent<Props> = (props: Props) => {
 
       <ToastContainer />
 
-      <h1 className="w-full text-center p-3 sm:p-6 text-xl sm:text-3xl text-teal-600">Workout Composer</h1>
+      <h1 className="w-full text-center p-3 sm:p-6 text-2xl sm:text-3xl text-yellow-300">Workout Composer</h1>
       <div className="flex flex-col">
         {winReady ? <ExerciseBoard /> : null}
         <ActionBar />

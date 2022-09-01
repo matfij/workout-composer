@@ -1,3 +1,4 @@
+import style from './exercise-item.module.css';
 import { FunctionComponent } from 'react';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import { BoardData, useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
@@ -7,7 +8,7 @@ export interface Exercise {
   name: string;
   reps?: number;
   sets?: number;
-  rest?: string;
+  description?: string;
 }
 
 interface Props extends Exercise {
@@ -41,12 +42,12 @@ const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
           ref={provided.innerRef}
           className="relative"
         >
-          <div className="p-4 w-full m-auto bg-white border shadow-sm flex flex-col items-center font-semibold">
-            <p className="text-xl text-teal-600">{props.name}</p>
+          <div className={style.exerciseItem}>
+            <p className="text-md text-yellow-300">{props.name}</p>
             <p>
               {props.sets} x {props.reps}
             </p>
-            <p>{props.rest ? `${props.rest} rest` : ''}</p>
+            <p className="font-thin">{props.description ? `${props.description}` : ''}</p>
             <div onDoubleClick={removeExercise} className="absolute top-2 right-2 cursor-pointer">
               ❌
             </div>

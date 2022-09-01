@@ -51,7 +51,7 @@ const ExerciseBoard: FunctionComponent = () => {
         <section className={style.daysWrapper}>
           {boardData.days.map((day) => (
             <div key={day.day} className={style.dayWrapper}>
-              <h3 className="text-center p-2 text-lg font-bold">{day.day}</h3>
+              <h3 className="text-center p-2 text-lg font-semibold text-neutral-100">{day.day}</h3>
               <Droppable droppableId={day.day}>
                 {(provided: DroppableProvided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
@@ -65,22 +65,20 @@ const ExerciseBoard: FunctionComponent = () => {
             </div>
           ))}
         </section>
-        <section>
-          <div>
-            <h3 className="text-center text-lg font-bold">Standby</h3>
-            <Droppable droppableId={STANDBY_ID} direction="horizontal">
-              {(provided: DroppableProvided) => (
-                <div {...provided.droppableProps} ref={provided.innerRef} className={style.standbyWrapper}>
-                  {boardData.standby.map((exercise, index) => (
-                    <div key={index} className={style.standbyItem}>
-                      <ExerciseItem {...exercise} index={index} />
-                    </div>
-                  ))}
-                  {provided.placeholder}
-                </div>
-              )}
-            </Droppable>
-          </div>
+        <section className={style.standbyWrapper}>
+          <h3 className="text-center text-lg font-semibold text-neutral-100">Standby</h3>
+          <Droppable droppableId={STANDBY_ID} direction="horizontal">
+            {(provided: DroppableProvided) => (
+              <div {...provided.droppableProps} ref={provided.innerRef} className={style.standbyListWrapper}>
+                {boardData.standby.map((exercise, index) => (
+                  <div key={index} className={style.standbyItem}>
+                    <ExerciseItem {...exercise} index={index} />
+                  </div>
+                ))}
+                {provided.placeholder}
+              </div>
+            )}
+          </Droppable>
         </section>
       </DragDropContext>
     </section>
