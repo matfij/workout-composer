@@ -1,8 +1,8 @@
+import React from 'react';
 import style from './action-bar.module.css';
 import { FunctionComponent, useState } from 'react';
 import { useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
 import ExerciseAdd from './exercise-add';
-import { toast } from 'react-toastify';
 import ToastService from '../services/ToastService';
 
 const ActionBar: FunctionComponent = () => {

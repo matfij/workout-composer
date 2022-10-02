@@ -1,3 +1,4 @@
+import React from 'react';
 import style from './exercise-board.module.css';
 import { FunctionComponent } from 'react';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';

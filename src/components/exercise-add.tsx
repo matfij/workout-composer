@@ -1,3 +1,4 @@
+import React from 'react';
 import style from './exercise-add.module.css';
 import { FunctionComponent } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';

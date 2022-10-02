@@ -1,3 +1,4 @@
+import React from 'react';
 import { createContext, useContext, useState } from 'react';
 import { Exercise } from '../components/exercise-item';
 import { initialBoardData } from './exercise-data';

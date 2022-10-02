@@ -1,4 +1,5 @@
-import style from './exercise-item.module.css';
+import React from 'react';
+// import style from './exercise-item.module.css';
 import { FunctionComponent } from 'react';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import { BoardData, useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
@@ -42,8 +43,8 @@ const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
           ref={provided.innerRef}
           className="relative"
         >
-          <div className={style.exerciseItem}>
-            <p className="text-md text-yellow-300">{props.name}</p>
+          <div className={'style.exerciseItem'}>
+            <p data-testid="exercise-name" className="text-md text-yellow-300">{props.name}</p>
             <p>
               {props.sets} x {props.reps}
             </p>
