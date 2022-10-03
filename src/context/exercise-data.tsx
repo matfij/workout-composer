@@ -1,35 +1,35 @@
+import UtilService from "../services/UtilService";
 import { BoardData } from "./BoardContext";
-import { v4 as uuidv4 } from 'uuid';
 
 export const initialBoardData: BoardData = {
   days: [
     {
       day: 'Monday',
       exercises: [
-        { id: uuidv4(), name: 'Push-up', sets: 5, reps: 20 },
-        { id: uuidv4(), name: 'Pull-up', sets: 4, reps: 8 },
+        { id: UtilService.generateId(), name: 'Push-up', sets: 5, reps: 20 },
+        { id: UtilService.generateId(), name: 'Pull-up', sets: 4, reps: 8 },
       ],
     },
     {
       day: 'Wednesday',
       exercises: [
-        { id: uuidv4(), name: 'Hollow body', sets: 5, reps: 1 },
-        { id: uuidv4(), name: 'Plank', sets: 5, reps: 1 },
+        { id: UtilService.generateId(), name: 'Hollow body', sets: 5, reps: 1 },
+        { id: UtilService.generateId(), name: 'Plank', sets: 5, reps: 1 },
       ],
     },
     {
       day: 'Friday',
       exercises: [
-        { id: uuidv4(), name: 'Pistol squats', sets: 5, reps: 5 },
-        { id: uuidv4(), name: 'Sprints', sets: 5, reps: 1 },
+        { id: UtilService.generateId(), name: 'Pistol squats', sets: 5, reps: 5 },
+        { id: UtilService.generateId(), name: 'Sprints', sets: 5, reps: 1 },
       ],
     },
   ],
   standby: [
-    { id: uuidv4(), name: 'Front lever', sets: 1, reps: 1 },
-    { id: uuidv4(), name: 'Straddle planche', sets: 1, reps: 1 },
-    { id: uuidv4(), name: 'Back lever', sets: 1, reps: 1 },
-    { id: uuidv4(), name: 'Supine planche', sets: 1, reps: 1 },
+    { id: UtilService.generateId(), name: 'Front lever', sets: 1, reps: 1 },
+    { id: UtilService.generateId(), name: 'Straddle planche', sets: 1, reps: 1 },
+    { id: UtilService.generateId(), name: 'Back lever', sets: 1, reps: 1 },
+    { id: UtilService.generateId(), name: 'Supine planche', sets: 1, reps: 1 },
   ],
   locked: false,
 };

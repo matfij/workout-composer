@@ -2,11 +2,11 @@ import Head from 'next/head';
 import { FunctionComponent, useEffect, useState } from 'react';
 import ExerciseBoard from '../components/exercise-board';
 import { BoardData, useSetBoardDataContext } from '../context/BoardContext';
-import { v4 as uuidv4 } from 'uuid';
 import { BaseContext } from 'next/dist/shared/lib/utils';
 import ActionBar from '../components/action-bar';
 import { ToastContainer } from 'react-toastify';
 import FirebaseService from '../services/FirebaseService';
+import UtilService from '../services/UtilService';
 
 interface Props {
   workoutData?: string;
@@ -25,9 +25,9 @@ const Home: FunctionComponent<Props> = (props: Props) => {
           const savedBoardData: BoardData = {
             days: loadedBoardData.days.map((day) => ({
               day: day.day,
-              exercises: day.exercises.map((exercise) => ({ ...exercise, id: uuidv4() })),
+              exercises: day.exercises.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
             })),
-            standby: loadedBoardData.standby.map((exercise) => ({ ...exercise, id: uuidv4() })),
+            standby: loadedBoardData.standby.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
             locked: loadedBoardData.locked || false,
           };
           updateBoardData(savedBoardData);

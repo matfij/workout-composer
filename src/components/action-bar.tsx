@@ -47,30 +47,28 @@ const ActionBar: FunctionComponent = () => {
   return (
     <div className={style.actionBarWrapper}>
       <button onClick={toggleExerciseAdd} className="w-24 bg">
-        <p className="text-3xl">🤸🏻‍♂️</p> New
+        <p data-testid="new-icon" className="text-3xl">🤸🏻‍♂️</p> New
       </button>
       {!isCopying ? (
         <button onClick={copyLink} className="w-24">
-          <p className="text-3xl">🔗</p> Share
+          <p data-testid="share-icon" className="text-3xl">🔗</p> Share
         </button>
       ) : (
         <button className="w-24">
-          <p className="text-3xl">⏳</p> Saving...
+          <p data-testid="loading-icon" className="text-3xl">⏳</p> Saving...
         </button>
       )}
       {!boardData.locked ? (
         <button onClick={() => toggleBoardLock(true)} className="w-24">
-          <p className="text-3xl">🔒</p> Lock
+          <p data-testid="lock-icon" className="text-3xl">🔒</p> Lock
         </button>
       ) : (
         <button onClick={() => toggleBoardLock(false)} className="w-24">
-          <p className="text-3xl">🔓</p> Unlock
+          <p data-testid="unlock-icon" className="text-3xl">🔓</p> Unlock
         </button>
       )}
 
       {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />}
-
-      
     </div>
   );
 };

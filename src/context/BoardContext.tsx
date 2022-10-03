@@ -15,7 +15,7 @@ export interface BoardData {
 }
 
 const setInitialBoardData = (data: BoardData) => {
-  console.log(data);
+  console.log('setting', data);
 };
 
 const BoardDataContext = createContext<BoardData>(initialBoardData);

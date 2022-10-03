@@ -4,7 +4,7 @@ import { FunctionComponent } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Exercise } from './exercise-item';
 import { useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
-import { v4 as uuidv4 } from 'uuid';
+import UtilService from '../services/UtilService';
 
 type Props = {
   onCancel: () => void;
@@ -23,23 +23,25 @@ const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
     if (!data.name || !data.sets || !data.reps) return;
 
     const newExercise: Exercise = {
-      id: uuidv4(),
+      id: UtilService.generateId(),
       name: data.name,
       sets: data.sets,
       reps: data.reps,
       description: data.description,
     };
+
     const newBoardData = boardData;
     newBoardData.standby.push(newExercise);
 
     updateBoardData({ ...newBoardData });
+    props.onCancel();
   };
 
   return (
     <section onClick={props.onCancel} className={style.modalBackdrop}>
       <div onClick={(e) => e.stopPropagation()} className={style.modalWrapper}>
         <div className="flex items-center p-4">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Add a new exercise</h3>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Add a new exercise 12</h3>
         </div>
 
         <form onSubmit={handleSubmit(addExercise)} className={style.formWrapper}>
