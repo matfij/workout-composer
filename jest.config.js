@@ -15,6 +15,7 @@ module.exports = {
     '^.+\\.(css|sass|scss)$': '<rootDir>/__mocks__/styleMock.js',
     '^.+\\.(png|jpg|jpeg|gif|webp|avif|ico|bmp|svg)$/i': `<rootDir>/__mocks__/fileMock.js`,
     '^@/components/(.*)$': '<rootDir>/components/$1',
+    '^firebase/app$': '<rootDir>/node_modules/firebase/app/dist/app/index.d.ts',
   },
   testPathIgnorePatterns: ['<rootDir>/node_modules/', '<rootDir>/.next/'],
   testEnvironment: 'jsdom',
@@ -22,4 +23,5 @@ module.exports = {
     '^.+\\.(js|jsx|ts|tsx)$': ['babel-jest', { presets: ['next/babel'] }],
   },
   transformIgnorePatterns: ['/node_modules/', '^.+\\.module\\.(css|sass|scss)$'],
+  // resolver: 'jest-node-exports-resolver',
 };

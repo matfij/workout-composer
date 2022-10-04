@@ -1,10 +1,10 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import ActionBar from '../components/action-bar';
+import ActionBar from '../../components/action-bar';
 
 describe('Exercise Item', () => {
-  it.only('should render correct icons in initial state', () => {
+  it.only('Renders correct icons in initial state', () => {
     render(<ActionBar></ActionBar>);
 
     const newIconContainer = screen.getByTestId('new-icon');
