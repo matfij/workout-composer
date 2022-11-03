@@ -1,7 +1,0 @@
-.btnPrimary {
-    @apply text-black bg-green-400 hover:bg-green-500 font-medium text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800;
-}
-
-.btnFloat {
-    @apply fixed z-50 bottom-10 right-8 w-16 h-16 sm:h-12 drop-shadow-lg flex justify-center items-center text-xl hover:drop-shadow-2xl;
-}
