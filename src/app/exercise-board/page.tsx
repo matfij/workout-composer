@@ -5,12 +5,13 @@ import 'tailwindcss/tailwind.css';
 import 'react-toastify/dist/ReactToastify.css';
 import React, { useEffect, useState } from 'react';
 import ActionBar from '../../components/common/action-bar';
-import { BoardData, useBoardDataContext, useSetBoardDataContext } from '../../context/BoardContext';
+import { BoardData, BoardDataProvider, useBoardDataContext, useSetBoardDataContext } from '../../context/BoardContext';
 import FirebaseService from '../../services/FirebaseService';
 import UtilsService from '../../services/UtilsService';
 import { ToastContainer } from 'react-toastify';
+import ExerciseList from '../../components/exercise-board/exercise-list';
 
-const getExerciseBoardData = async (id?: string) => {
+const getExerciseBoardData = async (id?: string): Promise<string|null> => {
   const firebaseService = FirebaseService.getInstance();
   firebaseService.initializeFirebaseApp();
   return await firebaseService.getWorkoutData(id);
@@ -44,9 +45,12 @@ export default function ExerciseBoardPage() {
 
   return (
     <div>
-      {JSON.stringify(boardData)}
+      <h1 data-testid="app-title" className="w-full text-center p-3 sm:p-6 text-2xl sm:text-3xl text-yellow-300">Workout Composer</h1>
+      <BoardDataProvider>
+        <ExerciseList></ExerciseList>
+        <ActionBar />
+      </BoardDataProvider>
       <ToastContainer />
-      <ActionBar />
     </div>
   );
 }

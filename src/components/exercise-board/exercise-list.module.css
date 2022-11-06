@@ -1,0 +1,38 @@
+.daysWrapper {
+    @apply w-full m-auto p-4 flex flex-col sm:flex-row gap-2 items-stretch justify-center;
+
+    max-width: 1200px;
+    min-height: 200px;
+}
+
+.dayWrapper {
+    width: 100%;
+}
+
+.dayWrapper:nth-child(n) > div {
+    height: 100%;
+}
+
+.standbyWrapper {
+    @apply w-full m-auto p-4  sm:flex-row gap-2 items-stretch justify-center;
+
+    max-width: 1200px;
+    min-height: 200px;
+}
+
+.standbyListWrapper {
+    @apply w-full m-auto mt-2 mb-20 py-4 flex gap-1;
+
+    max-width: 1200px;
+    overflow-x: auto;
+}
+
+.standbyItem {
+    @apply w-full;
+}
+
+@media only screen and (max-width: 600px) {
+    .standbyItem {
+        min-width: 100%;
+    }
+}

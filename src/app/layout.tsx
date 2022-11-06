@@ -1,11 +1,6 @@
-import Head from "next/head";
-import { ToastContainer } from "react-toastify";
+import Head from 'next/head';
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html>
       <Head>
@@ -16,9 +11,7 @@ export default function RootLayout({
         />
         <link rel="icon" href="../public/favicon.ico" />
       </Head>
-      <body>
-        {children}
-      </body>
+      <body>{children}</body>
     </html>
   );
 }

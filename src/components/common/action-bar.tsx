@@ -1,8 +1,18 @@
+'use client';
+
 import React from 'react';
 import style from './action-bar.module.css';
-import { FunctionComponent, useState } from 'react';
+import { useState } from 'react';
 import { useBoardDataContext, useSetBoardDataContext } from '../../context/BoardContext';
 import ToastService from '../../services/ToastService';
+import ExerciseAdd from '../exercise-board/exercise-add';
+import { NextApiRequest, NextApiResponse } from 'next';
+import FirebaseService from '../../services/FirebaseService';
+
+const saveWorkout = async (workoutData: string): Promise<string> => {
+  const firebaseService = FirebaseService.getInstance();
+  return await firebaseService.saveWorkoutData(workoutData);
+};
 
 export default function ActionBar() {
   const boardData = useBoardDataContext();
@@ -17,26 +27,22 @@ export default function ActionBar() {
 
   const copyLink = async () => {
     if (isCopying) return;
-    setIsCopying(true);
 
-    const res = await fetch('/api/workout-save', {
-      method: 'POST',
-      body: JSON.stringify(JSON.stringify(boardData)),
-      headers: {
-        'Content-Type': 'application/json',
-      },
-    });
+    setIsCopying(true);
+    const res = await saveWorkout(JSON.stringify(JSON.stringify(boardData)));
     setIsCopying(false);
 
-    if (res.status !== 201) {
-      ToastService.showError('Failed to save the workout, please try again later');
-      return;
-    }
-    const workoutId = await res.json();
+    console.log(res);
 
-    window.history.pushState({}, document.title, '/');
-    navigator.clipboard.writeText(`${window.location.href}?id=${workoutId}`);
-    ToastService.showInfo('✨ Workout link copied!');
+    // if (res.status !== 201) {
+    //   ToastService.showError('Failed to save the workout, please try again later');
+    //   return;
+    // }
+    // const workoutId = await res.json();
+
+    // window.history.pushState({}, document.title, '/');
+    // navigator.clipboard.writeText(`${window.location.href}?id=${workoutId}`);
+    // ToastService.showInfo('✨ Workout link copied!');
   };
 
   const toggleBoardLock = (locked: boolean) => {
@@ -46,28 +52,43 @@ export default function ActionBar() {
   return (
     <div className={style.actionBarWrapper}>
       <button onClick={toggleExerciseAdd} className="w-24 bg">
-        <p data-testid="new-icon" className="text-3xl">🤸🏻‍♂️</p> New
+        <p data-testid="new-icon" className="text-3xl">
+          🤸🏻‍♂️
+        </p>{' '}
+        New
       </button>
       {!isCopying ? (
         <button onClick={copyLink} className="w-24">
-          <p data-testid="share-icon" className="text-3xl">🔗</p> Share
+          <p data-testid="share-icon" className="text-3xl">
+            🔗
+          </p>{' '}
+          Share
         </button>
       ) : (
         <button className="w-24">
-          <p data-testid="loading-icon" className="text-3xl">⏳</p> Saving...
+          <p data-testid="loading-icon" className="text-3xl">
+            ⏳
+          </p>{' '}
+          Saving...
         </button>
       )}
       {!boardData.locked ? (
         <button onClick={() => toggleBoardLock(true)} className="w-24">
-          <p data-testid="lock-icon" className="text-3xl">🔒</p> Lock
+          <p data-testid="lock-icon" className="text-3xl">
+            🔒
+          </p>{' '}
+          Lock
         </button>
       ) : (
         <button onClick={() => toggleBoardLock(false)} className="w-24">
-          <p data-testid="unlock-icon" className="text-3xl">🔓</p> Unlock
+          <p data-testid="unlock-icon" className="text-3xl">
+            🔓
+          </p>{' '}
+          Unlock
         </button>
       )}
 
-      {/* {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />} */}
+      {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />}
     </div>
   );
-};
+}
