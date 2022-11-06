@@ -23,7 +23,7 @@ export default class FirebaseService {
     this.firestore = getFirestore(getApp('workout-composer'));
   }
 
-  async getWorkoutData(id?: string): Promise<string|null> {
+  async getWorkoutData(id?: string | null): Promise<string | null> {
     if (!this.firestore) this.initializeFirebaseApp();
     if (!id) return null;
 
@@ -34,9 +34,14 @@ export default class FirebaseService {
   }
 
   async saveWorkoutData(data: string) {
-    if (!this.firestore) this.initializeFirebaseApp();
+    // if (!this.firestore) this.initializeFirebaseApp();
 
-    const colRef = collection(this.firestore, 'workouts');
-    return (await addDoc(colRef, { data: data })).id;
+    // const colRef = collection(this.firestore, 'workouts');
+    // console.log(colRef)
+    // addDoc(colRef, { data: data }).then((x) => {
+    //   console.log('cos', x)
+    // })
+    const work = await this.getWorkoutData('bRMayFphxwPQGAh5F2RQ');
+    console.log(work);
   }
 }

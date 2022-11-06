@@ -1,3 +1,5 @@
+import '../styles/globals.css';
+import 'tailwindcss/tailwind.css';
 import Head from 'next/head';
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

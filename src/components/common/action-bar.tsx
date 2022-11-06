@@ -9,7 +9,7 @@ import ExerciseAdd from '../exercise-board/exercise-add';
 import { NextApiRequest, NextApiResponse } from 'next';
 import FirebaseService from '../../services/FirebaseService';
 
-const saveWorkout = async (workoutData: string): Promise<string> => {
+const saveWorkout = async (workoutData: string): Promise<void> => {
   const firebaseService = FirebaseService.getInstance();
   return await firebaseService.saveWorkoutData(workoutData);
 };
