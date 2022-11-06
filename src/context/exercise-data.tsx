@@ -1,5 +1,5 @@
 import UtilService from '../services/UtilsService';
-import { BoardData } from './ExerciseBoardContext';
+import { BoardData } from './BoardContext';
 
 export const initialBoardData: BoardData = {
   days: [

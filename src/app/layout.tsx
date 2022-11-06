@@ -1,3 +1,4 @@
+import Head from "next/head";
 import { ToastContainer } from "react-toastify";
 
 export default function RootLayout({
@@ -7,17 +8,16 @@ export default function RootLayout({
 }) {
   return (
     <html>
-      <head>
+      <Head>
         <title>Workout Composer</title>
         <meta
           name="description"
           content="This app will allow you to create a training plan in just a few seconds."
         />
         <link rel="icon" href="../public/favicon.ico" />
-      </head>
+      </Head>
       <body>
         {children}
-        hi there
       </body>
     </html>
   );

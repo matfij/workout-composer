@@ -1,14 +1,19 @@
 'use client';
 
-import React, { FunctionComponent, useEffect, useState } from 'react';
+import '../../styles/globals.css';
+import 'tailwindcss/tailwind.css';
+import 'react-toastify/dist/ReactToastify.css';
+import React, { useEffect, useState } from 'react';
+import ActionBar from '../../components/common/action-bar';
 import { BoardData, useBoardDataContext, useSetBoardDataContext } from '../../context/BoardContext';
 import FirebaseService from '../../services/FirebaseService';
 import UtilsService from '../../services/UtilsService';
+import { ToastContainer } from 'react-toastify';
 
 const getExerciseBoardData = async (id?: string) => {
   const firebaseService = FirebaseService.getInstance();
   firebaseService.initializeFirebaseApp();
-  return (await firebaseService.getWorkoutData(id ?? '')) ?? '';
+  return await firebaseService.getWorkoutData(id);
 };
 
 export default function ExerciseBoardPage() {
@@ -16,10 +21,11 @@ export default function ExerciseBoardPage() {
   const updateBoardData = useSetBoardDataContext();
   const [winReady, setwinReady] = useState(false);
 
-  try {
-    const loadedBoardData = JSON.parse('') as Partial<BoardData>;
+  getExerciseBoardData().then((boardData) => {
+    if (!boardData) return;
+    const loadedBoardData = JSON.parse(boardData!) as Partial<BoardData>;
 
-    if (loadedBoardData.days && loadedBoardData.standby) {
+    if (loadedBoardData && loadedBoardData.days && loadedBoardData.standby) {
       const savedBoardData: BoardData = {
         days: loadedBoardData.days.map((day) => ({
           day: day.day,
@@ -30,11 +36,17 @@ export default function ExerciseBoardPage() {
       };
       updateBoardData(savedBoardData);
     }
-  } catch (e) {}
+  });
 
   useEffect(() => {
     setwinReady(true);
   }, []);
 
-  return <div>{JSON.stringify(boardData)}</div>;
+  return (
+    <div>
+      {JSON.stringify(boardData)}
+      <ToastContainer />
+      <ActionBar />
+    </div>
+  );
 }

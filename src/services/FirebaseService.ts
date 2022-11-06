@@ -23,8 +23,9 @@ export default class FirebaseService {
     this.firestore = getFirestore(getApp('workout-composer'));
   }
 
-  async getWorkoutData(id: string): Promise<string> {
+  async getWorkoutData(id?: string): Promise<string|null> {
     if (!this.firestore) this.initializeFirebaseApp();
+    if (!id) return null;
 
     const docRef = doc(this.firestore, 'workouts', id);
     const docSnap = await getDoc(docRef);
