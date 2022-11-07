@@ -19,6 +19,6 @@ export default class ToastService {
   }
 
   static showError(message: string, options = this.defaultOptions): void {
-    toast.error(message, options);
+    toast.success(message, options);
   }
 }

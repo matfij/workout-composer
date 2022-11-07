@@ -1,14 +1,7 @@
 import React from 'react';
 import { createContext, useContext, useState } from 'react';
+import { Exercise } from '../components/exercise-item';
 import { initialBoardData } from './exercise-data';
-
-export interface Exercise {
-  id: string;
-  name: string;
-  reps?: number;
-  sets?: number;
-  description?: string;
-}
 
 export interface DayData {
   day: string;

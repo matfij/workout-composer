@@ -1,18 +1,15 @@
-import React, { useEffect } from 'react';
-import style from './exercise-list.module.css';
+import React from 'react';
+import style from './exercise-board.module.css';
+import { FunctionComponent } from 'react';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
+import { BoardData, useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
 import ExerciseItem from './exercise-item';
-import { useBoardDataContext, useSetBoardDataContext, BoardData } from '../../context/BoardContext';
 
 export const STANDBY_ID = 'item-standby';
 
-export default function ExerciseList(initialBoardData: BoardData) {
+const ExerciseBoard: FunctionComponent = () => {
   const boardData = useBoardDataContext();
   const updateBoardData = useSetBoardDataContext();
-
-  useEffect(() => {
-    updateBoardData(initialBoardData);
-  }, []);
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -87,4 +84,6 @@ export default function ExerciseList(initialBoardData: BoardData) {
       </DragDropContext>
     </section>
   );
-}
+};
+
+export default ExerciseBoard;

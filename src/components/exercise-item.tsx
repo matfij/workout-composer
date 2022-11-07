@@ -1,7 +1,8 @@
 import React from 'react';
 import style from './exercise-item.module.css';
+import { FunctionComponent } from 'react';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
-import { useBoardDataContext, useSetBoardDataContext, BoardData } from '../../context/BoardContext';
+import { BoardData, useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
 
 export interface Exercise {
   id: string;
@@ -15,7 +16,7 @@ interface Props extends Exercise {
   index: number;
 }
 
-export default function ExerciseItem(props: Props) {
+const ExerciseItem: FunctionComponent<Props> = (props: Props) => {
   const boardData = useBoardDataContext();
   const updateBoardData = useSetBoardDataContext();
 
@@ -57,3 +58,5 @@ export default function ExerciseItem(props: Props) {
     </Draggable>
   );
 };
+
+export default ExerciseItem;

@@ -1,15 +1,16 @@
 import React from 'react';
 import style from './exercise-add.module.css';
+import { FunctionComponent } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Exercise } from './exercise-item';
-import { useBoardDataContext, useSetBoardDataContext } from '../../context/BoardContext';
-import UtilService from '../../services/UtilsService';
+import { useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
+import UtilService from '../services/UtilService';
 
 type Props = {
   onCancel: () => void;
 };
 
-export default function ExerciseAdd(props: Props) {
+const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
   const boardData = useBoardDataContext();
   const updateBoardData = useSetBoardDataContext();
   const {
@@ -101,3 +102,5 @@ export default function ExerciseAdd(props: Props) {
     </section>
   );
 };
+
+export default ExerciseAdd;
