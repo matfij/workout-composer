@@ -1,40 +1,39 @@
 import Head from 'next/head';
-import { FunctionComponent, useEffect, useState } from 'react';
-import ExerciseBoard from '../components/exercise-board';
-import { BoardData, useSetBoardDataContext } from '../context/BoardContext';
+import { useEffect, useState } from 'react';
+import ExerciseList from '../components/exercise-list.component';
+import { useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import { BaseContext } from 'next/dist/shared/lib/utils';
-import ActionBar from '../components/action-bar';
+import ActionBar from '../components/action-bar.component';
 import { ToastContainer } from 'react-toastify';
 import FirebaseService from '../services/FirebaseService';
 import UtilService from '../services/UtilService';
+import { ExerciseBoard } from '../definitions';
 
-interface Props {
-  workoutData?: string;
+type Props = {
+  exerciseBoardRaw?: string;
 }
 
-const Home: FunctionComponent<Props> = (props: Props) => {
-  const updateBoardData = useSetBoardDataContext();
+export default function Index(props: Props) {
+  const updateBoardData = useSetExerciseBoardContext();
   const [winReady, setwinReady] = useState(false);
 
   useEffect(() => {
-    if (props.workoutData) {
+    if (props.exerciseBoardRaw) {
       try {
-        const loadedBoardData = JSON.parse(props.workoutData) as Partial<BoardData>;
-
-        if (loadedBoardData.days && loadedBoardData.standby) {
-          const savedBoardData: BoardData = {
-            days: loadedBoardData.days.map((day) => ({
+        const exerciseBoardParsed = JSON.parse(props.exerciseBoardRaw) as Partial<ExerciseBoard>;
+        if (exerciseBoardParsed.days && exerciseBoardParsed.standby) {
+          updateBoardData({
+            days: exerciseBoardParsed.days.map((day) => ({
               day: day.day,
               exercises: day.exercises.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
             })),
-            standby: loadedBoardData.standby.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
-            locked: loadedBoardData.locked || false,
-          };
-          updateBoardData(savedBoardData);
+            standby: exerciseBoardParsed.standby.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
+            locked: exerciseBoardParsed.locked || false,
+          });
         }
       } catch (e) {}
     }
-  }, [props.workoutData]);
+  }, [props.exerciseBoardRaw]);
 
   useEffect(() => {
     setwinReady(true);
@@ -55,7 +54,7 @@ const Home: FunctionComponent<Props> = (props: Props) => {
 
       <h1 data-testid="app-title" className="w-full text-center p-3 sm:p-6 text-2xl sm:text-3xl text-yellow-300">Workout Composer</h1>
       <div className="flex flex-col">
-        {winReady ? <ExerciseBoard /> : null}
+        {winReady ? <ExerciseList /> : null}
         <ActionBar />
       </div>
     </>
@@ -73,11 +72,9 @@ export const getServerSideProps = async (context: BaseContext) => {
   }
 
   const props: Props = {
-    workoutData: data,
+    exerciseBoardRaw: data,
   };
   return {
     props: props,
   };
 };
-
-export default Home;

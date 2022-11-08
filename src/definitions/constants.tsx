@@ -1,7 +1,9 @@
-import UtilService from "../services/UtilService";
-import { BoardData } from "./BoardContext";
+import { ExerciseBoard } from '.';
+import UtilService from '../services/UtilService';
 
-export const initialBoardData: BoardData = {
+export const STANDBY_ID = 'item-standby';
+
+export const initialBoardData: ExerciseBoard = {
   days: [
     {
       day: 'Monday',

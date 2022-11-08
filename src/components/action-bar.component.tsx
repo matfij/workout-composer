@@ -1,13 +1,13 @@
 import React from 'react';
 import style from './action-bar.module.css';
-import { FunctionComponent, useState } from 'react';
-import { useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
-import ExerciseAdd from './exercise-add';
+import { useState } from 'react';
+import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
+import ExerciseAdd from './exercise-add.component';
 import ToastService from '../services/ToastService';
 
-const ActionBar: FunctionComponent = () => {
-  const boardData = useBoardDataContext();
-  const setBoardData = useSetBoardDataContext();
+export default function ActionBar() {
+  const exerciseBoard = useExerciseBoardContext();
+  const setExerciseBoard = useSetExerciseBoardContext();
 
   const [displayExerciseAdd, setDisplayExerciseAdd] = useState(false);
   const [isCopying, setIsCopying] = useState(false);
@@ -22,7 +22,7 @@ const ActionBar: FunctionComponent = () => {
 
     const res = await fetch('/api/workout-save', {
       method: 'POST',
-      body: JSON.stringify(JSON.stringify(boardData)),
+      body: JSON.stringify(JSON.stringify(exerciseBoard)),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -41,7 +41,7 @@ const ActionBar: FunctionComponent = () => {
   };
 
   const toggleBoardLock = (locked: boolean) => {
-    setBoardData({ ...boardData, locked: locked });
+    setExerciseBoard({ ...exerciseBoard, locked: locked });
   };
 
   return (
@@ -58,7 +58,7 @@ const ActionBar: FunctionComponent = () => {
           <p data-testid="loading-icon" className="text-3xl">⏳</p> Saving...
         </button>
       )}
-      {!boardData.locked ? (
+      {!exerciseBoard.locked ? (
         <button onClick={() => toggleBoardLock(true)} className="w-24">
           <p data-testid="lock-icon" className="text-3xl">🔒</p> Lock
         </button>
@@ -72,5 +72,3 @@ const ActionBar: FunctionComponent = () => {
     </div>
   );
 };
-
-export default ActionBar;

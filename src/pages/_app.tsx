@@ -3,14 +3,12 @@ import '../styles/common.css';
 import 'tailwindcss/tailwind.css';
 import 'react-toastify/dist/ReactToastify.css';
 import type { AppProps } from 'next/app';
-import { BoardDataProvider } from '../context/BoardContext';
+import { ExerciseBoardProvider } from '../contexts/exercise-board.context';
 
-function MyApp({ Component, pageProps }: AppProps) {
+export default function App({ Component, pageProps }: AppProps) {
   return (
-    <BoardDataProvider>
+    <ExerciseBoardProvider>
       <Component {...pageProps} />
-    </BoardDataProvider>
+    </ExerciseBoardProvider>
   );
 }
-
-export default MyApp;

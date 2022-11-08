@@ -1,15 +1,13 @@
 import React from 'react';
-import style from './exercise-board.module.css';
-import { FunctionComponent } from 'react';
+import style from './exercise-list.module.css';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
-import { BoardData, useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
-import ExerciseItem from './exercise-item';
+import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
+import ExerciseItem from './exercise-item.component';
+import { STANDBY_ID } from '../definitions/constants';
 
-export const STANDBY_ID = 'item-standby';
-
-const ExerciseBoard: FunctionComponent = () => {
-  const boardData = useBoardDataContext();
-  const updateBoardData = useSetBoardDataContext();
+export default function ExerciseList() {
+  const exerciseBoard = useExerciseBoardContext();
+  const setExerciseBoard = useSetExerciseBoardContext();
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -21,15 +19,15 @@ const ExerciseBoard: FunctionComponent = () => {
 
     const movedExercise =
       startDay === STANDBY_ID
-        ? boardData.standby[startIndex]
-        : boardData.days.find((day) => day.day === startDay)?.exercises[startIndex];
+        ? exerciseBoard.standby[startIndex]
+        : exerciseBoard.days.find((day) => day.day === startDay)?.exercises[startIndex];
 
-    startDay === STANDBY_ID ? boardData.standby.splice(startIndex, 1) : null;
-    endDay === STANDBY_ID && movedExercise ? boardData.standby.splice(endIndex, 0, movedExercise) : null;
+    startDay === STANDBY_ID ? exerciseBoard.standby.splice(startIndex, 1) : null;
+    endDay === STANDBY_ID && movedExercise ? exerciseBoard.standby.splice(endIndex, 0, movedExercise) : null;
 
-    const newBoardData: BoardData = {
+    setExerciseBoard({
       days: [
-        ...boardData.days.map((day) => {
+        ...exerciseBoard.days.map((day) => {
           if (day.day === startDay) {
             day.exercises.splice(startIndex, 1);
           }
@@ -39,25 +37,23 @@ const ExerciseBoard: FunctionComponent = () => {
           return day;
         }),
       ],
-      standby: boardData.standby,
-      locked: boardData.locked,
-    };
-
-    updateBoardData(newBoardData);
+      standby: exerciseBoard.standby,
+      locked: exerciseBoard.locked,
+    });
   };
 
   return (
     <section>
       <DragDropContext onDragEnd={onDragEnd}>
         <section className={style.daysWrapper}>
-          {boardData.days.map((day) => (
+          {exerciseBoard.days.map((day) => (
             <div key={day.day} className={style.dayWrapper}>
               <h3 className="text-center p-2 text-lg font-semibold text-neutral-100">{day.day}</h3>
               <Droppable droppableId={day.day}>
                 {(provided: DroppableProvided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
                     {day.exercises.map((exercise, index) => (
-                      <ExerciseItem {...exercise} index={index} key={index} />
+                      <ExerciseItem exercise={exercise} index={index} key={index} />
                     ))}
                     {provided.placeholder}
                   </div>
@@ -71,9 +67,9 @@ const ExerciseBoard: FunctionComponent = () => {
           <Droppable droppableId={STANDBY_ID} direction="horizontal">
             {(provided: DroppableProvided) => (
               <div {...provided.droppableProps} ref={provided.innerRef} className={style.standbyListWrapper}>
-                {boardData.standby.map((exercise, index) => (
+                {exerciseBoard.standby.map((exercise, index) => (
                   <div key={index} className={style.standbyItem}>
-                    <ExerciseItem {...exercise} index={index} />
+                    <ExerciseItem exercise={exercise} index={index} />
                   </div>
                 ))}
                 {provided.placeholder}
@@ -84,6 +80,4 @@ const ExerciseBoard: FunctionComponent = () => {
       </DragDropContext>
     </section>
   );
-};
-
-export default ExerciseBoard;
+}

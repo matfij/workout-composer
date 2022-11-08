@@ -1,18 +1,17 @@
 import React from 'react';
 import style from './exercise-add.module.css';
-import { FunctionComponent } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { Exercise } from './exercise-item';
-import { useBoardDataContext, useSetBoardDataContext } from '../context/BoardContext';
+import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import UtilService from '../services/UtilService';
+import { Exercise } from '../definitions';
 
 type Props = {
   onCancel: () => void;
 };
 
-const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
-  const boardData = useBoardDataContext();
-  const updateBoardData = useSetBoardDataContext();
+export default function ExerciseAdd(props: Props) {
+  const exerciseBoard = useExerciseBoardContext();
+  const setExerciseBoard = useSetExerciseBoardContext();
   const {
     register,
     handleSubmit,
@@ -30,10 +29,10 @@ const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
       description: data.description,
     };
 
-    const newBoardData = boardData;
+    const newBoardData = exerciseBoard;
     newBoardData.standby.push(newExercise);
 
-    updateBoardData({ ...newBoardData });
+    setExerciseBoard({ ...newBoardData });
     props.onCancel();
   };
 
@@ -101,6 +100,4 @@ const ExerciseAdd: FunctionComponent<Props> = (props: Props) => {
       </div>
     </section>
   );
-};
-
-export default ExerciseAdd;
+}
