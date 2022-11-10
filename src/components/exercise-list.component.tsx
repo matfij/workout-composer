@@ -62,8 +62,8 @@ export default function ExerciseList() {
             </div>
           ))}
         </section>
+        <h3 className="text-center mb-2 text-lg font-semibold text-neutral-100 mt-4">Standby</h3>
         <section className={style.standbyWrapper}>
-          <h3 className="text-center text-lg font-semibold text-neutral-100">Standby</h3>
           <Droppable droppableId={STANDBY_ID} direction="horizontal">
             {(provided: DroppableProvided) => (
               <div {...provided.droppableProps} ref={provided.innerRef} className={style.standbyListWrapper}>
