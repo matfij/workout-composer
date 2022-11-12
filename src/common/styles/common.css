@@ -1,0 +1,5 @@
+.btnLink {
+    @apply text-xl text-center text-neutral-100 bg-slate-900;
+    @apply hover:cursor-pointer hover:text-yellow-300 hover:bg-black;
+    @apply mt-4 py-8 block;
+}

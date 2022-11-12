@@ -1,9 +1,9 @@
-import '../styles/globals.css';
-import '../styles/common.css';
+import '../common/styles/globals.css';
+import '../common/styles/common.css';
 import 'tailwindcss/tailwind.css';
 import 'react-toastify/dist/ReactToastify.css';
 import type { AppProps } from 'next/app';
-import { ExerciseBoardProvider } from '../contexts/exercise-board.context';
+import { ExerciseBoardProvider } from '../features/workout-composer/contexts/exercise-board.context';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (

@@ -4,14 +4,24 @@ import style from './action-bar.module.css';
 import { useState } from 'react';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import ExerciseAdd from './exercise-add.component';
-import ToastService from '../services/ToastService';
+import ToastService from '../../../common/services/toast-service';
+import LoadinIndicator from '../../../common/components/loading-indicator.component';
+import { useRouter } from 'next/router';
 
 export default function ActionBar() {
+  const router = useRouter();
   const exerciseBoard = useExerciseBoardContext();
   const setExerciseBoard = useSetExerciseBoardContext();
-
   const [displayExerciseAdd, setDisplayExerciseAdd] = useState(false);
   const [isCopying, setIsCopying] = useState(false);
+
+  const navigateHome = () => {
+    router.push('/');
+  };
+
+  const toggleBoardLock = (locked: boolean) => {
+    setExerciseBoard({ ...exerciseBoard, locked: locked });
+  };
 
   const toggleExerciseAdd = () => {
     setDisplayExerciseAdd(!displayExerciseAdd);
@@ -37,16 +47,17 @@ export default function ActionBar() {
     const workoutId = await res.json();
 
     window.history.pushState({}, document.title, '/');
-    navigator.clipboard.writeText(`${window.location.href}?id=${workoutId}`);
+    navigator.clipboard.writeText(`${window.location.href}workout-composer?id=${workoutId}`);
+    window.history.pushState({}, document.title, `workout-composer?id=${workoutId}`);
     ToastService.showInfo('✨ Workout link copied!');
-  };
-
-  const toggleBoardLock = (locked: boolean) => {
-    setExerciseBoard({ ...exerciseBoard, locked: locked });
   };
 
   return (
     <div className={style.actionBarWrapper}>
+      <button onClick={navigateHome} className="w-24 bg">
+        <Image src="/icons/home-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+        <p>Home</p>
+      </button>
       <button onClick={toggleExerciseAdd} className="w-24 bg">
         <Image src="/icons/add-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
         <p>Add</p>
@@ -58,7 +69,7 @@ export default function ActionBar() {
         </button>
       ) : (
         <button className="w-24">
-          <div className={style.loadingItem}></div>
+          <LoadinIndicator />
           <p>Saving</p>
         </button>
       )}

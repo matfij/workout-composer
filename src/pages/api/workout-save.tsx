@@ -1,5 +1,5 @@
 import { NextApiRequest, NextApiResponse } from 'next';
-import FirebaseService from '../../services/FirebaseService';
+import FirebaseService from '../../features/workout-composer/services/firebase-service';
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   const firebaseService = FirebaseService.getInstance();

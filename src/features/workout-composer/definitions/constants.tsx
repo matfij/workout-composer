@@ -1,5 +1,5 @@
 import { ExerciseBoard } from '.';
-import UtilService from '../services/UtilService';
+import UtilService from '../../../common/services/utils-service';
 
 export const STANDBY_ID = 'item-standby';
 

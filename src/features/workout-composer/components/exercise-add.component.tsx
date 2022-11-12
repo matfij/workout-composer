@@ -2,7 +2,7 @@ import React from 'react';
 import style from './exercise-add.module.css';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
-import UtilService from '../services/UtilService';
+import UtilService from '../../../common/services/utils-service';
 import { Exercise } from '../definitions';
 
 type Props = {

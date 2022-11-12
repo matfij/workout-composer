@@ -11,6 +11,7 @@ export default class ToastService {
   };
 
   static showInfo(message: string, options = this.defaultOptions): void {
+    console.log('showin')
     toast(message, options);
   }
 

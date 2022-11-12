@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import ActionBar from '../../components/action-bar.component';
+import ActionBar from '../../features/workout-composer/components/action-bar.component';
 
 describe('Exercise Item', () => {
   it('Renders correct icons in initial state', () => {
