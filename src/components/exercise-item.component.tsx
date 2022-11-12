@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import style from './exercise-item.module.css';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
@@ -48,7 +49,7 @@ export default function ExerciseItem(props: Props) {
             </p>
             <p className="font-thin">{props.exercise.description ? `${props.exercise.description}` : ''}</p>
             <div onDoubleClick={removeExercise} className="absolute top-2 right-2 cursor-pointer">
-              ❌
+              <Image src="/icons/remove-icon.svg" alt="unlock" width={20} height={20} className="m-auto" />
             </div>
           </div>
         </div>

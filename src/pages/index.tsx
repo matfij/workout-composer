@@ -11,7 +11,7 @@ import { ExerciseBoard } from '../definitions';
 
 type Props = {
   exerciseBoardRaw?: string;
-}
+};
 
 export default function Index(props: Props) {
   const updateBoardData = useSetExerciseBoardContext();
@@ -27,7 +27,10 @@ export default function Index(props: Props) {
               day: day.day,
               exercises: day.exercises.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
             })),
-            standby: exerciseBoardParsed.standby.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
+            standby: exerciseBoardParsed.standby.map((exercise) => ({
+              ...exercise,
+              id: UtilService.generateId(),
+            })),
             locked: exerciseBoardParsed.locked || false,
           });
         }
@@ -52,14 +55,16 @@ export default function Index(props: Props) {
 
       <ToastContainer />
 
-      <h1 data-testid="app-title" className="w-full text-center p-3 sm:p-6 text-2xl sm:text-3xl text-yellow-300">Workout Composer</h1>
+      <h1 className="w-full text-center p-3 mt-8 sm:p-6 text-2xl sm:text-3xl text-yellow-300">
+        Workout Composer
+      </h1>
       <div className="flex flex-col">
         {winReady ? <ExerciseList /> : null}
         <ActionBar />
       </div>
     </>
   );
-};
+}
 
 export const getServerSideProps = async (context: BaseContext) => {
   const firebaseService = FirebaseService.getInstance();

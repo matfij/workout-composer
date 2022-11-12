@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import style from './action-bar.module.css';
 import { useState } from 'react';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
@@ -47,28 +48,33 @@ export default function ActionBar() {
   return (
     <div className={style.actionBarWrapper}>
       <button onClick={toggleExerciseAdd} className="w-24 bg">
-        <p data-testid="new-icon" className="text-3xl">🤸🏻‍♂️</p> New
+        <Image src="/icons/add-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+        <p>Add</p>
       </button>
       {!isCopying ? (
         <button onClick={copyLink} className="w-24">
-          <p data-testid="share-icon" className="text-3xl">🔗</p> Share
+          <Image src="/icons/share-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+          <p>Share</p>
         </button>
       ) : (
         <button className="w-24">
-          <p data-testid="loading-icon" className="text-3xl">⏳</p> Saving...
+          <div className={style.loadingItem}></div>
+          <p>Saving</p>
         </button>
       )}
       {!exerciseBoard.locked ? (
         <button onClick={() => toggleBoardLock(true)} className="w-24">
-          <p data-testid="lock-icon" className="text-3xl">🔒</p> Lock
+          <Image src="/icons/lock-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+          <p>Lock</p>
         </button>
       ) : (
         <button onClick={() => toggleBoardLock(false)} className="w-24">
-          <p data-testid="unlock-icon" className="text-3xl">🔓</p> Unlock
+          <Image src="/icons/unlock-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+          <p>Unlock</p>
         </button>
       )}
 
       {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />}
     </div>
   );
-};
+}

@@ -40,7 +40,7 @@ export default function ExerciseAdd(props: Props) {
     <section onClick={props.onCancel} className={style.modalBackdrop}>
       <div onClick={(e) => e.stopPropagation()} className={style.modalWrapper}>
         <div className="flex items-center p-4">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Add a new exercise 12</h3>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Add a new exercise</h3>
         </div>
 
         <form onSubmit={handleSubmit(addExercise)} className={style.formWrapper}>

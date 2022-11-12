@@ -17,6 +17,7 @@
     @apply w-full m-auto flex flex-col sm:flex-row items-stretch justify-center;
 
     max-width: 1200px;
+    margin-bottom: 100px;
 }
 
 .standbyListWrapper {
