@@ -15,4 +15,5 @@ export interface ExerciseBoard {
   days: ExerciseList[];
   standby: Exercise[];
   locked: boolean;
+  editedExercise?: Exercise;
 }

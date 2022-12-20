@@ -3,7 +3,7 @@ import Image from 'next/image';
 import style from './action-bar.module.css';
 import { useState } from 'react';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
-import ExerciseAdd from './exercise-add.component';
+import ExerciseAddEdit from './exercise-add-edit.component';
 import ToastService from '../../../common/services/toast-service';
 import LoadinIndicator from '../../../common/components/loading-indicator.component';
 import { useRouter } from 'next/router';
@@ -85,7 +85,9 @@ export default function ActionBar() {
         </button>
       )}
 
-      {displayExerciseAdd && <ExerciseAdd onCancel={toggleExerciseAdd} />}
+      {(displayExerciseAdd || exerciseBoard.editedExercise) && (
+        <ExerciseAddEdit exercise={exerciseBoard.editedExercise} onCancel={toggleExerciseAdd} />
+      )}
     </div>
   );
 }

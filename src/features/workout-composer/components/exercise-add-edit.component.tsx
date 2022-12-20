@@ -1,38 +1,77 @@
-import React from 'react';
-import style from './exercise-add.module.css';
+import React, { useEffect, useState } from 'react';
+import style from './exercise-add-edit.module.css';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import UtilService from '../../../common/services/utils-service';
 import { Exercise } from '../definitions';
 
 type Props = {
+  exercise?: Exercise;
   onCancel: () => void;
 };
 
-export default function ExerciseAdd(props: Props) {
+export default function ExerciseAddEdit(props: Props) {
+  const [editMode, setEditMode] = useState(false);
   const exerciseBoard = useExerciseBoardContext();
   const setExerciseBoard = useSetExerciseBoardContext();
   const {
+    setValue,
     register,
     handleSubmit,
     formState: { errors },
   } = useForm<Partial<Exercise>>();
 
-  const addExercise: SubmitHandler<Partial<Exercise>> = (data: Partial<Exercise>) => {
-    if (!data.name || !data.sets || !data.reps) return;
+  useEffect(() => {
+    if (!props.exercise) return;
+    setEditMode(true);
+    setValue('id', props.exercise.id);
+    setValue('name', props.exercise.name);
+    setValue('sets', props.exercise.sets);
+    setValue('reps', props.exercise.reps);
+    setValue('description', props.exercise.description);
+  }, [props.exercise, setValue]);
 
-    const newExercise: Exercise = {
-      id: UtilService.generateId(),
+  const addEditExercise: SubmitHandler<Partial<Exercise>> = (data: Partial<Exercise>) => {
+    if (!data.name || !data.sets || !data.reps) return;
+    const exercise: Exercise = {
+      id: props.exercise ? props.exercise.id : UtilService.generateId(),
       name: data.name,
       sets: data.sets,
       reps: data.reps,
       description: data.description,
     };
+    editMode ? editExercise(exercise) : addExercise(exercise);
+  };
 
+  const addExercise = (exercise: Exercise) => {
     const newBoardData = exerciseBoard;
-    newBoardData.standby.push(newExercise);
+    newBoardData.standby.push(exercise);
+    setExerciseBoard({ ...newBoardData, editedExercise: undefined });
+    onCancel(false);
+  };
 
-    setExerciseBoard({ ...newBoardData });
+  const editExercise = (editedExercise: Exercise) => {
+    if (!props.exercise) return;
+    setExerciseBoard({
+      days: exerciseBoard.days.map((day) => ({
+        day: day.day,
+        exercises: [
+          ...day.exercises.map((exercise) => (exercise.id === editedExercise.id ? editedExercise : exercise)),
+        ],
+      })),
+      standby: [
+        ...exerciseBoard.standby.map((exercise) =>
+          exercise.id === editedExercise.id ? editedExercise : exercise
+        ),
+      ],
+      locked: exerciseBoard.locked,
+      editedExercise: undefined,
+    });
+    onCancel(false);
+  };
+
+  const onCancel = (reset: boolean) => {
+    if (reset) setExerciseBoard({ ...exerciseBoard, editedExercise: undefined });
     props.onCancel();
   };
 
@@ -40,10 +79,12 @@ export default function ExerciseAdd(props: Props) {
     <section onClick={props.onCancel} className={style.modalBackdrop}>
       <div onClick={(e) => e.stopPropagation()} className={style.modalWrapper}>
         <div className="flex items-center p-4">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">Add a new exercise</h3>
+          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+            {editMode ? 'Edit exercise' : 'Add a new exercise'}
+          </h3>
         </div>
 
-        <form onSubmit={handleSubmit(addExercise)} className={style.formWrapper}>
+        <form onSubmit={handleSubmit(addEditExercise)} className={style.formWrapper}>
           <fieldset className="mb-4">
             <label className={style.formLabel} htmlFor="name">
               Name
@@ -91,10 +132,10 @@ export default function ExerciseAdd(props: Props) {
           </fieldset>
 
           <div className="flex items-center pt-4 space-x-2">
-            <button onClick={props.onCancel} type="button" className={style.formBtnCancel}>
+            <button onClick={() => onCancel(true)} type="button" className={style.formBtnCancel}>
               Cancel
             </button>
-            <button className={style.formBtnSubmit}>Add</button>
+            <button className={style.formBtnSubmit}>{editMode ? 'Update' : 'Add'}</button>
           </div>
         </form>
       </div>

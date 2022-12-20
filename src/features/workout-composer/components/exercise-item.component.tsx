@@ -14,6 +14,13 @@ export default function ExerciseItem(props: Props) {
   const exerciseBoard = useExerciseBoardContext();
   const setExerciseBoard = useSetExerciseBoardContext();
 
+  const editExercise = () => {
+    setExerciseBoard({
+      ...exerciseBoard,
+      editedExercise: props.exercise,
+    });
+  };
+
   const removeExercise = () => {
     if (exerciseBoard.locked) return;
     setExerciseBoard({
@@ -48,9 +55,17 @@ export default function ExerciseItem(props: Props) {
               {props.exercise.sets} x {props.exercise.reps}
             </p>
             <p className="font-thin">{props.exercise.description ? `${props.exercise.description}` : ''}</p>
-            <div onDoubleClick={removeExercise} className="absolute top-2 right-2 cursor-pointer">
-              <Image src="/icons/remove-icon.svg" alt="unlock" width={20} height={20} className="m-auto" />
-            </div>
+
+            {!exerciseBoard.locked ? (
+              <div onClick={editExercise} className="absolute top-2 right-8 cursor-pointer">
+                <Image src="/icons/edit-icon.svg" alt="unlock" width={18} height={18} className="m-auto" />
+              </div>
+            ) : null}
+            {!exerciseBoard.locked ? (
+              <div onDoubleClick={removeExercise} className="absolute top-2 right-2 cursor-pointer">
+                <Image src="/icons/remove-icon.svg" alt="unlock" width={20} height={20} className="m-auto" />
+              </div>
+            ) : null}
           </div>
         </div>
       )}
