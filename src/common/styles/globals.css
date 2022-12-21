@@ -28,8 +28,8 @@ a {
 }
 
 *::selection {
-  background: var(--clr-green-500);
-  color: white;
+  color: var(--clr-primary-500);
+  background: rgba(250, 204, 21, 0.9);
 }
 
 ::-webkit-scrollbar {

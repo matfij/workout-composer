@@ -3,7 +3,7 @@ import style from './exercise-add-edit.module.css';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import UtilService from '../../../common/services/utils-service';
-import { Exercise } from '../definitions';
+import { Exercise, ExerciseBoard } from '../definitions';
 
 type Props = {
   exercise?: Exercise;
@@ -51,8 +51,8 @@ export default function ExerciseAddEdit(props: Props) {
   };
 
   const editExercise = (editedExercise: Exercise) => {
-    if (!props.exercise) return;
-    setExerciseBoard({
+    if (!props.exercise) return onCancel(false);
+    const newBoardData: ExerciseBoard = {
       days: exerciseBoard.days.map((day) => ({
         day: day.day,
         exercises: [
@@ -65,18 +65,17 @@ export default function ExerciseAddEdit(props: Props) {
         ),
       ],
       locked: exerciseBoard.locked,
-      editedExercise: undefined,
-    });
-    onCancel(false);
+    };
+    setExerciseBoard({ ...newBoardData, editedExercise: undefined });
   };
 
   const onCancel = (reset: boolean) => {
     if (reset) setExerciseBoard({ ...exerciseBoard, editedExercise: undefined });
-    props.onCancel();
+    else props.onCancel();
   };
 
   return (
-    <section onClick={props.onCancel} className={style.modalBackdrop}>
+    <section className={style.modalBackdrop}>
       <div onClick={(e) => e.stopPropagation()} className={style.modalWrapper}>
         <div className="flex items-center p-4">
           <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
@@ -132,9 +131,15 @@ export default function ExerciseAddEdit(props: Props) {
           </fieldset>
 
           <div className="flex items-center pt-4 space-x-2">
-            <button onClick={() => onCancel(true)} type="button" className={style.formBtnCancel}>
-              Cancel
-            </button>
+            {editMode ? (
+              <button onClick={() => onCancel(true)} type="button" className={style.formBtnCancel}>
+                Cancel
+              </button>
+            ) : (
+              <button onClick={() => onCancel(false)} type="button" className={style.formBtnCancel}>
+                Cancel
+              </button>
+            )}
             <button className={style.formBtnSubmit}>{editMode ? 'Update' : 'Add'}</button>
           </div>
         </form>
