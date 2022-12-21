@@ -4,6 +4,7 @@ import style from './exercise-item.module.css';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import { Exercise } from '../definitions';
+import UtilService from '../../../common/services/utils-service';
 
 type Props = {
   exercise: Exercise;
@@ -22,13 +23,31 @@ export default function ExerciseItem(props: Props) {
   };
 
   const removeExercise = () => {
-    if (exerciseBoard.locked) return;
     setExerciseBoard({
       days: exerciseBoard.days.map((day) => ({
         day: day.day,
         exercises: day.exercises.filter((exercise) => exercise.id !== props.exercise.id),
       })),
       standby: exerciseBoard.standby.filter((exercise) => exercise.id !== props.exercise.id),
+      locked: exerciseBoard.locked,
+    });
+  };
+
+  const copyExercise = () => {
+    setExerciseBoard({
+      days: exerciseBoard.days.map((day) => ({
+        day: day.day,
+        exercises: day.exercises.flatMap((exercise) => {
+          if (exercise.id === props.exercise.id)
+            return [exercise, { ...exercise, id: UtilService.generateId() }];
+          return exercise;
+        }),
+      })),
+      standby: exerciseBoard.standby.flatMap((exercise) => {
+        if (exercise.id === props.exercise.id)
+          return [exercise, { ...exercise, id: UtilService.generateId() }];
+        return exercise;
+      }),
       locked: exerciseBoard.locked,
     });
   };
@@ -56,16 +75,19 @@ export default function ExerciseItem(props: Props) {
             </p>
             <p className="font-thin">{props.exercise.description ? `${props.exercise.description}` : ''}</p>
 
-            {!exerciseBoard.locked ? (
-              <div onClick={editExercise} className="absolute top-2 right-8 cursor-pointer">
-                <Image src="/icons/edit-icon.svg" alt="unlock" width={18} height={18} className="m-auto" />
-              </div>
-            ) : null}
-            {!exerciseBoard.locked ? (
-              <div onDoubleClick={removeExercise} className="absolute top-2 right-2 cursor-pointer">
-                <Image src="/icons/remove-icon.svg" alt="unlock" width={20} height={20} className="m-auto" />
-              </div>
-            ) : null}
+            {!exerciseBoard.locked && (
+              <>
+                <div onClick={copyExercise} className="absolute top-8 right-2 cursor-pointer">
+                  <Image src="/icons/copy-icon.svg" alt="unlock" width={18} height={18} />
+                </div>
+                <div onClick={editExercise} className="absolute top-2 right-8 cursor-pointer">
+                  <Image src="/icons/edit-icon.svg" alt="unlock" width={18} height={18} />
+                </div>
+                <div onDoubleClick={removeExercise} className="absolute top-2 right-2 cursor-pointer">
+                  <Image src="/icons/remove-icon.svg" alt="unlock" width={20} height={20} />
+                </div>
+              </>
+            )}
           </div>
         </div>
       )}
