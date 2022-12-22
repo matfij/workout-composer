@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import style from './exercise-list.module.css';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
@@ -6,6 +6,8 @@ import ExerciseItem from './exercise-item.component';
 import { STANDBY_ID } from '../definitions/constants';
 
 export default function ExerciseList() {
+  const [editDay, setEditDay] = useState(-1);
+  const [dayName, setDayName] = useState('');
   const exerciseBoard = useExerciseBoardContext();
   const setExerciseBoard = useSetExerciseBoardContext();
 
@@ -42,13 +44,44 @@ export default function ExerciseList() {
     });
   };
 
+  const startEditDay = (index: number, name: string) => {
+    setEditDay(index);
+    setDayName(name);
+  };
+
+  const submitEditDay = (event: KeyboardEvent) => {
+    if (event.key !== 'Enter') return;
+    console.log(dayName);
+    setExerciseBoard({
+      ...exerciseBoard,
+      days: exerciseBoard.days.map((day, index) => (index === editDay ? { ...day, day: dayName } : day)),
+    });
+    setEditDay(-1);
+  };
+
   return (
     <section>
       <DragDropContext onDragEnd={onDragEnd}>
         <section className={style.daysWrapper}>
-          {exerciseBoard.days.map((day) => (
+          {exerciseBoard.days.map((day, index) => (
             <div key={day.day} className={style.dayWrapper}>
-              <h3 className="text-center p-2 text-lg font-semibold text-neutral-100">{day.day}</h3>
+              {editDay === index ? (
+                <input
+                  type="text"
+                  value={dayName}
+                  onChange={(event) => setDayName(event.target.value)}
+                  onKeyDown={(event) => submitEditDay(event as unknown as KeyboardEvent)}
+                  className={style.dayNameInput}
+                />
+              ) : (
+                <h3
+                  onDoubleClick={() => startEditDay(index, day.day)}
+                  className="text-center p-2 text-lg font-semibold text-neutral-100"
+                >
+                  {day.day}
+                </h3>
+              )}
+
               <Droppable droppableId={day.day}>
                 {(provided: DroppableProvided) => (
                   <div {...provided.droppableProps} ref={provided.innerRef}>
