@@ -51,7 +51,6 @@ export default function ExerciseList() {
 
   const submitEditDay = (event: KeyboardEvent) => {
     if (event.key !== 'Enter') return;
-    console.log(dayName);
     setExerciseBoard({
       ...exerciseBoard,
       days: exerciseBoard.days.map((day, index) => (index === editDay ? { ...day, day: dayName } : day)),

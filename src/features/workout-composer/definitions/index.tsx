@@ -17,3 +17,7 @@ export interface ExerciseBoard {
   locked: boolean;
   editedExercise?: Exercise;
 }
+
+export interface DayFormFields {
+  name: string;
+}

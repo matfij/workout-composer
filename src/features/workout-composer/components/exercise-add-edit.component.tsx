@@ -7,6 +7,7 @@ import { Exercise, ExerciseBoard } from '../definitions';
 
 type Props = {
   exercise?: Exercise;
+  toggleDayAdd: () => void;
   onCancel: () => void;
 };
 
@@ -69,6 +70,11 @@ export default function ExerciseAddEdit(props: Props) {
     setExerciseBoard({ ...newBoardData, editedExercise: undefined });
   };
 
+  const toggleDayAdd = () => {
+    props.toggleDayAdd();
+    onCancel(false);
+  };
+
   const onCancel = (reset: boolean) => {
     if (reset) setExerciseBoard({ ...exerciseBoard, editedExercise: undefined });
     else props.onCancel();
@@ -77,8 +83,8 @@ export default function ExerciseAddEdit(props: Props) {
   return (
     <section className={style.modalBackdrop}>
       <div onClick={(e) => e.stopPropagation()} className={style.modalWrapper}>
-        <div className="flex items-center p-4">
-          <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <div className="flex items-center p-4 ml-4">
+          <h3 className="text-xl font-semibold text-gray-900">
             {editMode ? 'Edit exercise' : 'Add a new exercise'}
           </h3>
         </div>
@@ -141,6 +147,7 @@ export default function ExerciseAddEdit(props: Props) {
               </button>
             )}
             <button className={style.formBtnSubmit}>{editMode ? 'Update' : 'Add'}</button>
+            {!editMode && <button onClick={toggleDayAdd} className={style.formBtnSubmit}>Add new day</button>}
           </div>
         </form>
       </div>

@@ -7,11 +7,13 @@ import ExerciseAddEdit from './exercise-add-edit.component';
 import ToastService from '../../../common/services/toast-service';
 import LoadinIndicator from '../../../common/components/loading-indicator.component';
 import { useRouter } from 'next/router';
+import DayAdd from './day-add.component';
 
 export default function ActionBar() {
   const router = useRouter();
   const exerciseBoard = useExerciseBoardContext();
   const setExerciseBoard = useSetExerciseBoardContext();
+  const [displayDayAdd, setDisplayDayAdd] = useState(false);
   const [displayExerciseAdd, setDisplayExerciseAdd] = useState(false);
   const [isCopying, setIsCopying] = useState(false);
 
@@ -25,6 +27,10 @@ export default function ActionBar() {
 
   const toggleExerciseAdd = () => {
     setDisplayExerciseAdd(!displayExerciseAdd);
+  };
+
+  const toggleDayAdd = () => {
+    setDisplayDayAdd(!displayDayAdd);
   };
 
   const copyLink = async () => {
@@ -86,8 +92,11 @@ export default function ActionBar() {
       )}
 
       {(displayExerciseAdd || exerciseBoard.editedExercise) && (
-        <ExerciseAddEdit exercise={exerciseBoard.editedExercise} onCancel={toggleExerciseAdd} />
+        <ExerciseAddEdit exercise={exerciseBoard.editedExercise} toggleDayAdd={toggleDayAdd} onCancel={toggleExerciseAdd} />
       )}
+
+      {displayDayAdd && <DayAdd onCancel={toggleDayAdd}></DayAdd>}
+      
     </div>
   );
 }
