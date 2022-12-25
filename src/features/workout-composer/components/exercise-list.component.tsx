@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Image from 'next/image';
 import style from './exercise-list.module.css';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
@@ -45,15 +46,24 @@ export default function ExerciseList() {
   };
 
   const startEditDay = (index: number, name: string) => {
+    if (exerciseBoard.locked) return;
     setEditDay(index);
     setDayName(name);
   };
 
   const submitEditDay = (event: KeyboardEvent) => {
-    if (event.key !== 'Enter') return;
+    if (event.key !== 'Enter' || !dayName) return;
     setExerciseBoard({
       ...exerciseBoard,
       days: exerciseBoard.days.map((day, index) => (index === editDay ? { ...day, day: dayName } : day)),
+    });
+    setEditDay(-1);
+  };
+
+  const removeDay = (removeIndex: number) => {
+    setExerciseBoard({
+      ...exerciseBoard,
+      days: exerciseBoard.days.filter((_, index) => index !== removeIndex),
     });
     setEditDay(-1);
   };
@@ -65,13 +75,21 @@ export default function ExerciseList() {
           {exerciseBoard.days.map((day, index) => (
             <div key={day.day} className={style.dayWrapper}>
               {editDay === index ? (
-                <input
-                  type="text"
-                  value={dayName}
-                  onChange={(event) => setDayName(event.target.value)}
-                  onKeyDown={(event) => submitEditDay(event as unknown as KeyboardEvent)}
-                  className={style.dayNameInput}
-                />
+                <>
+                  <input
+                    type="text"
+                    value={dayName}
+                    onChange={(event) => setDayName(event.target.value)}
+                    onKeyDown={(event) => submitEditDay(event as unknown as KeyboardEvent)}
+                    className={style.dayNameInput + ' inline'}
+                  />
+                  <div
+                    onDoubleClick={() => removeDay(index)}
+                    className="absolute top-3 right-2 cursor-pointer"
+                  >
+                    <Image src="/icons/remove-icon.svg" alt="unlock" width={20} height={20} />
+                  </div>
+                </>
               ) : (
                 <h3
                   onDoubleClick={() => startEditDay(index, day.day)}
@@ -94,21 +112,27 @@ export default function ExerciseList() {
             </div>
           ))}
         </section>
-        <h3 className="text-center mb-2 text-lg font-semibold text-neutral-100 mt-4">Standby</h3>
-        <section className={style.standbyWrapper}>
-          <Droppable droppableId={STANDBY_ID} direction="horizontal">
-            {(provided: DroppableProvided) => (
-              <div {...provided.droppableProps} ref={provided.innerRef} className={style.standbyListWrapper}>
-                {exerciseBoard.standby.map((exercise, index) => (
-                  <div key={index} className={style.standbyItem}>
-                    <ExerciseItem exercise={exercise} index={index} />
-                  </div>
-                ))}
-                {provided.placeholder}
-              </div>
-            )}
-          </Droppable>
-        </section>
+        {!exerciseBoard.locked && <>
+          <h3 className="text-center mb-2 text-lg font-semibold text-neutral-100 mt-4">Standby</h3>
+          <section className={style.standbyWrapper}>
+            <Droppable droppableId={STANDBY_ID} direction="horizontal">
+              {(provided: DroppableProvided) => (
+                <div
+                  {...provided.droppableProps}
+                  ref={provided.innerRef}
+                  className={style.standbyListWrapper}
+                >
+                  {exerciseBoard.standby.map((exercise, index) => (
+                    <div key={index} className={style.standbyItem}>
+                      <ExerciseItem exercise={exercise} index={index} />
+                    </div>
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </section>
+        </>}
       </DragDropContext>
     </section>
   );

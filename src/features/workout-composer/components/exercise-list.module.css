@@ -8,6 +8,7 @@
 .dayWrapper {
     width: 100%;
     text-align: center;
+    position: relative;
 }
 
 .dayWrapper:nth-child(n) > div {

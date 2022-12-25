@@ -64,20 +64,26 @@ export default function ActionBar() {
         <Image src="/icons/home-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
         <p>Home</p>
       </button>
-      <button onClick={toggleExerciseAdd} className="w-24 bg">
-        <Image src="/icons/add-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
-        <p>Add</p>
-      </button>
-      {!isCopying ? (
-        <button onClick={copyLink} className="w-24">
-          <Image src="/icons/share-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
-          <p>Share</p>
+      {!exerciseBoard.locked && (
+        <button onClick={toggleExerciseAdd} className="w-24 bg">
+          <Image src="/icons/add-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+          <p>Add</p>
         </button>
-      ) : (
-        <button className="w-24">
-          <LoadinIndicator />
-          <p>Saving</p>
-        </button>
+      )}
+      {exerciseBoard.locked && (
+        <>
+          {!isCopying ? (
+            <button onClick={copyLink} className="w-24">
+              <Image src="/icons/share-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+              <p>Share</p>
+            </button>
+          ) : (
+            <button className="w-24">
+              <LoadinIndicator />
+              <p>Saving</p>
+            </button>
+          )}
+        </>
       )}
       {!exerciseBoard.locked ? (
         <button onClick={() => toggleBoardLock(true)} className="w-24">
@@ -92,11 +98,14 @@ export default function ActionBar() {
       )}
 
       {(displayExerciseAdd || exerciseBoard.editedExercise) && (
-        <ExerciseAddEdit exercise={exerciseBoard.editedExercise} toggleDayAdd={toggleDayAdd} onCancel={toggleExerciseAdd} />
+        <ExerciseAddEdit
+          exercise={exerciseBoard.editedExercise}
+          toggleDayAdd={toggleDayAdd}
+          onCancel={toggleExerciseAdd}
+        />
       )}
 
       {displayDayAdd && <DayAdd onCancel={toggleDayAdd}></DayAdd>}
-      
     </div>
   );
 }
