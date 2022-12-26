@@ -1,5 +1,6 @@
 import ActionBar from "../features/running-calculator/components/action-bar.component";
 import RunPeaceForm from "../features/running-calculator/components/run-pace-form.component";
+import RunTimeForm from "../features/running-calculator/components/run-time-form.component";
 
 export default function RunningCalculator() {
   return (
@@ -8,6 +9,7 @@ export default function RunningCalculator() {
         Running Calculator
       </h1>
       <RunPeaceForm />
+      <RunTimeForm />
       <ActionBar />
     </>
   );

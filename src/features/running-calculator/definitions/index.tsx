@@ -5,3 +5,9 @@ export interface RunPaceInput {
   timeMinutes: number;
   timeSeconds: number;
 }
+
+export interface RunTimeInput {
+  distanceKilometers: number;
+  distanceMeters: number;
+  speedKilometers: number;
+}

@@ -19,8 +19,9 @@ export default function RunPeaceForm() {
 
   return (
     <section className={style.sectionWrapper}>
+      <h3 className="mt-4 text-white text-xl text-center font-semibold">Run Pace</h3>
       <form className={style.formWrapper} onSubmit={handleSubmit(calculateRunPace)}>
-        <p className="mt-2 text-white text-lg font-semibold">Distance</p>
+        <p className="text-white text-lg font-semibold">Distance</p>
         <div className="flex gap-2">
           <fieldset className="w-1/2 flex items-center">
             <input
