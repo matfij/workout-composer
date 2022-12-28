@@ -25,6 +25,7 @@ export default function RunPeaceForm() {
         <h3 className="text-white text-xl font-semibold">Run Pace</h3>
         <Image
           onClick={() => setDisplayForm(!displayForm)}
+          className={displayForm ? `${style.revealIconClose} ${style.revealIcon}` : style.revealIcon}
           src="/icons/reveal-icon.svg"
           alt="reveal"
           width={30}

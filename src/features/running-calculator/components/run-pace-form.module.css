@@ -2,6 +2,15 @@
     @apply max-w-2xl w-11/12 m-auto mt-8 border-y;
 }
 
+.revealIcon {
+    transition: all 0.2s ease-in-out;
+    cursor: pointer;
+}
+
+.revealIconClose {
+    transform: rotate(-180deg);
+}
+
 .formWrapper {
     @apply px-4 py-2 pt-0;
 }
