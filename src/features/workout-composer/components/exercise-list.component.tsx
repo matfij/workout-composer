@@ -53,6 +53,10 @@ export default function ExerciseList() {
 
   const submitEditDay = (event: KeyboardEvent) => {
     if (event.key !== 'Enter' || !dayName) return;
+    editDayName();
+  };
+
+  const editDayName = () => {
     setExerciseBoard({
       ...exerciseBoard,
       days: exerciseBoard.days.map((day, index) => (index === editDay ? { ...day, day: dayName } : day)),
@@ -81,6 +85,7 @@ export default function ExerciseList() {
                     value={dayName}
                     onChange={(event) => setDayName(event.target.value)}
                     onKeyDown={(event) => submitEditDay(event as unknown as KeyboardEvent)}
+                    onBlur={editDayName}
                     className={style.dayNameInput + ' inline'}
                   />
                   <div

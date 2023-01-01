@@ -41,6 +41,8 @@ export default function RunTimeForm() {
                   type="number"
                   name="distanceKilometers"
                   id="distanceKilometers"
+                  min={0}
+                  max={1000}
                 />
                 <label className={style.formLabel} htmlFor="distanceKilometers">
                   km
@@ -53,6 +55,8 @@ export default function RunTimeForm() {
                   type="number"
                   name="distanceMeters"
                   id="distanceMeters"
+                  min={0}
+                  max={999}
                 />
                 <label className={style.formLabel} htmlFor="distanceMeters">
                   m
