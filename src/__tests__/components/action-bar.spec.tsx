@@ -1,18 +1,21 @@
 import React from 'react';
 import '@testing-library/jest-dom';
-import { render, screen } from '@testing-library/react';
+import { fireEvent, render, screen } from '@testing-library/react';
 import ActionBar from '../../features/workout-composer/components/action-bar.component';
+import { useRouter } from 'next/router';
 
-describe('Exercise Item', () => {
-  it('Renders correct icons in initial state', () => {
-    render(<ActionBar></ActionBar>);
+jest.mock('next/router', () => ({ useRouter: jest.fn() }));
 
-    const newIconContainer = screen.getByTestId('new-icon');
-    const shareIconContainer = screen.getByTestId('share-icon');
-    const lockIconContainer = screen.getByTestId('lock-icon');
+describe('Home button', () => {
+  it('Redirects to home directory', () => {
+    const mockRouter = { push: jest.fn() };
+    (useRouter as jest.Mock).mockReturnValue(mockRouter);
 
-    expect(newIconContainer.textContent).toContain('🤸🏻‍♂️');
-    expect(shareIconContainer.textContent).toContain('🔗');
-    expect(lockIconContainer.textContent).toContain('🔒');
+    render(<ActionBar />);
+
+    const homeButton = screen.getByTestId('home-button');
+    fireEvent.click(homeButton);
+
+    expect(mockRouter.push).toHaveBeenCalledWith('/');
   });
 });

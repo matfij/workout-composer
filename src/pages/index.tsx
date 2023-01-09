@@ -19,6 +19,7 @@ export default function Index() {
         <Link
           className="btnLink"
           href="/workout-composer"
+          data-testid="workout-composer-link"
         >
           Workout Composer
         </Link>
@@ -26,6 +27,7 @@ export default function Index() {
         <Link
           className="btnLink"
           href="/running-calculator"
+          data-testid="running-calculator-link"
         >
           Running Calculator
         </Link>
