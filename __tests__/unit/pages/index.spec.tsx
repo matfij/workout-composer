@@ -1,9 +1,10 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
-import Index from '../../pages';
+import Index from '../../../src/pages';
 
-describe('Links in Index (Home) Component', () => {
+
+describe('Index Page', () => {
   beforeEach(() => {
     render(<Index />);
   });
