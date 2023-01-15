@@ -78,13 +78,13 @@ export default function ExerciseItem(props: Props) {
             {!exerciseBoard.locked && (
               <>
                 <div onClick={copyExercise} className="absolute top-8 right-2 cursor-pointer">
-                  <Image src="/icons/copy-icon.svg" alt="unlock" width={18} height={18} />
+                  <Image src="/icons/copy-icon.svg" alt="copy" width={18} height={18} />
                 </div>
                 <div onClick={editExercise} className="absolute top-2 right-8 cursor-pointer">
-                  <Image src="/icons/edit-icon.svg" alt="unlock" width={18} height={18} />
+                  <Image src="/icons/edit-icon.svg" alt="edit" width={18} height={18} />
                 </div>
                 <div onDoubleClick={removeExercise} className="absolute top-2 right-2 cursor-pointer">
-                  <Image src="/icons/remove-icon.svg" alt="unlock" width={20} height={20} />
+                  <Image src="/icons/remove-icon.svg" alt="remove" width={20} height={20} />
                 </div>
               </>
             )}

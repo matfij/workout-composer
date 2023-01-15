@@ -34,7 +34,7 @@ a {
 
 ::-webkit-scrollbar {
   height: 0.4rem;
-  width: 0.rem;
+  width: 0.4rem;
   border: 1px solid white;
   background: var(--clr-light-500);
 }
