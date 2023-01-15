@@ -16,20 +16,16 @@ export default function Index() {
           <Image src="/brand.png" alt="" width={160} height={160} />
         </div>
 
-        <Link
-          className="btnLink"
-          href="/workout-composer"
-          data-testid="workout-composer-link"
-        >
+        <Link className="btnLink" href="/workout-composer" data-testid="workout-composer-link">
           Workout Composer
         </Link>
 
-        <Link
-          className="btnLink"
-          href="/running-calculator"
-          data-testid="running-calculator-link"
-        >
+        <Link className="btnLink" href="/running-calculator" data-testid="running-calculator-link">
           Running Calculator
+        </Link>
+
+        <Link className="btnLink" href="/smart-timer" data-testid="smart-timer-link">
+          Smart Timer
         </Link>
       </div>
     </>
