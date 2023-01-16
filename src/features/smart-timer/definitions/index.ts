@@ -1,3 +1,3 @@
-export interface CreateTimerInput {
+export interface Timer {
   intervals: { value: number }[];
 }

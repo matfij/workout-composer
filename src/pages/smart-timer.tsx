@@ -1,5 +1,6 @@
 import ActionBar from "../features/smart-timer/components/action-bar.component";
 import CreateTimerForm from "../features/smart-timer/components/create-timer-form.component";
+import TimerView from "../features/smart-timer/components/timer-view.component";
 
 export default function SmartTimer() {
   return (
@@ -9,6 +10,7 @@ export default function SmartTimer() {
           Smart Timer
         </h1>
         <CreateTimerForm />
+        <TimerView />
       </main>
       <ActionBar />
     </>
