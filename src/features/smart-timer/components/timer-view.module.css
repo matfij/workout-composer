@@ -11,6 +11,14 @@
     transform: rotate(-180deg);
 }
 
+.activeTime {
+    @apply text-yellow-500 text-2xl font-semibold;
+}
+
+.inactiveTime {
+    @apply text-white text-xl font-semibold;
+}
+
 .formBtn {
     @apply px-5 py-2.5 my-4;
     @apply mr-2 text-sm text-black font-medium text-center bg-yellow-500 hover:bg-yellow-600

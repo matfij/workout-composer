@@ -1,11 +1,14 @@
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
+import UtilService from '../../../common/services/utils-service';
 import { Timer } from '../definitions';
 import TimerStoreService from '../services/timer-store-service';
 import style from './timer-view.module.css';
 
 export default function TimerView() {
+  const timerTimeouts = [setTimeout(() => null, 0)];
   const [timer, setTimer] = useState<Timer>();
+  const [activeTimerIndex, setActiveTimerIndex] = useState(0);
   const [displayTimer, setDisplayTimer] = useState(true);
 
   useEffect(() => {
@@ -19,11 +22,26 @@ export default function TimerView() {
   };
 
   const startTimer = () => {
-    console.log('start...');
+    setActiveTimerIndex(0);
+    let delay = 0;
+    timer?.intervals.forEach((interval, index) => {
+      delay += +interval.value;
+      timerTimeouts.push(
+        setTimeout(() => {
+          setActiveTimerIndex(index + 1);
+        }, 1000 * delay),
+        setTimeout(() => {
+          UtilService.playSound('/sounds/timer-sound.mp3');
+        }, 1000 * delay - 2000)
+      );
+    });
   };
 
   const stopTimer = () => {
-    console.log('stop...');
+    setActiveTimerIndex(0);
+    timerTimeouts.forEach((timerTimeout) => {
+      clearInterval(timerTimeout);
+    });
   };
 
   return (
@@ -53,7 +71,9 @@ export default function TimerView() {
                     height={20}
                   />
                 )}
-                <p className="text-white text-xl font-semibold">{interval.value} s</p>
+                <p className={index === activeTimerIndex ? `${style.activeTime}` : `${style.inactiveTime}`}>
+                  {interval.value} s
+                </p>
               </div>
             ))}
           </div>

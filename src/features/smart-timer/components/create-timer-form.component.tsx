@@ -6,7 +6,7 @@ import TimerStoreService from '../services/timer-store-service';
 import style from './create-timer-form.module.css';
 
 export default function CreateTimerForm() {
-  const [displayForm, setDisplayForm] = useState(true);
+  const [displayForm, setDisplayForm] = useState(false);
   const { control, register, handleSubmit } = useForm<Timer>({
     defaultValues: {
       intervals: [{ value: 0 }],
