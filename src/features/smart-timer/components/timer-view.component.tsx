@@ -6,10 +6,10 @@ import TimerStoreService from '../services/timer-store-service';
 import style from './timer-view.module.css';
 
 export default function TimerView() {
-  const timerTimeouts = [setTimeout(() => null, 0)];
+  const timerTimeouts: NodeJS.Timeout[] = [];
   const [timer, setTimer] = useState<Timer>();
   const [activeTimerIndex, setActiveTimerIndex] = useState(0);
-  const [displayTimer, setDisplayTimer] = useState(true);
+  const [displayTimer, setDisplayTimer] = useState(false);
 
   useEffect(() => {
     getTimer();
@@ -19,9 +19,11 @@ export default function TimerView() {
     const savedTimer = TimerStoreService.getTimer();
     if (!savedTimer) return;
     setTimer(savedTimer);
+    setDisplayTimer(true);
   };
 
   const startTimer = () => {
+    if (timerTimeouts.length > 0) return;
     setActiveTimerIndex(0);
     let delay = 0;
     timer?.intervals.forEach((interval, index) => {
@@ -29,7 +31,9 @@ export default function TimerView() {
       timerTimeouts.push(
         setTimeout(() => {
           setActiveTimerIndex(index + 1);
-        }, 1000 * delay),
+        }, 1000 * delay)
+      );
+      timerTimeouts.push(
         setTimeout(() => {
           UtilService.playSound('/sounds/timer-sound.mp3');
         }, 1000 * delay - 2000)
@@ -42,6 +46,7 @@ export default function TimerView() {
     timerTimeouts.forEach((timerTimeout) => {
       clearInterval(timerTimeout);
     });
+    timerTimeouts.length = 0;
   };
 
   return (
