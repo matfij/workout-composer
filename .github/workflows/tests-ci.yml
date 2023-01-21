@@ -11,7 +11,7 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - uses: borales/actions-yarn@3.0.0
-      - names: Use Node.js ${{ matrix.node-version }}
+      - uses: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
         with:
           node-version: ${{ matrix.node-version }}
