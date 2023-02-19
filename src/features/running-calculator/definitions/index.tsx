@@ -10,4 +10,6 @@ export interface RunTimeInput {
   distanceKilometers: number;
   distanceMeters: number;
   speedKilometers: number;
+  paceMinutes: number;
+  paceSeconds: number;
 }

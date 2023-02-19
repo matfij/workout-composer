@@ -1,7 +1,6 @@
 import { RunPaceInput, RunTimeInput } from '../definitions';
 
 export default class RunningCalculatorService {
-
   static calculateRunPace(input: RunPaceInput): number {
     const totalDistanceKilometers = 0 + +input.distanceKilometers + +input.distanceMeters / 1000;
     const targetTimeMinutes = 0 + 60 * +input.timeHours + +input.timeMinutes + +input.timeSeconds / 60;
@@ -23,10 +22,19 @@ export default class RunningCalculatorService {
   }
 
   static calculateRunTimeInHours(input: RunTimeInput): number {
-    const totalDistanceKilometers = 0 + +input.distanceKilometers + +input.distanceMeters / 1000;
-    const targetSpeedKilometers = 0 + +input.speedKilometers;
-    if (totalDistanceKilometers === 0 || targetSpeedKilometers === 0) return 0;
-    return totalDistanceKilometers / targetSpeedKilometers;
+    console.log(input)
+    if (input.speedKilometers) {
+      const totalDistanceKilometers = 0 + +input.distanceKilometers + +input.distanceMeters / 1000;
+      const targetSpeedKilometers = 0 + +input.speedKilometers;
+      if (totalDistanceKilometers === 0 || targetSpeedKilometers === 0) return 0;
+      return totalDistanceKilometers / targetSpeedKilometers;
+    } else if (input.paceMinutes || input.paceSeconds) {
+      const totalDistanceKilometers = 0 + +input.distanceKilometers + +input.distanceMeters / 1000;
+      const targetPaceMinutes = 0 + +input.paceMinutes + +input.paceSeconds / 60;
+      return targetPaceMinutes * totalDistanceKilometers / 60;
+    } else {
+      return 0;
+    }
   }
 
   static formatRunTime(timeInHours: number): string {
