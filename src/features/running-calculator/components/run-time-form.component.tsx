@@ -81,6 +81,39 @@ export default function RunTimeForm() {
                 </label>
               </fieldset>
             </div>
+            <p className="mt-2 text-white text-lg font-semibold">
+              or <br /> Pace per km
+            </p>
+            <div className="flex gap-2">
+              <fieldset className="w-1/2 flex items-center">
+                <input
+                  {...register('paceMinutes', { min: 0, max: 999 })}
+                  className={style.formInput}
+                  type="number"
+                  name="paceMinutes"
+                  id="paceMinutes"
+                  min={0}
+                  max={999}
+                />
+                <label className={style.formLabel} htmlFor="paceMinutes">
+                  min
+                </label>
+              </fieldset>
+              <fieldset className="w-1/2 flex items-center">
+                <input
+                  {...register('paceSeconds', { min: 0, max: 59 })}
+                  className={style.formInput}
+                  type="number"
+                  name="paceSeconds"
+                  id="paceSeconds"
+                  min={0}
+                  max={59}
+                />
+                <label className={style.formLabel} htmlFor="paceSeconds">
+                  s
+                </label>
+              </fieldset>
+            </div>
 
             <button className={style.formBtnSubmit}>Calculate</button>
           </form>
