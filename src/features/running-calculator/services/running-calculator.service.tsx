@@ -22,7 +22,6 @@ export default class RunningCalculatorService {
   }
 
   static calculateRunTimeInHours(input: RunTimeInput): number {
-    console.log(input)
     if (input.speedKilometers) {
       const totalDistanceKilometers = 0 + +input.distanceKilometers + +input.distanceMeters / 1000;
       const targetSpeedKilometers = 0 + +input.speedKilometers;

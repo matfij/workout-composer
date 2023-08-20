@@ -8,6 +8,7 @@ import ToastService from '../../../common/services/toast-service';
 import LoadinIndicator from '../../../common/components/loading-indicator.component';
 import { useRouter } from 'next/router';
 import DayAdd from './day-add.component';
+import { StorageService } from '../../../common/services/storage-service';
 
 export default function ActionBar() {
   const router = useRouter();
@@ -51,6 +52,8 @@ export default function ActionBar() {
       return;
     }
     const workoutId = await res.json();
+
+    StorageService.write('workoutData', exerciseBoard);
 
     window.history.pushState({}, document.title, '/');
     navigator.clipboard.writeText(`${window.location.href}workout-composer?id=${workoutId}`);

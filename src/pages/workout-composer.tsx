@@ -7,6 +7,7 @@ import ExerciseList from '../features/workout-composer/components/exercise-list.
 import { useSetExerciseBoardContext } from '../features/workout-composer/contexts/exercise-board.context';
 import { ExerciseBoard } from '../features/workout-composer/definitions';
 import FirebaseService from '../features/workout-composer/services/firebase-service';
+import { StorageService } from '../common/services/storage-service';
 
 type Props = {
   exerciseBoardRaw?: string;
@@ -20,29 +21,47 @@ export default function WorkoutComposer(props: Props) {
     if (props.exerciseBoardRaw) {
       try {
         const exerciseBoardParsed = JSON.parse(props.exerciseBoardRaw) as Partial<ExerciseBoard>;
-        if (exerciseBoardParsed.days && exerciseBoardParsed.standby) {
-          updateBoardData({
-            days: exerciseBoardParsed.days.map((day) => ({
-              day: day.day,
-              exercises: day.exercises.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
-            })),
-            standby: exerciseBoardParsed.standby.map((exercise) => ({
-              ...exercise,
-              id: UtilService.generateId(),
-            })),
-            locked: exerciseBoardParsed.locked || false,
-          });
+        if (!exerciseBoardParsed.days || !exerciseBoardParsed.standby) {
+          return;
         }
+        updateBoardData({
+          days: exerciseBoardParsed.days.map((day) => ({
+            day: day.day,
+            exercises: day.exercises.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
+          })),
+          standby: exerciseBoardParsed.standby.map((exercise) => ({
+            ...exercise,
+            id: UtilService.generateId(),
+          })),
+          locked: exerciseBoardParsed.locked || false,
+        });
+        StorageService.write('workoutData', exerciseBoardParsed);
       } catch (e) {}
+      return;
     }
-  }, [props.exerciseBoardRaw]);
+    const localWorkoutData = StorageService.read('workoutData');
+    if (!localWorkoutData || !localWorkoutData.days || !localWorkoutData.standby) {
+      return;
+    }
+    updateBoardData({
+      days: localWorkoutData.days.map((day) => ({
+        day: day.day,
+        exercises: day.exercises.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
+      })),
+      standby: localWorkoutData.standby.map((exercise) => ({
+        ...exercise,
+        id: UtilService.generateId(),
+      })),
+      locked: localWorkoutData.locked || false,
+    });
+  }, []);
 
   useEffect(() => {
     setwinReady(true);
   }, []);
   return (
     <>
-      <main className='mainWrapper'>
+      <main className="mainWrapper">
         <h1 className="w-full text-center p-3 mt-8 sm:p-6 text-2xl sm:text-3xl text-yellow-300">
           Workout Composer
         </h1>
