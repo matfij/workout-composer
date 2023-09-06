@@ -1,6 +1,10 @@
-import ActionBar from '../common/components/action-bar.component';
+import { useState } from 'react';
+import ActionBar from '../features/darts-scoreboard/components/action-bar.component';
+import AddUserForm from '../features/darts-scoreboard/components/add-user-form.component';
 
 export default function DartsScoreboard() {
+  const [showAddUserForm, setShowAddUserForm] = useState(false);
+
   return (
     <>
       <main className="mainWrapper">
@@ -8,7 +12,8 @@ export default function DartsScoreboard() {
           Darts Scoreboard
         </h1>
       </main>
-      <ActionBar />
+      {showAddUserForm && <AddUserForm onCancel={() => setShowAddUserForm(false)} />}
+      <ActionBar showAddUserForm={() => setShowAddUserForm(true)} />
     </>
   );
 }
