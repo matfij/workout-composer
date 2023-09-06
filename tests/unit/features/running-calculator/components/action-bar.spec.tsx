@@ -1,7 +1,7 @@
 import React from 'react';
 import '@testing-library/jest-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
-import ActionBar from '../../../../../src/features/running-calculator/components/action-bar.component';
+import ActionBar from '../../../../../src/common/components/action-bar.component';
 import { useRouter } from 'next/router';
 
 jest.mock('next/router', () => ({ useRouter: jest.fn() }));

@@ -27,6 +27,10 @@ export default function Index() {
         <Link className="btnLink" href="/smart-timer" data-testid="smart-timer-link">
           Smart Timer
         </Link>
+
+        <Link className="btnLink" href="/darts-scoreboard" data-testid="darts-scoreboard-link">
+          Darts Scoreboard
+        </Link>
       </div>
     </>
   );
