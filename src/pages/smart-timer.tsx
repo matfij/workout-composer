@@ -1,6 +1,6 @@
-import ActionBar from "../features/smart-timer/components/action-bar.component";
-import CreateTimerForm from "../features/smart-timer/components/create-timer-form.component";
-import TimerView from "../features/smart-timer/components/timer-view.component";
+import ActionBar from '../common/components/action-bar.component';
+import CreateTimerForm from '../features/smart-timer/components/create-timer-form.component';
+import TimerView from '../features/smart-timer/components/timer-view.component';
 
 export default function SmartTimer() {
   return (

@@ -1,4 +1,4 @@
-import ActionBar from '../features/running-calculator/components/action-bar.component';
+import ActionBar from '../common/components/action-bar.component';
 import RunPeaceForm from '../features/running-calculator/components/run-pace-form.component';
 import RunTimeForm from '../features/running-calculator/components/run-time-form.component';
 

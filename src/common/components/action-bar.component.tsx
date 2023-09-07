@@ -14,7 +14,7 @@ export default function ActionBar() {
     <>
       <div className={style.actionBarWrapper}>
         <button onClick={navigateHome} className="w-24 bg" data-testid="home-button">
-          <Image src="/icons/home-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+          <Image src="/icons/home-icon.svg" alt="home" width={30} height={30} className="m-auto" />
           <p>Home</p>
         </button>
       </div>
