@@ -11,3 +11,9 @@ export interface DartsUser {
 export interface DartsScoreboard {
   users: DartsUser[];
 }
+
+export interface UpdateScoresFields {
+  throw1: number;
+  throw2: number;
+  throw3: number;
+}

@@ -29,6 +29,6 @@ export const useDartsScoreboardContext = (): DartsScoreboard => {
   return useContext(DartsScoreboardContext);
 };
 
-export const useSetDartsScoreboardContenxt = () => {
+export const useSetDartsScoreboardContext = () => {
   return useContext(SetDartsScoreboardContext);
 };

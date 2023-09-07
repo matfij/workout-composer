@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form';
 import { AddUserFormFields, DartsUser } from '../definitions';
 import {
   useDartsScoreboardContext,
-  useSetDartsScoreboardContenxt,
+  useSetDartsScoreboardContext,
 } from '../contexts/darts-scoreboard.context';
 import { STARTING_POINTS } from '../definitions/constants';
 
@@ -19,7 +19,7 @@ export default function AddUserForm(props: Props) {
     formState: { errors },
   } = useForm<AddUserFormFields>();
   const dartsScoreboard = useDartsScoreboardContext();
-  const updateDartsScoreboard = useSetDartsScoreboardContenxt();
+  const updateDartsScoreboard = useSetDartsScoreboardContext();
 
   const addUser = (data: AddUserFormFields) => {
     const newUser: DartsUser = {
@@ -28,7 +28,6 @@ export default function AddUserForm(props: Props) {
       throws: [],
     };
     updateDartsScoreboard({ users: [...dartsScoreboard.users, newUser] });
-    console.log(dartsScoreboard)
     props.onCancel();
   };
 

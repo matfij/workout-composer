@@ -5,11 +5,11 @@
 }
 
 .modalWrapper {
-    @apply p-4 w-full max-w-4xl m-auto bg-white opacity-90;
+    @apply p-4 w-full max-w-2xl m-auto bg-white opacity-90;
 }
 
 .formWrapper {
-    @apply bg-white px-8 pb-2 mb-4;
+    @apply w-full bg-white px-8 pb-2;
 }
 
 .fromLabel {

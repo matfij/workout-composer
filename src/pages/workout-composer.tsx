@@ -1,6 +1,5 @@
 import { BaseContext } from 'next/dist/shared/lib/utils';
 import { useState, useEffect } from 'react';
-import { ToastContainer } from 'react-toastify';
 import UtilService from '../common/services/utils-service';
 import ActionBar from '../features/workout-composer/components/action-bar.component';
 import ExerciseList from '../features/workout-composer/components/exercise-list.component';
@@ -60,18 +59,15 @@ export default function WorkoutComposer(props: Props) {
     setwinReady(true);
   }, []);
   return (
-    <>
-      <main className="mainWrapper">
-        <h1 className="w-full text-center p-3 mt-8 sm:p-6 text-2xl sm:text-3xl text-yellow-300">
-          Workout Composer
-        </h1>
-        <div className="flex flex-col">
-          {winReady ? <ExerciseList /> : null}
-          <ActionBar />
-        </div>
-      </main>
-      <ToastContainer />
-    </>
+    <main className="mainWrapper">
+      <h1 className="w-full text-center p-3 mt-8 sm:p-6 text-2xl sm:text-3xl text-yellow-300">
+        Workout Composer
+      </h1>
+      <div className="flex flex-col">
+        {winReady ? <ExerciseList /> : null}
+        <ActionBar />
+      </div>
+    </main>
   );
 }
 
