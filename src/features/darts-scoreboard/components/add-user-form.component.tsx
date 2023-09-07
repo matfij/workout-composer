@@ -1,7 +1,12 @@
 import React from 'react';
 import style from './add-user-form.module.css';
 import { useForm } from 'react-hook-form';
-import { AddUserFormFields } from '../definitions';
+import { AddUserFormFields, DartsUser } from '../definitions';
+import {
+  useDartsScoreboardContext,
+  useSetDartsScoreboardContenxt,
+} from '../contexts/darts-scoreboard.context';
+import { STARTING_POINTS } from '../definitions/constants';
 
 type Props = {
   onCancel: () => void;
@@ -13,9 +18,17 @@ export default function AddUserForm(props: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm<AddUserFormFields>();
+  const dartsScoreboard = useDartsScoreboardContext();
+  const updateDartsScoreboard = useSetDartsScoreboardContenxt();
 
   const addUser = (data: AddUserFormFields) => {
-    console.log(data);
+    const newUser: DartsUser = {
+      name: data.name,
+      scores: STARTING_POINTS,
+      throws: [],
+    };
+    updateDartsScoreboard({ users: [...dartsScoreboard.users, newUser] });
+    console.log(dartsScoreboard)
     props.onCancel();
   };
 
