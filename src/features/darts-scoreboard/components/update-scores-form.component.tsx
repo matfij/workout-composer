@@ -6,6 +6,7 @@ import {
   useSetDartsScoreboardContext,
 } from '../contexts/darts-scoreboard.context';
 import ToastService from '../../../common/services/toast-service';
+import { ALLOWED_SCORES } from '../definitions/constants';
 
 type Props = {
   user: DartsUser;
@@ -16,6 +17,11 @@ export default function UpdateScoresForm(props: Props) {
   const { register, handleSubmit } = useForm<UpdateScoresFields>();
   const board = useDartsScoreboardContext();
   const updateBoard = useSetDartsScoreboardContext();
+
+  const validateScore = (score: number): boolean => {
+    console.log(ALLOWED_SCORES.includes(+score));
+    return ALLOWED_SCORES.includes(+score);
+  };
 
   const updateScores = (data: UpdateScoresFields) => {
     data.throw1 = +data.throw1 ?? 0;
@@ -60,19 +66,19 @@ export default function UpdateScoresForm(props: Props) {
           <form onSubmit={handleSubmit(updateScores)} className={style.formWrapper + ' mb-0'}>
             <fieldset className="mb-4 flex gap-1">
               <input
-                {...register('throw1', { min: 0, max: 60 })}
+                {...register('throw1', { validate: (x) => validateScore(x) })}
                 className={style.formInput}
                 id="throw1"
                 type="number"
               />
               <input
-                {...register('throw2', { min: 0, max: 60 })}
+                {...register('throw2', { validate: (x) => validateScore(x) })}
                 className={style.formInput}
                 id="throw2"
                 type="number"
               />
               <input
-                {...register('throw3', { min: 0, max: 60 })}
+                {...register('throw3', { validate: (x) => validateScore(x) })}
                 className={style.formInput}
                 id="throw3"
                 type="number"

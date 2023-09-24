@@ -1,5 +1,6 @@
 export interface AddUserFormFields {
   name: string;
+  scores: number;
 }
 
 export interface DartsUser {

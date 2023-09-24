@@ -6,7 +6,7 @@ import {
   useDartsScoreboardContext,
   useSetDartsScoreboardContext,
 } from '../contexts/darts-scoreboard.context';
-import { STARTING_POINTS } from '../definitions/constants';
+import { DEFAULT_STARTING_SCORES } from '../definitions/constants';
 
 type Props = {
   onCancel: () => void;
@@ -24,7 +24,7 @@ export default function AddUserForm(props: Props) {
   const addUser = (data: AddUserFormFields) => {
     const newUser: DartsUser = {
       name: data.name,
-      scores: STARTING_POINTS,
+      scores: data.scores,
       throws: [],
     };
     updateDartsScoreboard({ users: [...dartsScoreboard.users, newUser] });
@@ -49,6 +49,18 @@ export default function AddUserForm(props: Props) {
               type="text"
             />
             {errors.name && <span className="px-2 text-sm text-red-600">Name required</span>}
+          </fieldset>
+          <fieldset className="mb-4">
+            <label htmlFor="scores" className={style.formLabel}>
+              Scores
+            </label>
+            <input
+              {...register('scores', { required: true })}
+              defaultValue={DEFAULT_STARTING_SCORES}
+              className={style.formInput}
+              type="number"
+              id="scores"
+            />
           </fieldset>
           <div className="flex items-center pt-4 space-x-2">
             <button type="submit" className={style.formBtnSubmit}>

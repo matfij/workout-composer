@@ -13,7 +13,7 @@ export default function Index() {
 
       <div className="max-w-xl w-11/12 m-auto">
         <div className="w-40 m-auto my-12">
-          <Image src="/brand.png" alt="" width={160} height={160} />
+          <Image src="/brand.png" alt="" width={160} height={160} priority={false} />
         </div>
 
         <Link className="btnLink" href="/workout-composer" data-testid="workout-composer-link">
