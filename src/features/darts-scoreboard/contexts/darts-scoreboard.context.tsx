@@ -1,7 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { createContext } from 'react';
 import { DartsScoreboard } from '../definitions';
-import { loadDartsScoreboardData, saveDartsScoreboardData } from './darts-scoreboard-persist';
+import { saveDartsScoreboardData } from './darts-scoreboard-persist';
 
 const initialDartsScoreboard: DartsScoreboard = {
   users: [],
