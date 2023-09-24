@@ -20,7 +20,7 @@ export default function UserCard(props: Props) {
 
   return (
     <>
-      <section className={style.cardWrapper}>
+      <div className={style.cardWrapper}>
         <div className="mr-6">
           <h3 className="text-white text-xl font-semibold">
             {props.user.scores === 0 && '🏆'} {props.user.name}
@@ -33,7 +33,7 @@ export default function UserCard(props: Props) {
         <button onClick={() => setDisplayUpdateForm(true)} className="absolute top-2 right-2 cursor-pointer">
           <Image src="/icons/dart.svg" className="fill-white" alt="add" width={18} height={18} />
         </button>
-      </section>
+      </div>
       {displayUpdateForm && (
         <UpdateScoresForm user={props.user} onCancel={() => setDisplayUpdateForm(false)} />
       )}

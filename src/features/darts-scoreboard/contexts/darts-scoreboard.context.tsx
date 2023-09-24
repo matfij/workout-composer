@@ -1,6 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { createContext } from 'react';
 import { DartsScoreboard } from '../definitions';
+import { loadDartsScoreboardData, saveDartsScoreboardData } from './darts-scoreboard-persist';
 
 const initialDartsScoreboard: DartsScoreboard = {
   users: [],
@@ -14,6 +15,7 @@ export const DartsScoreboardProvider = ({ children }: { children: React.ReactNod
 
   const updateDartsScoreboard = (data: DartsScoreboard) => {
     setDartsScoreboard(data);
+    saveDartsScoreboardData(data);
   };
 
   return (
