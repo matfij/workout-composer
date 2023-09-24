@@ -5,6 +5,7 @@ import { useRouter } from 'next/router';
 
 type Props = {
   showAddUserForm: () => void;
+  showResetScoresDialog: () => void;
 };
 
 export default function ActionBar(props: Props) {
@@ -24,6 +25,14 @@ export default function ActionBar(props: Props) {
         <button onClick={props.showAddUserForm} className="w-24 bg" data-testid="show-add-user-form-button">
           <Image src="/icons/add-user.svg" alt="add-user" width={28} height={28} className="m-auto" />
           <p>Add user</p>
+        </button>
+        <button
+          onClick={props.showResetScoresDialog}
+          className="w-24 bg"
+          data-testid="show-reset-scores-dialog-button"
+        >
+          <Image src="/icons/erase-icon.svg" alt="add-user" width={28} height={28} className="m-auto" />
+          <p>Reset</p>
         </button>
       </nav>
     </>

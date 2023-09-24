@@ -7,9 +7,11 @@ import {
 } from '../features/darts-scoreboard/contexts/darts-scoreboard.context';
 import UserCard from '../features/darts-scoreboard/components/user-card.component';
 import { loadDartsScoreboardData } from '../features/darts-scoreboard/contexts/darts-scoreboard-persist';
+import ConfirmDialog from '../common/components/confirm-dialog.component';
 
 export default function DartsScoreboard() {
   const [showAddUserForm, setShowAddUserForm] = useState(false);
+  const [showResetScoresDialog, setShowResetScoresDialog] = useState(false);
   const dartsScoreboard = useDartsScoreboardContext();
   const setDartsScoreboard = useSetDartsScoreboardContext();
 
@@ -20,6 +22,13 @@ export default function DartsScoreboard() {
     }
     setDartsScoreboard(savedData);
   }, []);
+
+  const handleResetScoresDialogAction = (confirmReset: boolean) => {
+    if (confirmReset) {
+      setDartsScoreboard({ users: [] });
+    }
+    setShowResetScoresDialog(false);
+  };
 
   return (
     <>
@@ -34,7 +43,16 @@ export default function DartsScoreboard() {
         </div>
       </main>
       {showAddUserForm && <AddUserForm onCancel={() => setShowAddUserForm(false)} />}
-      <ActionBar showAddUserForm={() => setShowAddUserForm(true)} />
+      {showResetScoresDialog && (
+        <ConfirmDialog
+          onAction={(confirmReset) => handleResetScoresDialogAction(confirmReset)}
+          text={'Do you want to reset the score board data?'}
+        />
+      )}
+      <ActionBar
+        showAddUserForm={() => setShowAddUserForm(true)}
+        showResetScoresDialog={() => setShowResetScoresDialog(true)}
+      />
     </>
   );
 }
