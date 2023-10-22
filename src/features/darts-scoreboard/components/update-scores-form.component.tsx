@@ -7,6 +7,7 @@ import {
 } from '../contexts/darts-scoreboard.context';
 import ToastService from '../../../common/services/toast-service';
 import { ALLOWED_SCORES } from '../definitions/constants';
+import UtilService from '../../../common/services/utils-service';
 
 type Props = {
   user: DartsUser;
@@ -39,6 +40,7 @@ export default function UpdateScoresForm(props: Props) {
       newScores -= data.throw3;
     }
     if (newScores === 0) {
+      UtilService.playSound('/sounds/dart-win-sound.mp3');
       ToastService.showInfo(`${props.user.name} has won!`);
     }
     updateBoard({
