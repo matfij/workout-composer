@@ -40,7 +40,7 @@ export default function ActionBar() {
 
     const res = await fetch('/api/workout-save', {
       method: 'POST',
-      body: JSON.stringify(JSON.stringify(exerciseBoard)),
+      body: JSON.stringify(exerciseBoard),
       headers: {
         'Content-Type': 'application/json',
       },

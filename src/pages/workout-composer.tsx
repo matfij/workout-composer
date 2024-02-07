@@ -5,38 +5,31 @@ import ActionBar from '../features/workout-composer/components/action-bar.compon
 import ExerciseList from '../features/workout-composer/components/exercise-list.component';
 import { useSetExerciseBoardContext } from '../features/workout-composer/contexts/exercise-board.context';
 import { ExerciseBoard } from '../features/workout-composer/definitions';
-import FirebaseService from '../features/workout-composer/services/firebase-service';
+import { PersistenceService } from '../features/workout-composer/services/persistence-service';
 import { StorageService } from '../common/services/storage-service';
 
 type Props = {
-  exerciseBoardRaw?: string;
+  exerciseBoard: ExerciseBoard | undefined;
 };
 
-export default function WorkoutComposer(props: Props) {
+export default function WorkoutComposer({ exerciseBoard }: Props) {
   const updateBoardData = useSetExerciseBoardContext();
   const [winReady, setwinReady] = useState(false);
 
   useEffect(() => {
-    if (props.exerciseBoardRaw) {
-      try {
-        const exerciseBoardParsed = JSON.parse(props.exerciseBoardRaw) as Partial<ExerciseBoard>;
-        if (!exerciseBoardParsed.days || !exerciseBoardParsed.standby) {
-          return;
-        }
-        updateBoardData({
-          days: exerciseBoardParsed.days.map((day) => ({
-            day: day.day,
-            exercises: day.exercises.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
-          })),
-          standby: exerciseBoardParsed.standby.map((exercise) => ({
-            ...exercise,
-            id: UtilService.generateId(),
-          })),
-          locked: exerciseBoardParsed.locked || false,
-        });
-        StorageService.write('workoutData', exerciseBoardParsed);
-      } catch (e) {}
-      return;
+    if (exerciseBoard && exerciseBoard.days && exerciseBoard.standby) {
+      updateBoardData({
+        days: exerciseBoard.days.map((day) => ({
+          day: day.day,
+          exercises: day.exercises.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
+        })),
+        standby: exerciseBoard.standby.map((exercise) => ({
+          ...exercise,
+          id: UtilService.generateId(),
+        })),
+        locked: exerciseBoard.locked || false,
+      });
+      StorageService.write('workoutData', exerciseBoard);
     }
     const localWorkoutData = StorageService.read('workoutData');
     if (!localWorkoutData || !localWorkoutData.days || !localWorkoutData.standby) {
@@ -58,6 +51,7 @@ export default function WorkoutComposer(props: Props) {
   useEffect(() => {
     setwinReady(true);
   }, []);
+
   return (
     <main className="mainWrapper">
       <h1 className="w-full text-center p-3 mt-8 sm:p-6 text-2xl sm:text-3xl text-yellow-300">
@@ -72,19 +66,15 @@ export default function WorkoutComposer(props: Props) {
 }
 
 export const getServerSideProps = async (context: BaseContext) => {
-  const firebaseService = FirebaseService.getInstance();
-  firebaseService.initializeFirebaseApp();
-
   const id = context.query.id;
-  let data = '';
-  if (id) {
-    data = (await firebaseService.getWorkoutData(id)) ?? '';
+  if (!id) {
+    return {
+      props: { exerciseBoard: null },
+    };
   }
-
-  const props: Props = {
-    exerciseBoardRaw: data,
-  };
+  const exerciseBoard = await PersistenceService.getWorkoutData(id);
+  console.log('exerciseBoard', exerciseBoard)
   return {
-    props: props,
+    props: { exerciseBoard },
   };
 };
