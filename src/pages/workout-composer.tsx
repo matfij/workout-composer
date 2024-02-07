@@ -73,7 +73,6 @@ export const getServerSideProps = async (context: BaseContext) => {
     };
   }
   const exerciseBoard = await PersistenceService.getWorkoutData(id);
-  console.log('exerciseBoard', exerciseBoard)
   return {
     props: { exerciseBoard },
   };
