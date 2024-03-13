@@ -1,43 +1,58 @@
 import { useEffect, useState } from 'react';
 import ActionBar from '../features/darts-scoreboard/components/action-bar.component';
 import AddUserForm from '../features/darts-scoreboard/components/add-user-form.component';
-import {
-  useDartsScoreboardContext,
-  useSetDartsScoreboardContext,
-} from '../features/darts-scoreboard/contexts/darts-scoreboard.context';
 import UserCard from '../features/darts-scoreboard/components/user-card.component';
-import { loadDartsScoreboardData } from '../features/darts-scoreboard/contexts/darts-scoreboard-persist';
+import {
+  loadDartsScoreboardData,
+  saveDartsScoreboardData,
+} from '../features/darts-scoreboard/contexts/darts-scoreboard-persist';
 import ConfirmDialog from '../common/components/confirm-dialog.component';
+import { DartsBoard } from '../features/darts-scoreboard/definitions';
+import { DartsContext } from '../features/darts-scoreboard/contexts/darts-scoreboard.context';
 
 export default function DartsScoreboard() {
+  const [board, setBoard] = useState<DartsBoard>({ users: [] });
   const [showAddUserForm, setShowAddUserForm] = useState(false);
   const [showResetScoresDialog, setShowResetScoresDialog] = useState(false);
-  const dartsScoreboard = useDartsScoreboardContext();
-  const setDartsScoreboard = useSetDartsScoreboardContext();
+  const [showClearScoresDialog, setShowClearScoresDialog] = useState(false);
 
   useEffect(() => {
     const savedData = loadDartsScoreboardData();
     if (!savedData) {
       return;
     }
-    setDartsScoreboard(savedData);
+    handleSetBoard(savedData);
   }, []);
 
   const handleResetScoresDialogAction = (confirmReset: boolean) => {
-    if (confirmReset) {
-      setDartsScoreboard({ users: [] });
+    if (confirmReset && board?.users) {
+      const newUsers = board.users.map((u) => ({ ...u, scores: u.startingScores }));
+      handleSetBoard({ users: newUsers });
     }
     setShowResetScoresDialog(false);
   };
 
+  const handleClearScoresDialogAction = (confirmClear: boolean) => {
+    if (confirmClear) {
+      handleSetBoard({ users: [] });
+    }
+    setShowClearScoresDialog(false);
+  };
+
+  const handleSetBoard = (newBoard: DartsBoard) =>
+    setBoard(() => {
+      saveDartsScoreboardData(newBoard);
+      return newBoard;
+    });
+
   return (
-    <>
+    <DartsContext.Provider value={{ board, setBoard: handleSetBoard }}>
       <main className="mainWrapper">
         <h1 className="w-full text-center p-3 mt-8 sm:p-6 text-2xl sm:text-3xl text-yellow-300">
           Darts Scoreboard
         </h1>
         <div className="flex w-11/12 max-w-xl m-auto mt-8 items-center justify-center flex-col gap-4">
-          {dartsScoreboard.users.map((user) => (
+          {board?.users.map((user) => (
             <UserCard key={user.name} user={user} />
           ))}
         </div>
@@ -49,10 +64,17 @@ export default function DartsScoreboard() {
           text={'Do you want to reset the score board data?'}
         />
       )}
+      {showClearScoresDialog && (
+        <ConfirmDialog
+          onAction={(confirmClear) => handleClearScoresDialogAction(confirmClear)}
+          text={'Do you want to clear the score board data?'}
+        />
+      )}
       <ActionBar
         showAddUserForm={() => setShowAddUserForm(true)}
-        showResetScoresDialog={() => setShowResetScoresDialog(true)}
+        showResetGameDialog={() => setShowResetScoresDialog(true)}
+        showClearGameDialog={() => setShowClearScoresDialog(true)}
       />
-    </>
+    </DartsContext.Provider>
   );
 }

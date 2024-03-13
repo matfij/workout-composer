@@ -1,12 +1,9 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import style from './add-user-form.module.css';
 import { useForm } from 'react-hook-form';
 import { AddUserFormFields, DartsUser } from '../definitions';
-import {
-  useDartsScoreboardContext,
-  useSetDartsScoreboardContext,
-} from '../contexts/darts-scoreboard.context';
 import { DEFAULT_STARTING_SCORES } from '../definitions/constants';
+import { DartsContext } from '../contexts/darts-scoreboard.context';
 
 type Props = {
   onCancel: () => void;
@@ -18,16 +15,16 @@ export default function AddUserForm(props: Props) {
     handleSubmit,
     formState: { errors },
   } = useForm<AddUserFormFields>();
-  const dartsScoreboard = useDartsScoreboardContext();
-  const updateDartsScoreboard = useSetDartsScoreboardContext();
+  const { board, setBoard } = useContext(DartsContext);
 
   const addUser = (data: AddUserFormFields) => {
     const newUser: DartsUser = {
       name: data.name,
       scores: data.scores,
+      startingScores: data.scores,
       throws: [],
     };
-    updateDartsScoreboard({ users: [...dartsScoreboard.users, newUser] });
+    setBoard({ users: [...board.users, newUser] });
     props.onCancel();
   };
 
@@ -52,7 +49,7 @@ export default function AddUserForm(props: Props) {
           </fieldset>
           <fieldset className="mb-4">
             <label htmlFor="scores" className={style.formLabel}>
-              Scores
+              Starting scores
             </label>
             <input
               {...register('scores', { required: true })}

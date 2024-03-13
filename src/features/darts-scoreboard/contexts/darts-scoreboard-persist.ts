@@ -1,8 +1,8 @@
-import { DartsScoreboard } from '../definitions';
+import { DartsBoard } from '../definitions';
 
 const DARTS_SCOREBOARD_KEY = 'wc-darts-scoreboard';
 
-export const loadDartsScoreboardData = (): DartsScoreboard | null => {
+export const loadDartsScoreboardData = (): DartsBoard | null => {
   try {
     const rawData = localStorage.getItem(DARTS_SCOREBOARD_KEY);
     if (!rawData) {
@@ -14,7 +14,7 @@ export const loadDartsScoreboardData = (): DartsScoreboard | null => {
   }
 };
 
-export const saveDartsScoreboardData = (data: DartsScoreboard | null) => {
+export const saveDartsScoreboardData = (data: DartsBoard | null) => {
   if (!data) {
     localStorage.removeItem(DARTS_SCOREBOARD_KEY);
   }

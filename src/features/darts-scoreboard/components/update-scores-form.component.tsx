@@ -1,14 +1,11 @@
 import { useForm } from 'react-hook-form';
 import { DartsUser, UpdateScoresFields } from '../definitions';
 import style from './update-scores-form.module.css';
-import {
-  useDartsScoreboardContext,
-  useSetDartsScoreboardContext,
-} from '../contexts/darts-scoreboard.context';
 import ToastService from '../../../common/services/toast-service';
 import { ALLOWED_SCORES } from '../definitions/constants';
 import UtilService from '../../../common/services/utils-service';
-import { ChangeEvent } from 'react';
+import { ChangeEvent, useContext } from 'react';
+import { DartsContext } from '../contexts/darts-scoreboard.context';
 
 type Props = {
   user: DartsUser;
@@ -17,8 +14,7 @@ type Props = {
 
 export default function UpdateScoresForm(props: Props) {
   const { register, handleSubmit } = useForm<UpdateScoresFields>();
-  const board = useDartsScoreboardContext();
-  const updateBoard = useSetDartsScoreboardContext();
+  const { board, setBoard } = useContext(DartsContext);
 
   const validateScore = (score: number): boolean => {
     return ALLOWED_SCORES.includes(+score);
@@ -67,7 +63,7 @@ export default function UpdateScoresForm(props: Props) {
     updatedUser.scores = newScores;
     updatedUser.throws = [...updatedUser.throws, ...throws];
     const updatedUsers = board.users.map((user) => (user.name === updatedUser.name ? updatedUser : user));
-    updateBoard({
+    setBoard({
       users: updatedUsers,
     });
   };

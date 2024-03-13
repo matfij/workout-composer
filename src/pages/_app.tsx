@@ -4,16 +4,13 @@ import 'tailwindcss/tailwind.css';
 import 'react-toastify/dist/ReactToastify.css';
 import type { AppProps } from 'next/app';
 import { ExerciseBoardProvider } from '../features/workout-composer/contexts/exercise-board.context';
-import { DartsScoreboardProvider } from '../features/darts-scoreboard/contexts/darts-scoreboard.context';
 import { ToastContainer } from 'react-toastify';
 
 export default function App({ Component, pageProps }: AppProps) {
   return (
     <ExerciseBoardProvider>
-      <DartsScoreboardProvider>
-        <Component {...pageProps} />
-        <ToastContainer />
-      </DartsScoreboardProvider>
+      <Component {...pageProps} />
+      <ToastContainer />
     </ExerciseBoardProvider>
   );
 }

@@ -6,10 +6,11 @@ export interface AddUserFormFields {
 export interface DartsUser {
   name: string;
   scores: number;
+  startingScores: number;
   throws: number[];
 }
 
-export interface DartsScoreboard {
+export interface DartsBoard {
   users: DartsUser[];
 }
 
