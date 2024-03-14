@@ -57,9 +57,11 @@ export default function UpdateScoresForm(props: Props) {
     updatedUser.place = checkForWin(newScores);
     const updatedUsers = board.users.map((user) => (user.name === updatedUser.name ? updatedUser : user));
     const nextUserIndex = getNextUserIndex();
+    const nextTurn = nextUserIndex <= board.currentUserIndex ? board.turnsPassed + 1 : board.turnsPassed;
     setBoard({
       users: updatedUsers,
       currentUserIndex: nextUserIndex,
+      turnsPassed: nextTurn,
     });
   };
 
@@ -100,10 +102,10 @@ export default function UpdateScoresForm(props: Props) {
     let loopNo = 0;
     while (true) {
       if (nextUserIndex >= board.users.length) {
-        nextUserIndex = 0; 
+        nextUserIndex = 0;
       }
       const nextUser = board.users[nextUserIndex];
-      console.log(nextUserIndex)
+      console.log(nextUserIndex);
       if (nextUser.place === Place.None) {
         break;
       }

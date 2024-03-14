@@ -12,7 +12,7 @@ import { DartsContext } from '../features/darts-scoreboard/contexts/darts-scoreb
 import { DEFAULT_STARTING_SCORES, Place } from '../features/darts-scoreboard/definitions/constants';
 
 export default function DartsScoreboard() {
-  const [board, setBoard] = useState<DartsBoard>({ users: [], currentUserIndex: 0 });
+  const [board, setBoard] = useState<DartsBoard>({ users: [], currentUserIndex: 0, turnsPassed: 1 });
   const [showAddUserForm, setShowAddUserForm] = useState(false);
   const [showResetScoresDialog, setShowResetScoresDialog] = useState(false);
   const [showClearScoresDialog, setShowClearScoresDialog] = useState(false);
@@ -33,14 +33,14 @@ export default function DartsScoreboard() {
         throws: [],
         place: Place.None,
       }));
-      handleSetBoard({ users: newUsers, currentUserIndex: 0 });
+      handleSetBoard({ users: newUsers, currentUserIndex: 0, turnsPassed: 1 });
     }
     setShowResetScoresDialog(false);
   };
 
   const handleClearScoresDialogAction = (confirmClear: boolean) => {
     if (confirmClear) {
-      handleSetBoard({ users: [], currentUserIndex: 0 });
+      handleSetBoard({ users: [], currentUserIndex: 0, turnsPassed: 1 });
     }
     setShowClearScoresDialog(false);
   };
@@ -57,6 +57,9 @@ export default function DartsScoreboard() {
         <h1 className="w-full text-center p-3 mt-8 sm:p-6 text-2xl sm:text-3xl text-yellow-300">
           Darts Scoreboard
         </h1>
+        <p className="w-full text-center p-3 sm:p-6 text-xl sm:text-xl text-white">
+          Turn: {board.turnsPassed}
+        </p>
         <div className="flex w-11/12 max-w-xl m-auto mt-8 items-center justify-center flex-col gap-4">
           {board?.users.map((user) => (
             <UserCard key={user.name} user={user} />

@@ -16,6 +16,7 @@ export interface DartsUser {
 export interface DartsBoard {
   users: DartsUser[];
   currentUserIndex: number;
+  turnsPassed: number;
 }
 
 export interface UpdateScoresFields {
