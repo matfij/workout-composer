@@ -63,8 +63,13 @@ export default function UpdateScoresForm(props: Props) {
     updatedUser.scores = newScores;
     updatedUser.throws = [...updatedUser.throws, ...throws];
     const updatedUsers = board.users.map((user) => (user.name === updatedUser.name ? updatedUser : user));
+    let nextUserIndex = board.currentUserIndex + 1;
+    if (nextUserIndex >= board.users.length) {
+      nextUserIndex = 0;
+    }
     setBoard({
       users: updatedUsers,
+      currentUserIndex: nextUserIndex,
     });
   };
 

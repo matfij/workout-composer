@@ -7,7 +7,7 @@ export default function Index() {
     <>
       <Head>
         <title>Workout Composer</title>
-        <meta name="description" content="Take technological control of your fitness jurney." />
+        <meta name="description" content="Take technological control of your fitness journey." />
         <link rel="icon" href="/public/favicon.ico" />
       </Head>
 

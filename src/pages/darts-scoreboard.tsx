@@ -9,9 +9,10 @@ import {
 import ConfirmDialog from '../common/components/confirm-dialog.component';
 import { DartsBoard } from '../features/darts-scoreboard/definitions';
 import { DartsContext } from '../features/darts-scoreboard/contexts/darts-scoreboard.context';
+import { DEFAULT_STARTING_SCORES } from '../features/darts-scoreboard/definitions/constants';
 
 export default function DartsScoreboard() {
-  const [board, setBoard] = useState<DartsBoard>({ users: [] });
+  const [board, setBoard] = useState<DartsBoard>({ users: [], currentUserIndex: 0 });
   const [showAddUserForm, setShowAddUserForm] = useState(false);
   const [showResetScoresDialog, setShowResetScoresDialog] = useState(false);
   const [showClearScoresDialog, setShowClearScoresDialog] = useState(false);
@@ -26,15 +27,19 @@ export default function DartsScoreboard() {
 
   const handleResetScoresDialogAction = (confirmReset: boolean) => {
     if (confirmReset && board?.users) {
-      const newUsers = board.users.map((u) => ({ ...u, scores: u.startingScores }));
-      handleSetBoard({ users: newUsers });
+      const newUsers = board.users.map((user) => ({
+        ...user,
+        scores: user.startingScores || DEFAULT_STARTING_SCORES,
+        throws: [],
+      }));
+      handleSetBoard({ users: newUsers, currentUserIndex: 0 });
     }
     setShowResetScoresDialog(false);
   };
 
   const handleClearScoresDialogAction = (confirmClear: boolean) => {
     if (confirmClear) {
-      handleSetBoard({ users: [] });
+      handleSetBoard({ users: [], currentUserIndex: 0 });
     }
     setShowClearScoresDialog(false);
   };
