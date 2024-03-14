@@ -4,6 +4,7 @@ import { DartsUser } from '../definitions';
 import UpdateScoresForm from './update-scores-form.component';
 import { useContext, useState } from 'react';
 import { DartsContext } from '../contexts/darts-scoreboard.context';
+import { Place } from '../definitions/constants';
 
 type Props = {
   user: DartsUser;
@@ -22,7 +23,7 @@ export default function UserCard(props: Props) {
 
   const isActive = () => {
     const displayedUserIndex = board.users.findIndex((u) => u.name === props.user.name);
-    return board.currentUserIndex === displayedUserIndex;
+    return board.currentUserIndex === displayedUserIndex && props.user.place === Place.None;
   };
 
   const getWrapperClass = () => {
@@ -32,12 +33,30 @@ export default function UserCard(props: Props) {
     return style.cardWrapper;
   };
 
+  const getPlaceIcon = () => {
+    if (props.user.name)
+      switch (props.user.place) {
+        case Place.First: {
+          return '🥇';
+        }
+        case Place.Second: {
+          return '🥈';
+        }
+        case Place.Third: {
+          return '🥉';
+        }
+        default: {
+          return '';
+        }
+      }
+  };
+
   return (
     <>
       <div className={getWrapperClass()}>
         <div className="mr-6">
           <h3 className="text-white text-xl font-semibold">
-            {props.user.scores === 0 && '🏆'} {props.user.name}
+            {getPlaceIcon()} {props.user.name}
           </h3>
           <hr />
           <p className="text-2xl text-yellow-300">{props.user.scores}</p>

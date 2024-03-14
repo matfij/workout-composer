@@ -1,3 +1,5 @@
+import { Place } from "./constants";
+
 export interface AddUserFormFields {
   name: string;
   scores: number;
@@ -8,6 +10,7 @@ export interface DartsUser {
   scores: number;
   startingScores: number;
   throws: number[];
+  place: Place;
 }
 
 export interface DartsBoard {

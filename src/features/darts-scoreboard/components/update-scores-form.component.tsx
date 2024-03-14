@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { DartsUser, UpdateScoresFields } from '../definitions';
 import style from './update-scores-form.module.css';
 import ToastService from '../../../common/services/toast-service';
-import { ALLOWED_SCORES } from '../definitions/constants';
+import { ALLOWED_SCORES, Place } from '../definitions/constants';
 import UtilService from '../../../common/services/utils-service';
 import { ChangeEvent, useContext } from 'react';
 import { DartsContext } from '../contexts/darts-scoreboard.context';
@@ -29,9 +29,6 @@ export default function UpdateScoresForm(props: Props) {
 
   const updateScores = (data: UpdateScoresFields) => {
     const scores = calculateScores(data);
-    if (scores === 0) {
-      notifyWinner();
-    }
     updateUser(scores, [data.throw1, data.throw2, data.throw3]);
     props.onCancel();
   };
@@ -53,24 +50,71 @@ export default function UpdateScoresForm(props: Props) {
     return scores;
   };
 
+  const updateUser = (newScores: number, throws: number[]) => {
+    const updatedUser = { ...props.user };
+    updatedUser.scores = newScores;
+    updatedUser.throws = [...updatedUser.throws, ...throws];
+    updatedUser.place = checkForWin(newScores);
+    const updatedUsers = board.users.map((user) => (user.name === updatedUser.name ? updatedUser : user));
+    const nextUserIndex = getNextUserIndex();
+    setBoard({
+      users: updatedUsers,
+      currentUserIndex: nextUserIndex,
+    });
+  };
+
+  const getPreviousWinnersCount = () => {
+    return board.users.filter((user) => user.place !== Place.None).length;
+  };
+
+  const checkForWin = (scores: number) => {
+    if (scores !== 0) {
+      return Place.None;
+    }
+    switch (getPreviousWinnersCount()) {
+      case 0: {
+        notifyWinner();
+        return Place.First;
+      }
+      case 1: {
+        notifyWinner();
+        return Place.Second;
+      }
+      case 2: {
+        notifyWinner();
+        return Place.Third;
+      }
+      default: {
+        return Place.None;
+      }
+    }
+  };
+
   const notifyWinner = () => {
     UtilService.playSound('/sounds/dart-win-sound.mp3');
     ToastService.showInfo(`${props.user.name} has won!`);
   };
 
-  const updateUser = (newScores: number, throws: number[]) => {
-    const updatedUser = { ...props.user };
-    updatedUser.scores = newScores;
-    updatedUser.throws = [...updatedUser.throws, ...throws];
-    const updatedUsers = board.users.map((user) => (user.name === updatedUser.name ? updatedUser : user));
+  const getNextUserIndex = () => {
     let nextUserIndex = board.currentUserIndex + 1;
-    if (nextUserIndex >= board.users.length) {
-      nextUserIndex = 0;
+    let loopNo = 0;
+    while (true) {
+      if (nextUserIndex >= board.users.length) {
+        nextUserIndex = 0; 
+      }
+      const nextUser = board.users[nextUserIndex];
+      console.log(nextUserIndex)
+      if (nextUser.place === Place.None) {
+        break;
+      }
+      if (loopNo > board.users.length) {
+        nextUserIndex = board.currentUserIndex;
+        break;
+      }
+      nextUserIndex++;
+      loopNo++;
     }
-    setBoard({
-      users: updatedUsers,
-      currentUserIndex: nextUserIndex,
-    });
+    return nextUserIndex;
   };
 
   return (

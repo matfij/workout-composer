@@ -9,7 +9,7 @@ import {
 import ConfirmDialog from '../common/components/confirm-dialog.component';
 import { DartsBoard } from '../features/darts-scoreboard/definitions';
 import { DartsContext } from '../features/darts-scoreboard/contexts/darts-scoreboard.context';
-import { DEFAULT_STARTING_SCORES } from '../features/darts-scoreboard/definitions/constants';
+import { DEFAULT_STARTING_SCORES, Place } from '../features/darts-scoreboard/definitions/constants';
 
 export default function DartsScoreboard() {
   const [board, setBoard] = useState<DartsBoard>({ users: [], currentUserIndex: 0 });
@@ -31,6 +31,7 @@ export default function DartsScoreboard() {
         ...user,
         scores: user.startingScores || DEFAULT_STARTING_SCORES,
         throws: [],
+        place: Place.None,
       }));
       handleSetBoard({ users: newUsers, currentUserIndex: 0 });
     }

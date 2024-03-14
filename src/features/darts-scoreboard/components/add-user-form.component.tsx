@@ -2,7 +2,7 @@ import React, { useContext } from 'react';
 import style from './add-user-form.module.css';
 import { useForm } from 'react-hook-form';
 import { AddUserFormFields, DartsUser } from '../definitions';
-import { DEFAULT_STARTING_SCORES } from '../definitions/constants';
+import { DEFAULT_STARTING_SCORES, Place } from '../definitions/constants';
 import { DartsContext } from '../contexts/darts-scoreboard.context';
 
 type Props = {
@@ -23,6 +23,7 @@ export default function AddUserForm(props: Props) {
       scores: data.scores,
       startingScores: data.scores,
       throws: [],
+      place: Place.None,
     };
     setBoard({ users: [...board.users, newUser], currentUserIndex: board.currentUserIndex });
     props.onCancel();
