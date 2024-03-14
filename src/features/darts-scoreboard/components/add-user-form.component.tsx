@@ -25,7 +25,11 @@ export default function AddUserForm(props: Props) {
       throws: [],
       place: Place.None,
     };
-    setBoard({ users: [...board.users, newUser], currentUserIndex: board.currentUserIndex });
+    setBoard({
+      users: [...board.users, newUser],
+      currentUserIndex: board.currentUserIndex,
+      turnsPassed: board.turnsPassed,
+    });
     props.onCancel();
   };
 
