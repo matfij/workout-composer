@@ -21,6 +21,9 @@ export interface DartsBoard {
 
 export interface UpdateScoresFields {
   throw1: number;
+  throw1Factor: number;
   throw2: number;
+  throw2Factor: number;
   throw3: number;
+  throw3Factor: number;
 }

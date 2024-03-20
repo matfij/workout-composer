@@ -2,7 +2,7 @@ import { useForm } from 'react-hook-form';
 import { DartsUser, UpdateScoresFields } from '../definitions';
 import style from './update-scores-form.module.css';
 import ToastService from '../../../common/services/toast-service';
-import { ALLOWED_SCORES, Place } from '../definitions/constants';
+import { ALLOWED_FACTORS, ALLOWED_SCORES, Place } from '../definitions/constants';
 import UtilService from '../../../common/services/utils-service';
 import { ChangeEvent, useContext } from 'react';
 import { DartsContext } from '../contexts/darts-scoreboard.context';
@@ -13,18 +13,21 @@ type Props = {
 };
 
 export default function UpdateScoresForm(props: Props) {
-  const { register, handleSubmit } = useForm<UpdateScoresFields>();
+  const { register, handleSubmit, watch } = useForm<UpdateScoresFields>({
+    defaultValues: {
+      throw1Factor: 1,
+      throw2Factor: 1,
+      throw3Factor: 1,
+    },
+  });
   const { board, setBoard } = useContext(DartsContext);
 
-  const validateScore = (score: number): boolean => {
+  const validateScore = (score: number) => {
     return ALLOWED_SCORES.includes(+score);
   };
 
-  const checkInputSwitch = (event: ChangeEvent<HTMLInputElement>) => {
-    if (event.target.value.length < 2) {
-      return;
-    }
-    (event.target.nextElementSibling as HTMLInputElement)?.focus();
+  const validateFactor = (factor: number) => {
+    return ALLOWED_FACTORS.includes(+factor);
   };
 
   const updateScores = (data: UpdateScoresFields) => {
@@ -34,20 +37,15 @@ export default function UpdateScoresForm(props: Props) {
   };
 
   const calculateScores = (data: UpdateScoresFields) => {
-    let scores = props.user.scores;
-    data.throw1 = +data.throw1 ?? 0;
-    data.throw2 = +data.throw2 ?? 0;
-    data.throw3 = +data.throw3 ?? 0;
-    if (scores - data.throw1 >= 0) {
-      scores -= data.throw1;
+    data.throw1 = (+data.throw1Factor ?? 1) * +data.throw1 ?? 0;
+    data.throw2 = (+data.throw2Factor ?? 1) * +data.throw2 ?? 0;
+    data.throw3 = (+data.throw3Factor ?? 1) * +data.throw3 ?? 0;
+    let scoresLeft = props.user.scores;
+    const scores = data.throw1 + data.throw2 + data.throw3;
+    if (scoresLeft - scores >= 0) {
+      scoresLeft -= scores;
     }
-    if (scores - data.throw2 >= 0) {
-      scores -= data.throw2;
-    }
-    if (scores - data.throw3 >= 0) {
-      scores -= data.throw3;
-    }
-    return scores;
+    return scoresLeft;
   };
 
   const updateUser = (newScores: number, throws: number[]) => {
@@ -105,7 +103,6 @@ export default function UpdateScoresForm(props: Props) {
         nextUserIndex = 0;
       }
       const nextUser = board.users[nextUserIndex];
-      console.log(nextUserIndex);
       if (nextUser.place === Place.None) {
         break;
       }
@@ -119,6 +116,41 @@ export default function UpdateScoresForm(props: Props) {
     return nextUserIndex;
   };
 
+  const getFactorInputClass = (factor: number) => {
+    switch (+factor) {
+      case 1: {
+        return `${style.factorField} ${style.factorField1}`;
+      }
+      case 2: {
+        return `${style.factorField} ${style.factorField2}`;
+      }
+      case 3: {
+        return `${style.factorField} ${style.factorField3}`;
+      }
+    }
+  };
+
+  const getFactorLabel = (factor: number) => {
+    switch (+factor) {
+      case 1: {
+        return <p className={`${style.factorLabel} ${style.factorLabel1}`}>×1</p>;
+      }
+      case 2: {
+        return <p className={`${style.factorLabel} ${style.factorLabel2}`}>×2</p>;
+      }
+      case 3: {
+        return <p className={`${style.factorLabel} ${style.factorLabel3}`}>×3</p>;
+      }
+    }
+  };
+
+  const getMaxFactor = (score: number) => {
+    if (+score < 25) {
+      return 3;
+    }
+    return 2;
+  };
+
   return (
     <section className={style.modalBackdrop}>
       <div className={style.modalWrapper}>
@@ -127,34 +159,57 @@ export default function UpdateScoresForm(props: Props) {
             Update <span className="font-bold">{props.user.name}&apos;s</span> scores
           </h3>
           <form onSubmit={handleSubmit(updateScores)} className={style.formWrapper + ' mb-0'}>
-            <fieldset className="mb-4 flex gap-1">
+            <fieldset className={style.formField}>
               <input
                 {...register('throw1', { validate: (x) => validateScore(x) })}
-                onChange={(e) => checkInputSwitch(e)}
                 className={style.formInput}
-                id="throw1"
                 type="number"
                 min={0}
-                max={60}
+                max={25}
               />
               <input
+                {...register('throw1Factor', { validate: (x) => validateFactor(x) })}
+                className={getFactorInputClass(watch('throw1Factor'))}
+                type="range"
+                min="1"
+                max={getMaxFactor(watch('throw1'))}
+              />
+              {getFactorLabel(watch('throw1Factor'))}
+            </fieldset>
+            <fieldset className={style.formField}>
+              <input
                 {...register('throw2', { validate: (x) => validateScore(x) })}
-                onChange={(e) => checkInputSwitch(e)}
                 className={style.formInput}
                 id="throw2"
                 type="number"
                 min={0}
-                max={60}
+                max={25}
               />
               <input
+                {...register('throw2Factor', { validate: (x) => validateFactor(x) })}
+                className={getFactorInputClass(watch('throw2Factor'))}
+                type="range"
+                min="1"
+                max={getMaxFactor(watch('throw2'))}
+              />
+              {getFactorLabel(watch('throw2Factor'))}
+            </fieldset>
+            <fieldset className={style.formField}>
+              <input
                 {...register('throw3', { validate: (x) => validateScore(x) })}
-                onChange={(e) => checkInputSwitch(e)}
                 className={style.formInput}
-                id="throw3"
                 type="number"
                 min={0}
-                max={60}
+                max={25}
               />
+              <input
+                {...register('throw3Factor', { validate: (x) => validateFactor(x) })}
+                className={getFactorInputClass(watch('throw3Factor'))}
+                type="range"
+                min="1"
+                max={getMaxFactor(watch('throw3'))}
+              />
+              {getFactorLabel(watch('throw3Factor'))}
             </fieldset>
             <div className="flex items-center pt-4 space-x-2">
               <button type="submit" className={style.formBtnSubmit}>
