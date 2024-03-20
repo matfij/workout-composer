@@ -67,7 +67,7 @@ export default function ExerciseItem(props: Props) {
           className="relative"
         >
           <div className={style.exerciseItem}>
-            <p data-testid="exercise-name" className="text-md text-yellow-300">
+            <p className="text-md text-yellow-300">
               {props.exercise.name}
             </p>
             <p>

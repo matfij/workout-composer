@@ -16,19 +16,19 @@ export default function Index() {
           <Image src="/brand.png" alt="" width={160} height={160} priority={false} />
         </div>
 
-        <Link className="btnLink" href="/workout-composer" data-testid="workout-composer-link">
+        <Link className="btnLink" href="/workout-composer">
           Workout Composer
         </Link>
 
-        <Link className="btnLink" href="/running-calculator" data-testid="running-calculator-link">
+        <Link className="btnLink" href="/running-calculator">
           Running Calculator
         </Link>
 
-        <Link className="btnLink" href="/smart-timer" data-testid="smart-timer-link">
+        <Link className="btnLink" href="/smart-timer">
           Smart Timer
         </Link>
 
-        <Link className="btnLink" href="/darts-scoreboard" data-testid="darts-scoreboard-link">
+        <Link className="btnLink" href="/darts-scoreboard">
           Darts Scoreboard
         </Link>
       </div>
