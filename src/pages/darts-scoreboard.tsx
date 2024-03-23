@@ -54,17 +54,13 @@ export default function DartsScoreboard() {
   return (
     <DartsContext.Provider value={{ board, setBoard: handleSetBoard }}>
       <main className="mainWrapper">
-        <h1 className="w-full text-center p-3 mt-8 sm:p-6 text-2xl sm:text-3xl text-yellow-300">
-          Darts Scoreboard
-        </h1>
-        <p className="w-full text-center p-3 sm:p-6 text-xl sm:text-xl text-white">
+        <h1 className="title">Darts Scoreboard</h1>
+        <p className="subtitle" style={{ marginTop: 0 }}>
           Turn: {board.turnsPassed}
         </p>
-        <div className="flex w-11/12 max-w-xl m-auto mt-8 items-center justify-center flex-col gap-4">
-          {board?.users.map((user) => (
-            <UserCard key={user.name} user={user} />
-          ))}
-        </div>
+        {board?.users.map((user) => (
+          <UserCard key={user.name} user={user} />
+        ))}
       </main>
       {showAddUserForm && <AddUserForm onCancel={() => setShowAddUserForm(false)} />}
       {showResetScoresDialog && (

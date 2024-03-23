@@ -73,51 +73,48 @@ export default function ExerciseList() {
   };
 
   return (
-    <section>
-      <DragDropContext onDragEnd={onDragEnd}>
-        <section className={style.daysWrapper}>
-          {exerciseBoard.days.map((day, index) => (
-            <div key={day.day} className={style.dayWrapper}>
-              {editDay === index ? (
-                <>
-                  <input
-                    type="text"
-                    value={dayName}
-                    onChange={(event) => setDayName(event.target.value)}
-                    onKeyDown={(event) => submitEditDay(event as unknown as KeyboardEvent)}
-                    onBlur={editDayName}
-                    className={style.dayNameInput + ' inline'}
-                  />
-                  <div
-                    onDoubleClick={() => removeDay(index)}
-                    className="absolute top-3 right-2 cursor-pointer"
-                  >
-                    <Image src="/icons/remove-icon.svg" alt="unlock" width={20} height={20} />
-                  </div>
-                </>
-              ) : (
-                <h3
-                  onDoubleClick={() => startEditDay(index, day.day)}
-                  className="text-center p-2 text-lg font-semibold text-neutral-100"
-                >
-                  {day.day}
-                </h3>
-              )}
+    <DragDropContext onDragEnd={onDragEnd}>
+      <section className={style.daysWrapper}>
+        {exerciseBoard.days.map((day, index) => (
+          <div key={day.day} className={style.dayWrapper}>
+            {editDay === index ? (
+              <>
+                <input
+                  type="text"
+                  value={dayName}
+                  onChange={(event) => setDayName(event.target.value)}
+                  onKeyDown={(event) => submitEditDay(event as unknown as KeyboardEvent)}
+                  onBlur={editDayName}
+                  className={style.dayNameInput + ' inline'}
+                />
+                <div onDoubleClick={() => removeDay(index)} className="absolute top-3 right-2 cursor-pointer">
+                  <Image src="/icons/remove-icon.svg" alt="unlock" width={20} height={20} />
+                </div>
+              </>
+            ) : (
+              <h3
+                onDoubleClick={() => startEditDay(index, day.day)}
+                className="text-center p-2 text-lg font-semibold text-neutral-100"
+              >
+                {day.day}
+              </h3>
+            )}
 
-              <Droppable droppableId={day.day}>
-                {(provided: DroppableProvided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {day.exercises.map((exercise, index) => (
-                      <ExerciseItem exercise={exercise} index={index} key={index} />
-                    ))}
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </div>
-          ))}
-        </section>
-        {!exerciseBoard.locked && <>
+            <Droppable droppableId={day.day}>
+              {(provided: DroppableProvided) => (
+                <div {...provided.droppableProps} ref={provided.innerRef}>
+                  {day.exercises.map((exercise, index) => (
+                    <ExerciseItem exercise={exercise} index={index} key={index} />
+                  ))}
+                  {provided.placeholder}
+                </div>
+              )}
+            </Droppable>
+          </div>
+        ))}
+      </section>
+      {!exerciseBoard.locked && (
+        <>
           <h3 className="text-center mb-2 text-lg font-semibold text-neutral-100 mt-4">Standby</h3>
           <section className={style.standbyWrapper}>
             <Droppable droppableId={STANDBY_ID} direction="horizontal">
@@ -137,8 +134,8 @@ export default function ExerciseList() {
               )}
             </Droppable>
           </section>
-        </>}
-      </DragDropContext>
-    </section>
+        </>
+      )}
+    </DragDropContext>
   );
 }
