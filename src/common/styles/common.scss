@@ -1,0 +1,22 @@
+@import './variables.scss';
+
+.mainWrapper {
+  margin-bottom: 5rem;
+}
+
+.btnLink {
+  margin-top: 1rem;
+  display: block;
+  padding: 2rem 0;
+  font-size: 1.25rem;
+  line-height: 1.75rem;
+  text-align: center;
+  color: $color-light;
+  background: darken($color-dark, 10);
+
+  &:hover {
+    cursor: pointer;
+    color: $color-primary;
+    background: darken($color-dark, 20);
+  }
+}

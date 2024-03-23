@@ -1,5 +1,5 @@
-import '../common/styles/globals.css';
-import '../common/styles/common.css';
+import '../common/styles/globals.scss';
+import '../common/styles/common.scss';
 import 'tailwindcss/tailwind.css';
 import 'react-toastify/dist/ReactToastify.css';
 import type { AppProps } from 'next/app';
