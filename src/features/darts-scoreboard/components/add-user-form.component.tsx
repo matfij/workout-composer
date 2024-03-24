@@ -35,18 +35,13 @@ export default function AddUserForm(props: Props) {
   return (
     <section className="modalBackdrop">
       <div className="modalWrapper">
-        <h3 className="subtitle bold dark">Add a new user</h3>
         <form onSubmit={handleSubmit(addUser)} className="formWrapper">
+          <h3 className="subtitle bold dark left">Add a new user</h3>
           <fieldset>
             <label htmlFor="name" className="formLabel">
               Name
             </label>
-            <input
-              {...register('name', { required: true })}
-              className="formInput"
-              id="name"
-              type="text"
-            />
+            <input {...register('name', { required: true })} className="formInput" id="name" type="text" />
             {errors.name && <span className="formError">Name required</span>}
           </fieldset>
           <fieldset>

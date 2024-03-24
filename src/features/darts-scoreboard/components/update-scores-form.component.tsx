@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
 import { DartsUser, UpdateScoresFields } from '../definitions';
-import style from './update-scores-form.module.css';
+import style from './update-scores-form.module.scss';
 import ToastService from '../../../common/services/toast-service';
 import { ALLOWED_FACTORS, ALLOWED_SCORES, Place } from '../definitions/constants';
 import UtilService from '../../../common/services/utils-service';
@@ -152,75 +152,73 @@ export default function UpdateScoresForm(props: Props) {
   };
 
   return (
-    <section className={style.modalBackdrop}>
-      <div className={style.modalWrapper}>
-        <div className="flex items-center flex-col p-4">
-          <h3 className="w-full max-w-2/5 text-xl font-semibold px-8 pb-4 text-gray-900">
-            Update <span className="font-bold">{props.user.name}&apos;s</span> scores
+    <section className="modalBackdrop">
+      <div className="modalWrapper">
+        <form onSubmit={handleSubmit(updateScores)} className="formWrapper">
+          <h3 className="subtitle dark left">
+            Update <span className="bold">{props.user.name}&apos;s</span> scores
           </h3>
-          <form onSubmit={handleSubmit(updateScores)} className={style.formWrapper + ' mb-0'}>
-            <fieldset className={style.formField}>
-              <input
-                {...register('throw1', { validate: (x) => validateScore(x) })}
-                className={style.formInput}
-                type="number"
-                min={0}
-                max={25}
-              />
-              <input
-                {...register('throw1Factor', { validate: (x) => validateFactor(x) })}
-                className={getFactorInputClass(watch('throw1Factor'))}
-                type="range"
-                min="1"
-                max={getMaxFactor(watch('throw1'))}
-              />
-              {getFactorLabel(watch('throw1Factor'))}
-            </fieldset>
-            <fieldset className={style.formField}>
-              <input
-                {...register('throw2', { validate: (x) => validateScore(x) })}
-                className={style.formInput}
-                id="throw2"
-                type="number"
-                min={0}
-                max={25}
-              />
-              <input
-                {...register('throw2Factor', { validate: (x) => validateFactor(x) })}
-                className={getFactorInputClass(watch('throw2Factor'))}
-                type="range"
-                min="1"
-                max={getMaxFactor(watch('throw2'))}
-              />
-              {getFactorLabel(watch('throw2Factor'))}
-            </fieldset>
-            <fieldset className={style.formField}>
-              <input
-                {...register('throw3', { validate: (x) => validateScore(x) })}
-                className={style.formInput}
-                type="number"
-                min={0}
-                max={25}
-              />
-              <input
-                {...register('throw3Factor', { validate: (x) => validateFactor(x) })}
-                className={getFactorInputClass(watch('throw3Factor'))}
-                type="range"
-                min="1"
-                max={getMaxFactor(watch('throw3'))}
-              />
-              {getFactorLabel(watch('throw3Factor'))}
-            </fieldset>
-            <div className="flex items-center pt-4 space-x-2">
-              <button type="submit" className={style.formBtnSubmit}>
-                Confirm
-              </button>
-              <button onClick={props.onCancel} type="button" className={style.formBtnCancel}>
-                Cancel
-              </button>
-            </div>
-          </form>
-        </div>
+          <fieldset className={style.formFieldset}>
+            <input
+              {...register('throw1', { validate: (x) => validateScore(x) })}
+              className="formInput"
+              type="number"
+              min={0}
+              max={25}
+            />
+            <input
+              {...register('throw1Factor', { validate: (x) => validateFactor(x) })}
+              className={getFactorInputClass(watch('throw1Factor'))}
+              type="range"
+              min="1"
+              max={getMaxFactor(watch('throw1'))}
+            />
+            {getFactorLabel(watch('throw1Factor'))}
+          </fieldset>
+          <fieldset className={style.formFieldset}>
+            <input
+              {...register('throw2', { validate: (x) => validateScore(x) })}
+              className="formInput"
+              id="throw2"
+              type="number"
+              min={0}
+              max={25}
+            />
+            <input
+              {...register('throw2Factor', { validate: (x) => validateFactor(x) })}
+              className={getFactorInputClass(watch('throw2Factor'))}
+              type="range"
+              min="1"
+              max={getMaxFactor(watch('throw2'))}
+            />
+            {getFactorLabel(watch('throw2Factor'))}
+          </fieldset>
+          <fieldset className={style.formFieldset}>
+            <input
+              {...register('throw3', { validate: (x) => validateScore(x) })}
+              className="formInput"
+              type="number"
+              min={0}
+              max={25}
+            />
+            <input
+              {...register('throw3Factor', { validate: (x) => validateFactor(x) })}
+              className={getFactorInputClass(watch('throw3Factor'))}
+              type="range"
+              min="1"
+              max={getMaxFactor(watch('throw3'))}
+            />
+            {getFactorLabel(watch('throw3Factor'))}
+          </fieldset>
+          <div className="formActionsWrapper">
+            <button type="submit" className="formBtnSubmit">
+              Confirm
+            </button>
+            <button onClick={props.onCancel} type="button" className="formBtnCancel">
+              Cancel
+            </button>
+          </div>
+        </form>
       </div>
     </section>
   );

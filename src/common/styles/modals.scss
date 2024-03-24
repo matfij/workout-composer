@@ -1,4 +1,5 @@
 @import './variables.scss';
+@import './mixins.scss';
 
 .modalBackdrop {
   width: 100%;
@@ -14,6 +15,8 @@
 }
 
 .modalWrapper {
+  @include boxShadow;
+
   width: 100%;
   max-width: 56rem;
   margin: auto;

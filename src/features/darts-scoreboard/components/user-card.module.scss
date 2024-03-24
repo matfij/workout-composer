@@ -1,0 +1,26 @@
+@import '../../../common/styles/variables';
+@import '../../../common/styles/mixins';
+
+.cardWrapper {
+  @include boxShadow;
+
+  width: 100%;
+  position: relative;
+  opacity: 0.9;
+  background: $color-dark;
+  color: $color-light;
+  border: 2px solid $color-light;
+  padding: 4px 8px;
+}
+
+.active {
+  opacity: 1;
+  border: 3px solid $color-primary;
+}
+
+.updateScoreIcon {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  cursor: pointer;
+}

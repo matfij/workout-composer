@@ -7,3 +7,7 @@
 @mixin boxShadowSmall {
   box-shadow: 1px 1px 5px 0px $color-dark;
 }
+
+@mixin textShadow {
+  text-shadow: $color-dark 2px 2px 4px;
+}

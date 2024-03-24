@@ -1,0 +1,52 @@
+@import '../../../common/styles/mixins';
+
+.formFieldset {
+  display: grid;
+  grid-template-columns: 5fr 3fr 1fr;
+  justify-items: stretch;
+  align-items: center;
+  gap: 1rem;
+  margin: 8px 0;
+}
+
+.factorField {
+  transition: all 1s;
+}
+
+.factorField1 {
+  background-color: #4caf50;
+  height: 10px;
+}
+
+.factorField2 {
+  background-color: #ffc107;
+  height: 12px;
+}
+
+.factorField3 {
+  background-color: #f44336;
+  height: 14px;
+}
+
+.factorLabel {
+  @include textShadow;
+
+  width: 30px;
+  font-weight: 600;
+  transition: all 1s;
+}
+
+.factorLabel1 {
+  color: #4caf50;
+  font-size: 18px;
+}
+
+.factorLabel2 {
+  color: #ffc107;
+  font-size: 20px;
+}
+
+.factorLabel3 {
+  color: #f44336;
+  font-size: 22px;
+}
