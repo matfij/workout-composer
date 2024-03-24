@@ -1,3 +1,6 @@
+@import './forms.scss';
+@import './modals.scss';
+
 :root {
   --clr-light-500: #f5f5f5;
   --clr-dark-300: #334155;
@@ -31,6 +34,11 @@ a {
 *::selection {
   color: var(--clr-dark-500);
   background: rgba(250, 204, 21, 0.9);
+  outline: none;
+}
+
+*:focus {
+  outline: none;
 }
 
 ::-webkit-scrollbar {

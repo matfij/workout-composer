@@ -1,7 +1,7 @@
-import '../common/styles/globals.scss';
-import '../common/styles/common.scss';
 import 'tailwindcss/tailwind.css';
 import 'react-toastify/dist/ReactToastify.css';
+import '../common/styles/globals.scss';
+import '../common/styles/common.scss';
 import type { AppProps } from 'next/app';
 import { ExerciseBoardProvider } from '../features/workout-composer/contexts/exercise-board.context';
 import { ToastContainer } from 'react-toastify';

@@ -1,0 +1,71 @@
+@import './variables.scss';
+@import './mixins.scss';
+
+.formWrapper {
+  padding: 2rem;
+  background: $color-light;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.formLabel {
+  font-size: 16px;
+  margin-bottom: 0.5rem;
+  font-weight: 600;
+  display: block;
+}
+
+.formInput {
+  @include boxShadow;
+
+  width: 100%;
+  appearance: none;
+  padding: 0.5rem;
+  border: 1px solid darken($color-light, 25);
+}
+
+.formActionsWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 1rem;
+  gap: 1rem;
+}
+
+.formBtnSubmit {
+  @include boxShadowSmall;
+
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border: 1px solid lighten($color-dark, 20);
+  background: darken($color-primary, 10);
+
+  &:hover {
+    cursor: pointer;
+    background: darken($color-primary, 15);
+  }
+}
+
+.formBtnCancel {
+  @include boxShadowSmall;
+
+  font-weight: 500;
+  font-size: 1rem;
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border: 1px solid lighten($color-dark, 20);
+  background: darken($color-light, 10);
+
+  &:hover {
+    cursor: pointer;
+    background: darken($color-light, 15);
+  }
+}
+
+.formError {
+  font-size: 14px;
+  font-weight: 600;
+  color: $color-error;
+}

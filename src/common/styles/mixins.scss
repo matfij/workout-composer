@@ -1,0 +1,9 @@
+@import './variables.scss';
+
+@mixin boxShadow {
+  box-shadow: 2px 2px 10px 0px $color-dark;
+}
+
+@mixin boxShadowSmall {
+  box-shadow: 1px 1px 5px 0px $color-dark;
+}

@@ -56,3 +56,23 @@
     background: darken($color-dark, 20);
   }
 }
+
+.light {
+  color: $color-light;
+}
+
+.dark {
+  color: $color-dark;
+}
+
+.primary {
+  color: $color-primary;
+}
+
+.bold {
+  font-weight: 600;
+}
+
+.left {
+  text-align: left;
+}
