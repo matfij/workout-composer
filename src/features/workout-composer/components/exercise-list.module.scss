@@ -1,0 +1,84 @@
+@import '../../../common/styles/variables.scss';
+
+.daysWrapper {
+  width: 100%;
+  margin: auto;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+  gap: 0.5rem;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+}
+
+.dayWrapper {
+  width: 100%;
+  text-align: center;
+  position: relative;
+}
+
+.dayWrapper:nth-child(n) > div {
+  height: 100%;
+}
+
+.standbyWrapper {
+  width: 100%;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: center;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+}
+
+.standbyListWrapper {
+  max-width: 1200px;
+  width: calc(100% - 2rem);
+  margin: auto;
+  padding: 0rem 0rem 1rem 0rem;
+  overflow-x: auto;
+  display: flex;
+  flex-direction: row;
+  gap: 0.5rem;
+  justify-items: start;
+  align-items: stretch;
+
+  @media (min-width: 640px) {
+    flex-direction: row;
+  }
+}
+
+.standbyItem {
+  max-width: 100%;
+  min-width: 100%;
+
+  @media (min-width: 640px) {
+    max-width: 24rem;
+    min-width: calc((100% - 16px) / 3);
+  }
+}
+
+.removeIcon {
+  position: absolute;
+  top: 0.75rem;
+  right: 0.5rem;
+  cursor: pointer;
+}
+
+.dayNameInput {
+  width: 90%;
+  margin: 9px auto 6px auto;
+  font-size: 1.4rem;
+  line-height: 2.2rem;
+  text-align: center;
+  border-bottom: 1px dashed $color-light;
+  background: transparent;
+  color: $color-light;
+}

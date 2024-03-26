@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import Image from 'next/image';
-import style from './exercise-list.module.css';
+import style from './exercise-list.module.scss';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import ExerciseItem from './exercise-item.component';
@@ -87,15 +87,12 @@ export default function ExerciseList() {
                   onBlur={editDayName}
                   className={style.dayNameInput + ' inline'}
                 />
-                <div onDoubleClick={() => removeDay(index)} className="absolute top-3 right-2 cursor-pointer">
-                  <Image src="/icons/remove-icon.svg" alt="unlock" width={20} height={20} />
+                <div onDoubleClick={() => removeDay(index)} className={style.removeIcon}>
+                  <Image src="/icons/remove-icon.svg" alt="remove" width={20} height={20} />
                 </div>
               </>
             ) : (
-              <h3
-                onDoubleClick={() => startEditDay(index, day.day)}
-                className="text-center p-2 text-lg font-semibold text-neutral-100"
-              >
+              <h3 onDoubleClick={() => startEditDay(index, day.day)} className="subtitle">
                 {day.day}
               </h3>
             )}
@@ -115,7 +112,7 @@ export default function ExerciseList() {
       </section>
       {!exerciseBoard.locked && (
         <>
-          <h3 className="text-center mb-2 text-lg font-semibold text-neutral-100 mt-4">Standby</h3>
+          <h3 className="subtitle">Standby</h3>
           <section className={style.standbyWrapper}>
             <Droppable droppableId={STANDBY_ID} direction="horizontal">
               {(provided: DroppableProvided) => (

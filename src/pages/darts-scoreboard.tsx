@@ -53,7 +53,7 @@ export default function DartsScoreboard() {
 
   return (
     <DartsContext.Provider value={{ board, setBoard: handleSetBoard }}>
-      <main className="mainWrapper">
+      <main className="mainWrapper" style={{ maxWidth: '800px' }}>
         <h1 className="title">Darts Scoreboard</h1>
         <p className="subtitle" style={{ marginTop: 0 }}>
           Turn: {board.turnsPassed}
