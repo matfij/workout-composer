@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import style from './exercise-item.module.css';
+import style from './exercise-item.module.scss';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import { Exercise } from '../definitions';
@@ -67,24 +67,22 @@ export default function ExerciseItem(props: Props) {
           className="relative"
         >
           <div className={style.exerciseItem}>
-            <p className="text-md text-yellow-300">
-              {props.exercise.name}
-            </p>
+            <p className="bold primary">{props.exercise.name}</p>
             <p>
               {props.exercise.sets} x {props.exercise.reps}
             </p>
-            <p className="font-thin">{props.exercise.description ? `${props.exercise.description}` : ''}</p>
+            <p className="thin">{props.exercise.description ? `${props.exercise.description}` : ''}</p>
 
             {!exerciseBoard.locked && (
               <>
-                <div onClick={copyExercise} className="absolute top-8 right-2 cursor-pointer">
+                <div onClick={copyExercise} className={style.actionIcon} style={{ top: '27px', right: '3px' }}>
                   <Image src="/icons/copy-icon.svg" alt="copy" width={18} height={18} />
                 </div>
-                <div onClick={editExercise} className="absolute top-2 right-8 cursor-pointer">
-                  <Image src="/icons/edit-icon.svg" alt="edit" width={18} height={18} />
+                <div onClick={editExercise} className={style.actionIcon} style={{ top: '3px', right: '25px' }}>
+                  <Image src="/icons/edit-icon.svg" alt="edit" width={16} height={16} />
                 </div>
-                <div onDoubleClick={removeExercise} className="absolute top-2 right-2 cursor-pointer">
-                  <Image src="/icons/remove-icon.svg" alt="remove" width={20} height={20} />
+                <div onDoubleClick={removeExercise} className={style.actionIcon} style={{ top: '2px', right: '2px' }}>
+                  <Image src="/icons/remove-icon.svg" alt="remove" width={22} height={22} />
                 </div>
               </>
             )}

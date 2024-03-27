@@ -1,0 +1,23 @@
+@import '../../../common/styles/variables.scss';
+@import '../../../common/styles/mixins.scss';
+
+.exerciseItem {
+  @include boxShadow;
+
+  position: relative;
+  margin: 0.25rem 0;
+  padding: 0.25rem;
+  opacity: 0.92;
+  background: $color-dark;
+  color: $color-light;
+  border: 1px solid $color-light;
+
+  &:hover {
+    opacity: 1;
+  }
+}
+
+.actionIcon {
+  position: absolute;
+  cursor: pointer;
+}

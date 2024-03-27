@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import style from './exercise-add-edit.module.css';
+import style from './exercise-add-edit.module.scss';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import UtilService from '../../../common/services/utils-service';
@@ -81,73 +81,69 @@ export default function ExerciseAddEdit(props: Props) {
   };
 
   return (
-    <section className={style.modalBackdrop}>
-      <div onClick={(e) => e.stopPropagation()} className={style.modalWrapper}>
-        <div className="flex items-center p-4 ml-4">
-          <h3 className="text-xl font-semibold text-gray-900">
+    <section className="modalBackdrop">
+      <div onClick={(e) => e.stopPropagation()} className="modalWrapper">
+        <form onSubmit={handleSubmit(addEditExercise)} className="formWrapper">
+          <h3 className="subtitle left dark">
             {editMode ? 'Edit exercise' : 'Add a new exercise'}
           </h3>
-        </div>
-
-        <form onSubmit={handleSubmit(addEditExercise)} className={style.formWrapper}>
-          <fieldset className="mb-4">
-            <label className={style.formLabel} htmlFor="name">
+          <fieldset>
+            <label className="formLabel" htmlFor="name">
               Name
             </label>
-            <input
-              {...register('name', { required: true })}
-              className={style.formInput}
-              id="name"
-              type="text"
-            />
-            {errors.name && <span className="px-2 text-sm text-red-600">Name required</span>}
+            <input {...register('name', { required: true })} className="formInput" id="name" type="text" />
+            {errors.name && <span className="formError">Name required</span>}
           </fieldset>
-          <div className="flex mb-4 gap-2">
-            <fieldset className="w-1/2">
-              <label className={style.formLabel} htmlFor="sets">
+          <div style={{ display: 'flex', gap: '1rem' }}>
+            <fieldset>
+              <label className="formLabel" htmlFor="sets">
                 Sets
               </label>
               <input
                 {...register('sets', { required: true })}
-                className={style.formInput}
+                className="formInput"
                 id="sets"
                 type="number"
               />
-              {errors.sets && <span className="px-2 text-sm text-red-600">Sets required</span>}
+              {errors.sets && <span className="formError">Sets required</span>}
             </fieldset>
 
-            <fieldset className="w-1/2">
-              <label className={style.formLabel} htmlFor="reps">
+            <fieldset>
+              <label className="formLabel" htmlFor="reps">
                 Reps
               </label>
               <input
                 {...register('reps', { required: true })}
-                className={style.formInput}
+                className="formInput"
                 id="reps"
                 type="number"
               />
-              {errors.reps && <span className="px-2 text-sm text-red-600">Reps required</span>}
+              {errors.reps && <span className="formError">Reps required</span>}
             </fieldset>
           </div>
-          <fieldset className="mb-4">
-            <label className={style.formLabel} htmlFor="rest">
+          <fieldset>
+            <label className="formLabel" htmlFor="rest">
               Description (optional)
             </label>
-            <input {...register('description')} className={style.formInput} id="rest" type="text" />
+            <input {...register('description')} className="formInput" id="rest" type="text" />
           </fieldset>
 
-          <div className="flex items-center pt-4 space-x-2">
+          <div className="formActionsWrapper">
             {editMode ? (
-              <button onClick={() => onCancel(true)} type="button" className={style.formBtnCancel}>
+              <button onClick={() => onCancel(true)} type="button" className="formBtnCancel">
                 Cancel
               </button>
             ) : (
-              <button onClick={() => onCancel(false)} type="button" className={style.formBtnCancel}>
+              <button onClick={() => onCancel(false)} type="button" className="formBtnCancel">
                 Cancel
               </button>
             )}
-            <button className={style.formBtnSubmit}>{editMode ? 'Update' : 'Add'}</button>
-            {!editMode && <button onClick={toggleDayAdd} className={style.formBtnSubmit}>Add new day</button>}
+            <button className="formBtnSubmit">{editMode ? 'Update' : 'Add'}</button>
+            {!editMode && (
+              <button onClick={toggleDayAdd} className="formBtnSubmit">
+                Add new day
+              </button>
+            )}
           </div>
         </form>
       </div>
