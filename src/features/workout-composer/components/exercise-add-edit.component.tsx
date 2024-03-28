@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import style from './exercise-add-edit.module.scss';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import UtilService from '../../../common/services/utils-service';
