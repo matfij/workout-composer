@@ -1,6 +1,6 @@
 import React from 'react';
 import Image from 'next/image';
-import style from './action-bar.module.css';
+import style from './action-bar.module.scss';
 import { useState } from 'react';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import ExerciseAddEdit from './exercise-add-edit.component';
@@ -58,30 +58,30 @@ export default function ActionBar() {
     window.history.pushState({}, document.title, '/');
     navigator.clipboard.writeText(`${window.location.href}workout-composer?id=${workoutId}`);
     window.history.pushState({}, document.title, `workout-composer?id=${workoutId}`);
-    ToastService.showInfo('✨ Workout link copied!');
+    ToastService.showInfo('💫 Workout link copied!');
   };
 
   return (
     <div className={style.actionBarWrapper}>
-      <button onClick={navigateHome} className="w-24 bg">
-        <Image src="/icons/home-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+      <button onClick={navigateHome} className={style.navItem}>
+        <Image src="/icons/home-icon.svg" alt="unlock" width={28} height={28} />
         <p>Home</p>
       </button>
       {!exerciseBoard.locked && (
-        <button onClick={toggleExerciseAdd} className="w-24 bg">
-          <Image src="/icons/add-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+        <button onClick={toggleExerciseAdd} className={style.navItem}>
+          <Image src="/icons/add-icon.svg" alt="unlock" width={28} height={28} />
           <p>Add</p>
         </button>
       )}
       {exerciseBoard.locked && (
         <>
           {!isCopying ? (
-            <button onClick={copyLink} className="w-24">
-              <Image src="/icons/share-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+            <button onClick={copyLink} className={style.navItem}>
+              <Image src="/icons/share-icon.svg" alt="unlock" width={28} height={28} />
               <p>Share</p>
             </button>
           ) : (
-            <button className="w-24">
+            <button className={style.navItem}>
               <LoadinIndicator />
               <p>Saving</p>
             </button>
@@ -89,13 +89,13 @@ export default function ActionBar() {
         </>
       )}
       {!exerciseBoard.locked ? (
-        <button onClick={() => toggleBoardLock(true)} className="w-24">
-          <Image src="/icons/lock-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+        <button onClick={() => toggleBoardLock(true)} className={style.navItem}>
+          <Image src="/icons/lock-icon.svg" alt="lock" width={28} height={28} />
           <p>Lock</p>
         </button>
       ) : (
-        <button onClick={() => toggleBoardLock(false)} className="w-24">
-          <Image src="/icons/unlock-icon.svg" alt="unlock" width={30} height={30} className="m-auto" />
+        <button onClick={() => toggleBoardLock(false)} className={style.navItem}>
+          <Image src="/icons/unlock-icon.svg" alt="unlock" width={28} height={28} />
           <p>Unlock</p>
         </button>
       )}

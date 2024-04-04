@@ -1,5 +1,4 @@
 import React from 'react';
-import style from './day-add.module.css';
 import { useForm } from 'react-hook-form';
 import { DayFormFields } from '../definitions';
 import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
@@ -26,27 +25,25 @@ export default function DayAdd(props: Props) {
   };
 
   return (
-    <section className={style.modalBackdrop}>
-      <div className={style.modalWrapper}>
-        <div className="flex items-center p-4 ml-4">
-          <h3 className="text-xl font-semibold text-gray-900">Add a new day</h3>
-        </div>
-        <form onSubmit={handleSubmit(addDay)} className={style.formWrapper}>
-          <fieldset className="mb-4">
-            <label htmlFor="name" className={style.formLabel}>
+    <section className="modalBackdrop">
+      <div className="modalWrapper">
+        <form onSubmit={handleSubmit(addDay)} className="formWrapper">
+          <h3 className="subtitle dark left">Add a new day</h3>
+          <fieldset>
+            <label htmlFor="name" className="formLabel">
               Name
             </label>
             <input
               {...register('name', { required: true })}
-              className={style.formInput}
+              className="formInput"
               id="name"
               type="text"
             />
-            {errors.name && <span className="px-2 text-sm text-red-600">Name required</span>}
+            {errors.name && <span className="formError">Name required</span>}
           </fieldset>
-          <div className="flex items-center pt-4 space-x-2">
-            <button className={style.formBtnSubmit}>Add</button>
-            <button onClick={props.onCancel} type="button" className={style.formBtnCancel}>
+          <div className="formActionsWrapper">
+            <button className="formBtnSubmit">Add</button>
+            <button onClick={props.onCancel} type="button" className="formBtnCancel">
               Cancel
             </button>
           </div>

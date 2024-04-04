@@ -83,9 +83,7 @@ export default function ExerciseAddEdit(props: Props) {
     <section className="modalBackdrop">
       <div onClick={(e) => e.stopPropagation()} className="modalWrapper">
         <form onSubmit={handleSubmit(addEditExercise)} className="formWrapper">
-          <h3 className="subtitle left dark">
-            {editMode ? 'Edit exercise' : 'Add a new exercise'}
-          </h3>
+          <h3 className="subtitle left dark">{editMode ? 'Edit exercise' : 'Add a new exercise'}</h3>
           <fieldset>
             <label className="formLabel" htmlFor="name">
               Name
@@ -128,6 +126,7 @@ export default function ExerciseAddEdit(props: Props) {
           </fieldset>
 
           <div className="formActionsWrapper">
+            <button className="formBtnSubmit">{editMode ? 'Update' : 'Add'}</button>
             {editMode ? (
               <button onClick={() => onCancel(true)} type="button" className="formBtnCancel">
                 Cancel
@@ -137,14 +136,17 @@ export default function ExerciseAddEdit(props: Props) {
                 Cancel
               </button>
             )}
-            <button className="formBtnSubmit">{editMode ? 'Update' : 'Add'}</button>
-            {!editMode && (
-              <button onClick={toggleDayAdd} className="formBtnSubmit">
-                Add new day
-              </button>
-            )}
           </div>
         </form>
+        {!editMode && (
+          <div className="formWrapper">
+            <hr />
+            <div className="subtitle dark">or</div>
+            <button onClick={toggleDayAdd} className="formBtnSubmit">
+              Add new day
+            </button>
+          </div>
+        )}
       </div>
     </section>
   );
