@@ -1,15 +1,14 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { useForm } from 'react-hook-form';
 import { DayFormFields } from '../definitions';
-import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
+import { WorkoutContext } from '../contexts/exercise-board.context';
 
 type Props = {
   onCancel: () => void;
 };
 
 export default function DayAdd(props: Props) {
-  const exerciseBoard = useExerciseBoardContext();
-  const setExerciseBoard = useSetExerciseBoardContext();
+  const { setWorkout } = useContext(WorkoutContext);
   const {
     register,
     handleSubmit,
@@ -17,10 +16,10 @@ export default function DayAdd(props: Props) {
   } = useForm<DayFormFields>();
 
   const addDay = (data: DayFormFields) => {
-    setExerciseBoard({
-      ...exerciseBoard,
-      days: [...exerciseBoard.days, { day: data.name, exercises: [] }],
-    });
+    setWorkout((prev) => ({
+      ...prev,
+      days: [...prev.days, { day: data.name, exercises: [] }],
+    }));
     props.onCancel();
   };
 
@@ -33,12 +32,7 @@ export default function DayAdd(props: Props) {
             <label htmlFor="name" className="formLabel">
               Name
             </label>
-            <input
-              {...register('name', { required: true })}
-              className="formInput"
-              id="name"
-              type="text"
-            />
+            <input {...register('name', { required: true })} className="formInput" id="name" type="text" />
             {errors.name && <span className="formError">Name required</span>}
           </fieldset>
           <div className="formActionsWrapper">

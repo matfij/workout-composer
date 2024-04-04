@@ -3,22 +3,23 @@ import { useState, useEffect } from 'react';
 import UtilService from '../common/services/utils-service';
 import ActionBar from '../features/workout-composer/components/action-bar.component';
 import ExerciseList from '../features/workout-composer/components/exercise-list.component';
-import { useSetExerciseBoardContext } from '../features/workout-composer/contexts/exercise-board.context';
 import { ExerciseBoard } from '../features/workout-composer/definitions';
 import { PersistenceService } from '../features/workout-composer/services/persistence-service';
 import { StorageService } from '../common/services/storage-service';
+import { WorkoutContext } from '../features/workout-composer/contexts/exercise-board.context';
+import { initialBoardData } from '../features/workout-composer/definitions/constants';
 
 type Props = {
   exerciseBoard: ExerciseBoard | undefined;
 };
 
 export default function WorkoutComposer({ exerciseBoard }: Props) {
-  const updateBoardData = useSetExerciseBoardContext();
+  const [workout, setWorkout] = useState<ExerciseBoard>(initialBoardData);
   const [winReady, setwinReady] = useState(false);
 
   useEffect(() => {
     if (exerciseBoard && exerciseBoard.days && exerciseBoard.standby) {
-      updateBoardData({
+      setWorkout({
         days: exerciseBoard.days.map((day) => ({
           day: day.day,
           exercises: day.exercises.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
@@ -35,7 +36,7 @@ export default function WorkoutComposer({ exerciseBoard }: Props) {
     if (!localWorkoutData || !localWorkoutData.days || !localWorkoutData.standby) {
       return;
     }
-    updateBoardData({
+    setWorkout({
       days: localWorkoutData.days.map((day) => ({
         day: day.day,
         exercises: day.exercises.map((exercise) => ({ ...exercise, id: UtilService.generateId() })),
@@ -53,11 +54,13 @@ export default function WorkoutComposer({ exerciseBoard }: Props) {
   }, []);
 
   return (
-    <main className="mainWrapper">
-      <h1 className="title">Workout Composer</h1>
-      {winReady ? <ExerciseList /> : null}
-      <ActionBar />
-    </main>
+    <WorkoutContext.Provider value={{ workout, setWorkout }}>
+      <main className="mainWrapper">
+        <h1 className="title">Workout Composer</h1>
+        {winReady ? <ExerciseList /> : null}
+        <ActionBar />
+      </main>
+    </WorkoutContext.Provider>
   );
 }
 

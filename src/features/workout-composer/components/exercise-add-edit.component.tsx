@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import UtilService from '../../../common/services/utils-service';
 import { Exercise, ExerciseBoard } from '../definitions';
+import { WorkoutContext } from '../contexts/exercise-board.context';
 
 type Props = {
   exercise?: Exercise;
@@ -12,8 +12,7 @@ type Props = {
 
 export default function ExerciseAddEdit(props: Props) {
   const [editMode, setEditMode] = useState(false);
-  const exerciseBoard = useExerciseBoardContext();
-  const setExerciseBoard = useSetExerciseBoardContext();
+  const { workout, setWorkout } = useContext(WorkoutContext);
   const {
     setValue,
     register,
@@ -44,29 +43,29 @@ export default function ExerciseAddEdit(props: Props) {
   };
 
   const addExercise = (exercise: Exercise) => {
-    const newBoardData = exerciseBoard;
+    const newBoardData = workout;
     newBoardData.standby.push(exercise);
-    setExerciseBoard({ ...newBoardData, editedExercise: undefined });
+    setWorkout({ ...newBoardData, editedExercise: undefined });
     onCancel(false);
   };
 
   const editExercise = (editedExercise: Exercise) => {
     if (!props.exercise) return onCancel(false);
     const newBoardData: ExerciseBoard = {
-      days: exerciseBoard.days.map((day) => ({
+      days: workout.days.map((day) => ({
         day: day.day,
         exercises: [
           ...day.exercises.map((exercise) => (exercise.id === editedExercise.id ? editedExercise : exercise)),
         ],
       })),
       standby: [
-        ...exerciseBoard.standby.map((exercise) =>
+        ...workout.standby.map((exercise) =>
           exercise.id === editedExercise.id ? editedExercise : exercise
         ),
       ],
-      locked: exerciseBoard.locked,
+      locked: workout.locked,
     };
-    setExerciseBoard({ ...newBoardData, editedExercise: undefined });
+    setWorkout({ ...newBoardData, editedExercise: undefined });
   };
 
   const toggleDayAdd = () => {
@@ -75,7 +74,7 @@ export default function ExerciseAddEdit(props: Props) {
   };
 
   const onCancel = (reset: boolean) => {
-    if (reset) setExerciseBoard({ ...exerciseBoard, editedExercise: undefined });
+    if (reset) setWorkout({ ...workout, editedExercise: undefined });
     else props.onCancel();
   };
 

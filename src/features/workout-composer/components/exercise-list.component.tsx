@@ -1,16 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import Image from 'next/image';
 import style from './exercise-list.module.scss';
 import { DragDropContext, Droppable, DroppableProvided, DropResult } from 'react-beautiful-dnd';
-import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import ExerciseItem from './exercise-item.component';
 import { STANDBY_ID } from '../definitions/constants';
+import { WorkoutContext } from '../contexts/exercise-board.context';
 
 export default function ExerciseList() {
   const [editDay, setEditDay] = useState(-1);
   const [dayName, setDayName] = useState('');
-  const exerciseBoard = useExerciseBoardContext();
-  const setExerciseBoard = useSetExerciseBoardContext();
+  const { workout, setWorkout } = useContext(WorkoutContext);
 
   const onDragEnd = (result: DropResult) => {
     if (!result.destination) return;
@@ -22,15 +21,15 @@ export default function ExerciseList() {
 
     const movedExercise =
       startDay === STANDBY_ID
-        ? exerciseBoard.standby[startIndex]
-        : exerciseBoard.days.find((day) => day.day === startDay)?.exercises[startIndex];
+        ? workout.standby[startIndex]
+        : workout.days.find((day) => day.day === startDay)?.exercises[startIndex];
 
-    startDay === STANDBY_ID ? exerciseBoard.standby.splice(startIndex, 1) : null;
-    endDay === STANDBY_ID && movedExercise ? exerciseBoard.standby.splice(endIndex, 0, movedExercise) : null;
+    startDay === STANDBY_ID ? workout.standby.splice(startIndex, 1) : null;
+    endDay === STANDBY_ID && movedExercise ? workout.standby.splice(endIndex, 0, movedExercise) : null;
 
-    setExerciseBoard({
+    setWorkout({
       days: [
-        ...exerciseBoard.days.map((day) => {
+        ...workout.days.map((day) => {
           if (day.day === startDay) {
             day.exercises.splice(startIndex, 1);
           }
@@ -40,13 +39,13 @@ export default function ExerciseList() {
           return day;
         }),
       ],
-      standby: exerciseBoard.standby,
-      locked: exerciseBoard.locked,
+      standby: workout.standby,
+      locked: workout.locked,
     });
   };
 
   const startEditDay = (index: number, name: string) => {
-    if (exerciseBoard.locked) return;
+    if (workout.locked) return;
     setEditDay(index);
     setDayName(name);
   };
@@ -57,17 +56,17 @@ export default function ExerciseList() {
   };
 
   const editDayName = () => {
-    setExerciseBoard({
-      ...exerciseBoard,
-      days: exerciseBoard.days.map((day, index) => (index === editDay ? { ...day, day: dayName } : day)),
+    setWorkout({
+      ...workout,
+      days: workout.days.map((day, index) => (index === editDay ? { ...day, day: dayName } : day)),
     });
     setEditDay(-1);
   };
 
   const removeDay = (removeIndex: number) => {
-    setExerciseBoard({
-      ...exerciseBoard,
-      days: exerciseBoard.days.filter((_, index) => index !== removeIndex),
+    setWorkout({
+      ...workout,
+      days: workout.days.filter((_, index) => index !== removeIndex),
     });
     setEditDay(-1);
   };
@@ -75,7 +74,7 @@ export default function ExerciseList() {
   return (
     <DragDropContext onDragEnd={onDragEnd}>
       <section className={style.daysWrapper}>
-        {exerciseBoard.days.map((day, index) => (
+        {workout.days.map((day, index) => (
           <div key={day.day} className={style.dayWrapper}>
             {editDay === index ? (
               <>
@@ -110,7 +109,7 @@ export default function ExerciseList() {
           </div>
         ))}
       </section>
-      {!exerciseBoard.locked && (
+      {!workout.locked && (
         <>
           <h3 className="subtitle">Standby</h3>
           <section className={style.standbyWrapper}>
@@ -121,7 +120,7 @@ export default function ExerciseList() {
                   ref={provided.innerRef}
                   className={style.standbyListWrapper}
                 >
-                  {exerciseBoard.standby.map((exercise, index) => (
+                  {workout.standby.map((exercise, index) => (
                     <div key={index} className={style.standbyItem}>
                       <ExerciseItem exercise={exercise} index={index} />
                     </div>

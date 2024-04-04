@@ -1,10 +1,10 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import Image from 'next/image';
 import style from './exercise-item.module.scss';
 import { Draggable, DraggableProvided } from 'react-beautiful-dnd';
-import { useExerciseBoardContext, useSetExerciseBoardContext } from '../contexts/exercise-board.context';
 import { Exercise } from '../definitions';
 import UtilService from '../../../common/services/utils-service';
+import { WorkoutContext } from '../contexts/exercise-board.context';
 
 type Props = {
   exercise: Exercise;
@@ -12,30 +12,29 @@ type Props = {
 };
 
 export default function ExerciseItem(props: Props) {
-  const exerciseBoard = useExerciseBoardContext();
-  const setExerciseBoard = useSetExerciseBoardContext();
+  const { workout, setWorkout } = useContext(WorkoutContext);
 
   const editExercise = () => {
-    setExerciseBoard({
-      ...exerciseBoard,
+    setWorkout({
+      ...workout,
       editedExercise: props.exercise,
     });
   };
 
   const removeExercise = () => {
-    setExerciseBoard({
-      days: exerciseBoard.days.map((day) => ({
+    setWorkout({
+      days: workout.days.map((day) => ({
         day: day.day,
         exercises: day.exercises.filter((exercise) => exercise.id !== props.exercise.id),
       })),
-      standby: exerciseBoard.standby.filter((exercise) => exercise.id !== props.exercise.id),
-      locked: exerciseBoard.locked,
+      standby: workout.standby.filter((exercise) => exercise.id !== props.exercise.id),
+      locked: workout.locked,
     });
   };
 
   const copyExercise = () => {
-    setExerciseBoard({
-      days: exerciseBoard.days.map((day) => ({
+    setWorkout({
+      days: workout.days.map((day) => ({
         day: day.day,
         exercises: day.exercises.flatMap((exercise) => {
           if (exercise.id === props.exercise.id)
@@ -43,12 +42,12 @@ export default function ExerciseItem(props: Props) {
           return exercise;
         }),
       })),
-      standby: exerciseBoard.standby.flatMap((exercise) => {
+      standby: workout.standby.flatMap((exercise) => {
         if (exercise.id === props.exercise.id)
           return [exercise, { ...exercise, id: UtilService.generateId() }];
         return exercise;
       }),
-      locked: exerciseBoard.locked,
+      locked: workout.locked,
     });
   };
 
@@ -57,7 +56,7 @@ export default function ExerciseItem(props: Props) {
       key={props.exercise.id}
       draggableId={props.exercise.id}
       index={props.index}
-      isDragDisabled={exerciseBoard.locked}
+      isDragDisabled={workout.locked}
     >
       {(provided: DraggableProvided) => (
         <div
@@ -73,15 +72,27 @@ export default function ExerciseItem(props: Props) {
             </p>
             <p className="thin">{props.exercise.description ? `${props.exercise.description}` : ''}</p>
 
-            {!exerciseBoard.locked && (
+            {!workout.locked && (
               <>
-                <div onClick={copyExercise} className={style.actionIcon} style={{ top: '27px', right: '3px' }}>
+                <div
+                  onClick={copyExercise}
+                  className={style.actionIcon}
+                  style={{ top: '27px', right: '3px' }}
+                >
                   <Image src="/icons/copy-icon.svg" alt="copy" width={18} height={18} />
                 </div>
-                <div onClick={editExercise} className={style.actionIcon} style={{ top: '3px', right: '25px' }}>
+                <div
+                  onClick={editExercise}
+                  className={style.actionIcon}
+                  style={{ top: '3px', right: '25px' }}
+                >
                   <Image src="/icons/edit-icon.svg" alt="edit" width={16} height={16} />
                 </div>
-                <div onDoubleClick={removeExercise} className={style.actionIcon} style={{ top: '2px', right: '2px' }}>
+                <div
+                  onDoubleClick={removeExercise}
+                  className={style.actionIcon}
+                  style={{ top: '2px', right: '2px' }}
+                >
                   <Image src="/icons/remove-icon.svg" alt="remove" width={22} height={22} />
                 </div>
               </>
