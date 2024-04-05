@@ -17,6 +17,7 @@
 
 .dayWrapper {
   width: 100%;
+  min-height: 80px;
   text-align: center;
   position: relative;
 }
@@ -27,11 +28,14 @@
 
 .standbyWrapper {
   width: 100%;
+  min-height: 80px;
   margin: auto;
   display: flex;
   flex-direction: column;
   align-items: stretch;
   justify-content: center;
+  text-align: center;
+  background: $color-dark;
 
   @media (min-width: 640px) {
     flex-direction: row;
