@@ -99,7 +99,6 @@ export default function ExerciseAddEdit(props: Props) {
                 {...register('sets', { required: true })}
                 className="formInput"
                 id="sets"
-                type="number"
               />
               {errors.sets && <span className="formError">Sets required</span>}
             </fieldset>
@@ -112,7 +111,6 @@ export default function ExerciseAddEdit(props: Props) {
                 {...register('reps', { required: true })}
                 className="formInput"
                 id="reps"
-                type="number"
               />
               {errors.reps && <span className="formError">Reps required</span>}
             </fieldset>

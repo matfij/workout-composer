@@ -1,8 +1,8 @@
 export interface Exercise {
   id: string;
   name: string;
-  reps?: number;
-  sets?: number;
+  reps?: string;
+  sets?: string;
   description?: string;
 }
 
