@@ -4,7 +4,7 @@ import style from './update-scores-form.module.scss';
 import ToastService from '../../../common/services/toast-service';
 import { ALLOWED_SCORES, Place } from '../definitions/constants';
 import UtilService from '../../../common/services/utils-service';
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
 import { DartsContext } from '../contexts/darts-scoreboard.context';
 
 type Props = {
