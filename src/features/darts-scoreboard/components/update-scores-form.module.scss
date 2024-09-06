@@ -2,30 +2,44 @@
 
 .formFieldset {
   display: grid;
-  grid-template-columns: 5fr 3fr 1fr;
+  grid-template-columns: 6fr 2fr 2fr 2fr;
   justify-items: stretch;
   align-items: center;
   gap: 1rem;
   margin: 8px 0;
 }
 
-.factorField {
-  transition: all 1s;
+.factorBtn {
+  @include boxShadowSmall;
+
+  height: 42px;
+
+  &:disabled {
+    opacity: 0.7;
+    filter: grayscale(0.4);
+  }
 }
 
-.factorField1 {
-  background-color: #4caf50;
-  height: 10px;
+.factorBtn1 {
+  border-right: 2px solid #4caf50;
+  border-bottom: 2px solid #4caf50;
 }
 
-.factorField2 {
-  background-color: #ffc107;
-  height: 12px;
+.factorBtn2 {
+  border-right: 2px solid #ffc107;
+  border-bottom: 2px solid #ffc107;
 }
 
-.factorField3 {
-  background-color: #f44336;
-  height: 14px;
+.factorBtn3 {
+  border-right: 2px solid #f44336;
+  border-bottom: 2px solid #f44336;
+}
+
+.factorBtnActive {
+  @include boxShadow;
+
+  font-weight: bold;
+  border-width: 4px;
 }
 
 .factorLabel {

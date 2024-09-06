@@ -2,9 +2,9 @@ import { useForm } from 'react-hook-form';
 import { DartsUser, UpdateScoresFields } from '../definitions';
 import style from './update-scores-form.module.scss';
 import ToastService from '../../../common/services/toast-service';
-import { ALLOWED_FACTORS, ALLOWED_SCORES, Place } from '../definitions/constants';
+import { ALLOWED_SCORES, Place } from '../definitions/constants';
 import UtilService from '../../../common/services/utils-service';
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { DartsContext } from '../contexts/darts-scoreboard.context';
 
 type Props = {
@@ -13,7 +13,7 @@ type Props = {
 };
 
 export default function UpdateScoresForm(props: Props) {
-  const { register, handleSubmit, watch } = useForm<UpdateScoresFields>({
+  const { register, handleSubmit, watch, setValue } = useForm<UpdateScoresFields>({
     defaultValues: {
       throw1Factor: 1,
       throw2Factor: 1,
@@ -24,10 +24,6 @@ export default function UpdateScoresForm(props: Props) {
 
   const validateScore = (score: number) => {
     return ALLOWED_SCORES.includes(+score);
-  };
-
-  const validateFactor = (factor: number) => {
-    return ALLOWED_FACTORS.includes(+factor);
   };
 
   const updateScores = (data: UpdateScoresFields) => {
@@ -116,41 +112,6 @@ export default function UpdateScoresForm(props: Props) {
     return nextUserIndex;
   };
 
-  const getFactorInputClass = (factor: number) => {
-    switch (+factor) {
-      case 1: {
-        return `${style.factorField} ${style.factorField1}`;
-      }
-      case 2: {
-        return `${style.factorField} ${style.factorField2}`;
-      }
-      case 3: {
-        return `${style.factorField} ${style.factorField3}`;
-      }
-    }
-  };
-
-  const getFactorLabel = (factor: number) => {
-    switch (+factor) {
-      case 1: {
-        return <p className={`${style.factorLabel} ${style.factorLabel1}`}>×1</p>;
-      }
-      case 2: {
-        return <p className={`${style.factorLabel} ${style.factorLabel2}`}>×2</p>;
-      }
-      case 3: {
-        return <p className={`${style.factorLabel} ${style.factorLabel3}`}>×3</p>;
-      }
-    }
-  };
-
-  const getMaxFactor = (score: number) => {
-    if (+score < 25) {
-      return 3;
-    }
-    return 2;
-  };
-
   return (
     <section className="modalBackdrop">
       <div className="modalWrapper">
@@ -158,58 +119,47 @@ export default function UpdateScoresForm(props: Props) {
           <h3 className="subtitle dark left">
             Update <span className="bold">{props.user.name}&apos;s</span> scores
           </h3>
-          <fieldset className={style.formFieldset}>
-            <input
-              {...register('throw1', { validate: (x) => validateScore(x) })}
-              className="formInput"
-              type="number"
-              min={0}
-              max={25}
-            />
-            <input
-              {...register('throw1Factor', { validate: (x) => validateFactor(x) })}
-              className={getFactorInputClass(watch('throw1Factor'))}
-              type="range"
-              min="1"
-              max={getMaxFactor(watch('throw1'))}
-            />
-            {getFactorLabel(watch('throw1Factor'))}
-          </fieldset>
-          <fieldset className={style.formFieldset}>
-            <input
-              {...register('throw2', { validate: (x) => validateScore(x) })}
-              className="formInput"
-              id="throw2"
-              type="number"
-              min={0}
-              max={25}
-            />
-            <input
-              {...register('throw2Factor', { validate: (x) => validateFactor(x) })}
-              className={getFactorInputClass(watch('throw2Factor'))}
-              type="range"
-              min="1"
-              max={getMaxFactor(watch('throw2'))}
-            />
-            {getFactorLabel(watch('throw2Factor'))}
-          </fieldset>
-          <fieldset className={style.formFieldset}>
-            <input
-              {...register('throw3', { validate: (x) => validateScore(x) })}
-              className="formInput"
-              type="number"
-              min={0}
-              max={25}
-            />
-            <input
-              {...register('throw3Factor', { validate: (x) => validateFactor(x) })}
-              className={getFactorInputClass(watch('throw3Factor'))}
-              type="range"
-              min="1"
-              max={getMaxFactor(watch('throw3'))}
-            />
-            {getFactorLabel(watch('throw3Factor'))}
-          </fieldset>
+          {([1, 2, 3] as const).map((throwIndex) => (
+            <fieldset key={throwIndex} className={style.formFieldset}>
+              <input
+                {...register(`throw${throwIndex}`, { validate: (x) => validateScore(x) })}
+                onKeyUp={() => setValue(`throw${throwIndex}Factor`, 1)}
+                className="formInput"
+                type="number"
+                min={0}
+                max={25}
+              />
+              <button
+                type="button"
+                className={`${style.factorBtn} ${style.factorBtn1} ${
+                  watch(`throw${throwIndex}Factor`) === 1 ? style.factorBtnActive : ''
+                }`}
+                onClick={() => setValue(`throw${throwIndex}Factor`, 1)}
+              >
+                ×1
+              </button>
+              <button
+                type="button"
+                className={`${style.factorBtn} ${style.factorBtn2} ${
+                  watch(`throw${throwIndex}Factor`) === 2 ? style.factorBtnActive : ''
+                }`}
+                onClick={() => setValue(`throw${throwIndex}Factor`, 2)}
+              >
+                ×2
+              </button>
+              <button
+                type="button"
+                className={`${style.factorBtn} ${style.factorBtn3} ${
+                  watch(`throw${throwIndex}Factor`) === 3 ? style.factorBtnActive : ''
+                }`}
+                onClick={() => watch(`throw${throwIndex}`) < 25 && setValue(`throw${throwIndex}Factor`, 3)}
+                disabled={watch(`throw${throwIndex}`) >= 25}
+              >
+                ×3
+              </button>
+            </fieldset>
+          ))}
+
           <div className="formActionsWrapper">
             <button type="submit" className="formBtnSubmit">
               Confirm
