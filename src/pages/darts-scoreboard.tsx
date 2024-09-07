@@ -14,8 +14,8 @@ import { DEFAULT_STARTING_SCORES, Place } from '../features/darts-scoreboard/def
 export default function DartsScoreboard() {
   const [board, setBoard] = useState<DartsBoard>({ users: [], currentUserIndex: 0, turnsPassed: 1 });
   const [showAddUserForm, setShowAddUserForm] = useState(false);
-  const [showResetScoresDialog, setShowResetScoresDialog] = useState(false);
-  const [showClearScoresDialog, setShowClearScoresDialog] = useState(false);
+  const [showResetGameDialog, setShowResetGameDialog] = useState(false);
+  const [showUndoScoresDialog, setShowUndoScoresDialog] = useState(false);
 
   useEffect(() => {
     const savedData = loadDartsScoreboardData();
@@ -35,14 +35,31 @@ export default function DartsScoreboard() {
       }));
       handleSetBoard({ users: newUsers, currentUserIndex: 0, turnsPassed: 1 });
     }
-    setShowResetScoresDialog(false);
+    setShowResetGameDialog(false);
   };
 
-  const handleClearScoresDialogAction = (confirmClear: boolean) => {
+  const handleClearAllGameDataDialogAction = (confirmClear: boolean) => {
     if (confirmClear) {
       handleSetBoard({ users: [], currentUserIndex: 0, turnsPassed: 1 });
     }
-    setShowClearScoresDialog(false);
+    setShowResetGameDialog(false);
+  };
+
+  const handleUndoLastAction = (confirm: boolean) => {
+    if (confirm) {
+      const lastUser = board.users[board.currentUserIndex - 1];
+      if (!lastUser || lastUser.throws.length < 3) {
+        return;
+      }
+      const undoneThrows = lastUser.throws.splice(-3);
+      board.currentUserIndex -= 1;
+      if (board.currentUserIndex < 0) {
+        board.currentUserIndex = board.users.length - 1;
+      }
+      lastUser.scores += undoneThrows.reduce((sum, curr) => sum + curr, 0);
+      handleSetBoard(board);
+    }
+    setShowUndoScoresDialog(false);
   };
 
   const handleSetBoard = (newBoard: DartsBoard) =>
@@ -63,22 +80,25 @@ export default function DartsScoreboard() {
         ))}
       </main>
       {showAddUserForm && <AddUserForm onCancel={() => setShowAddUserForm(false)} />}
-      {showResetScoresDialog && (
+
+      {showResetGameDialog && (
         <ConfirmDialog
-          onAction={(confirmReset) => handleResetScoresDialogAction(confirmReset)}
-          text={'Do you want to reset the score board data?'}
+          onAction={(confirm) => handleResetScoresDialogAction(confirm)}
+          onActionAlt={(confirm) => handleClearAllGameDataDialogAction(confirm)}
+          text={'Do you want to clear user scores?'}
+          textAlt={'Do you want to clear all game data?'}
         />
       )}
-      {showClearScoresDialog && (
+      {showUndoScoresDialog && (
         <ConfirmDialog
-          onAction={(confirmClear) => handleClearScoresDialogAction(confirmClear)}
-          text={'Do you want to clear the score board data?'}
+          onAction={(confirmReset) => handleUndoLastAction(confirmReset)}
+          text={'Do you want undo last action?'}
         />
       )}
       <ActionBar
         showAddUserForm={() => setShowAddUserForm(true)}
-        showResetGameDialog={() => setShowResetScoresDialog(true)}
-        showClearGameDialog={() => setShowClearScoresDialog(true)}
+        showResetGameDialog={() => setShowResetGameDialog(true)}
+        showUndoDialog={() => setShowUndoScoresDialog(true)}
       />
     </DartsContext.Provider>
   );

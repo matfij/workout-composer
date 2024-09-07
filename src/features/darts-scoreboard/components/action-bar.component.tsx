@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 type Props = {
   showAddUserForm: () => void;
   showResetGameDialog: () => void;
-  showClearGameDialog: () => void;
+  showUndoDialog: () => void;
 };
 
 export default function ActionBar(props: Props) {
@@ -27,12 +27,12 @@ export default function ActionBar(props: Props) {
         <p>Add user</p>
       </button>
       <button onClick={props.showResetGameDialog} className={style.navItem}>
-        <Image src="/icons/reset-icon.svg" alt="reset" width={28} height={28} />
+        <Image src="/icons/erase-icon.svg" alt="clear" width={28} height={28} />
         <p>Reset</p>
       </button>
-      <button onClick={props.showClearGameDialog} className={style.navItem}>
-        <Image src="/icons/erase-icon.svg" alt="clear" width={28} height={28} />
-        <p>Clear</p>
+      <button onClick={props.showUndoDialog} className={style.navItem}>
+        <Image src="/icons/undo-icon.svg" alt="reset" width={28} height={28} />
+        <p>Undo</p>
       </button>
     </nav>
   );
