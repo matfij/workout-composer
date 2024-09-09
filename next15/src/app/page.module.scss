@@ -1,0 +1,34 @@
+@import '../shared/styles/variables.scss';
+
+.mainWrapper {
+    width: 90%;
+    max-width: 36rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 5rem 0;
+}
+
+.brandItem {
+    margin-bottom: 2.5rem;
+    color: $color-primary;
+}
+
+.navItem {
+    width: 100%;
+    display: block;
+    padding: 2rem 0;
+    line-height: 2;
+    font-size: 20px;
+    text-align: center;
+    color: $color-light;
+    background: darken($color-dark, 5);
+
+    &:hover {
+        cursor: pointer;
+        color: $color-primary;
+        background: darken($color-dark, 10);
+    }
+}
