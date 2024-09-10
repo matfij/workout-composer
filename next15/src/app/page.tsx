@@ -12,6 +12,9 @@ export default function App() {
                 <Link href={'/darts-manager'} className={style.navItem}>
                     Darts Manager
                 </Link>
+                <Link href={'/user-section'} className={style.navItem}>
+                    User Section
+                </Link>
             </main>
         </div>
     );

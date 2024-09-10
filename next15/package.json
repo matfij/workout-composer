@@ -10,6 +10,7 @@
         "lint": "next lint"
     },
     "dependencies": {
+        "@vercel/kv": "^2.0.0",
         "next": "^15.0.0-rc.0",
         "react": "^19.0.0-rc-a03254bc-20240905",
         "react-dom": "^19.0.0-rc-a03254bc-20240905"
