@@ -1,21 +1,18 @@
 'use client';
 
 import style from './page.module.scss';
-import { useFormState } from 'react-dom';
-import { login, register } from './_actions/user-actions';
+import { login } from './_actions/user-actions';
 import Link from 'next/link';
+import { useActionState } from 'react';
 
 export default function UserSectionPage() {
-    const [error, action] = useFormState(login, {
-        username: '',
-        password: '',
-    });
+    const [errorMessage, formAction, isPending] = useActionState(login, undefined);
 
     return (
         <main className={style.mainWrapper}>
             <h2>User Section - Login</h2>
             <hr />
-            <form action={action}>
+            <form action={formAction}>
                 <fieldset>
                     <label htmlFor="username">Username</label>
                     <input id="username" name="username" type="text" />
