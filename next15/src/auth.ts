@@ -4,7 +4,7 @@ import Credentials from 'next-auth/providers/credentials';
 import { DatabaseManager } from './shared/managers/database-manager';
 import { User } from './app/user-section/_definitions/types';
 
-const getUser = async (credentials: Partial<Record<string, unknown>>): Promise<User | null> => {
+const getUser = async (credentials: Partial<Record<string, unknown>>): Promise<User> => {
     if (
         !credentials.username ||
         typeof credentials.username !== 'string' ||

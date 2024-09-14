@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import style from './page.module.scss';
+import { auth } from '../auth';
 
-export default function App() {
+export default async function App() {
+    const session = await auth();
+
     return (
         <div>
             <main className={style.mainWrapper}>
@@ -16,6 +19,7 @@ export default function App() {
                     User Section
                 </Link>
             </main>
+            <aside>{session && <p>Signed as: {session?.user?.name}</p>}</aside>
         </div>
     );
 }

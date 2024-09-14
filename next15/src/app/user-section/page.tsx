@@ -4,12 +4,15 @@ import style from './page.module.scss';
 import { login } from './_actions/user-actions';
 import Link from 'next/link';
 import { useActionState } from 'react';
+import { useSession } from 'next-auth/react';
 
 export default function UserSectionPage() {
+    const { data: session, status } = useSession();
     const [errorMessage, formAction, isPending] = useActionState(login, undefined);
 
     return (
         <main className={style.mainWrapper}>
+            {session?.user?.name}
             <h2>User Section - Login</h2>
             <hr />
             <form action={formAction}>
