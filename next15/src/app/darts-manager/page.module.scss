@@ -1,0 +1,39 @@
+@import '../../shared/styles/variables.scss';
+@import '../../shared/styles/mixins.scss';
+
+.mainWrapper {
+    width: 90%;
+    max-width: 36rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 3rem 0;
+}
+
+.playerCardWrapper {
+    @include boxShadow;
+
+    width: 100%;
+    position: relative;
+    opacity: 0.9;
+    background: $color-dark;
+    color: $color-light;
+    border: 2px solid $color-light;
+    padding: 0.25rem 0.5rem;
+
+    .playerCardWrapperActive {
+        opacity: 1;
+        border: 3px solid $color-primary;
+    }
+
+    .updateScoresBtn {
+        position: absolute;
+        top: 0.5rem;
+        right: 0.5rem;
+        cursor: pointer;
+        background: none;
+        border: none;
+    }
+}
