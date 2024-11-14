@@ -2,7 +2,7 @@
 
 import style from './page.module.scss';
 import { useDartsStore } from './darts-store';
-import { PlayerCardComponent } from './player-card';
+import { PlayerCardComponent } from './player-card-component';
 
 export const dynamic = 'force-dynamic';
 

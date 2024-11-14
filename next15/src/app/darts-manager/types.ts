@@ -6,8 +6,7 @@ export type DartsGame = {
 
 export type DartsPlayer = {
     name: string;
-    scores: number;
-    startingScores: number;
+    points: number;
     throws: number[];
     place: DartsPlayerPlace;
 };
@@ -18,3 +17,12 @@ export enum DartsPlayerPlace {
     Second = 'Second',
     Third = 'Third',
 }
+
+export type PlayerScoreForm = {
+    throw1: number;
+    throw2: number;
+    throw3: number;
+    factor1: number;
+    factor2: number;
+    factor3: number;
+};
