@@ -1,8 +1,10 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 
+const IMG_SIZE = { width: 28, height: 28 };
+
 type MenuComponentProps = {
-    showAddUserForm: () => void;
+    showAddPlayerForm: () => void;
     showResetGameDialog: () => void;
     showUndoDialog: () => void;
 };
@@ -10,24 +12,22 @@ type MenuComponentProps = {
 export const MenuComponent = (props: MenuComponentProps) => {
     const router = useRouter();
 
-    const navigateHome = () => router.push('/');
-
     return (
         <nav className="menuWrapper">
-            <button onClick={navigateHome} className='menuItem'>
-                <Image src="/icons/home-icon.svg" alt="home" width={28} height={28} />
+            <button onClick={() => router.push('/')} className="menuItem">
+                <Image src="/icons/home-icon.svg" alt="home" {...IMG_SIZE} />
                 <p>Home</p>
             </button>
-            <button onClick={props.showAddUserForm} className='menuItem'>
-                <Image src="/icons/add-user-icon.svg" alt="add" width={28} height={28} />
-                <p>Add user</p>
+            <button onClick={props.showAddPlayerForm} className="menuItem">
+                <Image src="/icons/add-player-icon.svg" alt="add" {...IMG_SIZE} />
+                <p>Add player</p>
             </button>
-            <button onClick={props.showResetGameDialog} className='menuItem'>
-                <Image src="/icons/reset-icon.svg" alt="reset" width={28} height={28} />
+            <button onClick={props.showResetGameDialog} className="menuItem">
+                <Image src="/icons/reset-icon.svg" alt="reset" {...IMG_SIZE} />
                 <p>Reset</p>
             </button>
-            <button onClick={props.showUndoDialog} className='menuItem'>
-                <Image src="/icons/undo-icon.svg" alt="undo" width={28} height={28} />
+            <button onClick={props.showUndoDialog} className="menuItem">
+                <Image src="/icons/undo-icon.svg" alt="undo" {...IMG_SIZE} />
                 <p>Undo</p>
             </button>
         </nav>

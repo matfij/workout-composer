@@ -5,12 +5,13 @@ import { useDartsStore } from './darts-store';
 import { PlayerCardComponent } from './player-card-component';
 import { MenuComponent } from './menu-component';
 import { useState } from 'react';
+import { AddPlayerComponent } from './add-player-component';
 
 export const dynamic = 'force-dynamic';
 
 export default function DartsManagerPage() {
     const { players } = useDartsStore();
-    const [showAddUserForm, setShowAddUserForm] = useState(false);
+    const [showAddPlayerForm, setShowAddPlayerForm] = useState(false);
     const [showResetGameDialog, setShowResetGameDialog] = useState(false);
     const [showUndoScoresDialog, setShowUndoScoresDialog] = useState(false);
 
@@ -23,10 +24,11 @@ export default function DartsManagerPage() {
                 ))}
             </main>
             <MenuComponent
-                showAddUserForm={() => setShowAddUserForm(true)}
+                showAddPlayerForm={() => setShowAddPlayerForm(true)}
                 showResetGameDialog={() => setShowResetGameDialog(true)}
                 showUndoDialog={() => setShowUndoScoresDialog(true)}
             />
+            {showAddPlayerForm && <AddPlayerComponent onCancel={() => setShowAddPlayerForm(false)} />}
         </>
     );
 }
