@@ -2,6 +2,8 @@ import { useForm } from 'react-hook-form';
 import { useDartsStore } from './darts-store';
 import { DartsPlayerPlace } from './types';
 
+const DEFAULT_POINTS = 501;
+
 type AddPlayerComponentProps = {
     onCancel: () => void;
 };
@@ -41,7 +43,7 @@ export const AddPlayerComponent = (props: AddPlayerComponentProps) => {
                         </label>
                         <input
                             {...register('points', { required: true })}
-                            defaultValue={501}
+                            defaultValue={DEFAULT_POINTS}
                             className="formInput"
                             type="number"
                         />

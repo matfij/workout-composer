@@ -6,14 +6,20 @@ import { PlayerCardComponent } from './player-card-component';
 import { MenuComponent } from './menu-component';
 import { useState } from 'react';
 import { AddPlayerComponent } from './add-player-component';
+import { ConfirmModalComponent } from '../../shared/components/confirm-modal-component';
 
 export const dynamic = 'force-dynamic';
 
 export default function DartsManagerPage() {
-    const { players } = useDartsStore();
+    const { players, resetGame } = useDartsStore();
     const [showAddPlayerForm, setShowAddPlayerForm] = useState(false);
     const [showResetGameDialog, setShowResetGameDialog] = useState(false);
     const [showUndoScoresDialog, setShowUndoScoresDialog] = useState(false);
+
+    const onResetGame = () => {
+        resetGame();
+        setShowResetGameDialog(false);
+    };
 
     return (
         <>
@@ -29,6 +35,14 @@ export default function DartsManagerPage() {
                 showUndoDialog={() => setShowUndoScoresDialog(true)}
             />
             {showAddPlayerForm && <AddPlayerComponent onCancel={() => setShowAddPlayerForm(false)} />}
+            {showResetGameDialog && (
+                <ConfirmModalComponent
+                    text={'Do you want to clear user scores?'}
+                    textAlt={'Do you want to clear all game data?'}
+                    onAction={() => setShowResetGameDialog(false)}
+                    onActionAlt={onResetGame}
+                />
+            )}
         </>
     );
 }
