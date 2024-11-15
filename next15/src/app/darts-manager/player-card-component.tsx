@@ -5,22 +5,28 @@ import Image from 'next/image';
 import { PlayerScoresComponent } from './player-scores-component';
 import { useState } from 'react';
 
-export const PlayerCardComponent = ({ player }: { player: DartsPlayer }) => {
+type PlayerCardComponentProps = {
+    player: DartsPlayer;
+};
+
+export const PlayerCardComponent = (props: PlayerCardComponentProps) => {
     const { players, currentPlayerIndex } = useDartsStore();
     const [showScoresForm, setShowScoresForm] = useState(false);
 
-    const latestThrows = player.throws.length ? player.throws.slice(-3) : '---';
+    const latestThrows = props.player.throws.length ? props.player.throws.slice(-3) : '---';
 
     const isActive =
-        player.place === DartsPlayerPlace.None &&
-        players.findIndex((p) => p.name === player.name) === currentPlayerIndex;
+        props.player.place === DartsPlayerPlace.None &&
+        players.findIndex((p) => p.name === props.player.name) === currentPlayerIndex;
+
+    console.log({ currentPlayerIndex });
 
     const wrapperClass = isActive
         ? `${style.playerCardWrapper} ${style.playerCardWrapperActive}`
         : `${style.playerCardWrapper}`;
 
     const getPlaceIcon = () => {
-        switch (player.place) {
+        switch (props.player.place) {
             case DartsPlayerPlace.First:
                 return '🥇';
             case DartsPlayerPlace.Second:
@@ -37,10 +43,10 @@ export const PlayerCardComponent = ({ player }: { player: DartsPlayer }) => {
             <div className={wrapperClass}>
                 <div style={{ marginRight: '1.75rem' }}>
                     <h3 className="subtitle left bold" style={{ margin: '0.25rem 0' }}>
-                        {getPlaceIcon()} {player.name}
+                        {getPlaceIcon()} {props.player.name}
                     </h3>
                     <hr />
-                    <p className="subtitle primary">{player.points}</p>
+                    <p className="subtitle primary">{props.player.points}</p>
                     <hr />
                     <p>{latestThrows}</p>
                 </div>
@@ -50,7 +56,9 @@ export const PlayerCardComponent = ({ player }: { player: DartsPlayer }) => {
                     </button>
                 )}
             </div>
-            {showScoresForm && <PlayerScoresComponent player={player} />}
+            {showScoresForm && (
+                <PlayerScoresComponent player={props.player} onCancel={() => setShowScoresForm(false)} />
+            )}
         </>
     );
 };

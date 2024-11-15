@@ -7,6 +7,7 @@ import { useDartsStore } from './darts-store';
 
 type PlayerScoresComponentProps = {
     player: DartsPlayer;
+    onCancel: () => void;
 };
 
 export const PlayerScoresComponent = (props: PlayerScoresComponentProps) => {
@@ -108,7 +109,7 @@ export const PlayerScoresComponent = (props: PlayerScoresComponentProps) => {
                         <button type="submit" className="formBtnSubmit">
                             Confirm
                         </button>
-                        <button type="button" className="formBtnCancel">
+                        <button type="button" onClick={props.onCancel} className="formBtnCancel">
                             Cancel
                         </button>
                     </div>
