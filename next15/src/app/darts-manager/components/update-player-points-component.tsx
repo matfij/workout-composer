@@ -11,7 +11,7 @@ type UpdatePlayerPointsProps = {
 };
 
 export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
-    const { players, updatePlayer } = useDartsStore();
+    const { players, updatePlayer, incrementPlayerIndex } = useDartsStore();
     const { register, handleSubmit, watch, setValue } = useForm<PlayerScoreForm>({
         defaultValues: {
             factor1: 1,
@@ -55,9 +55,7 @@ export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
 
         updatePlayer(updatedPlayer);
 
-        // TODO - switch to next user index
-
-        // TODO - increment turn count
+        incrementPlayerIndex();
 
         props.onCancel();
     };
