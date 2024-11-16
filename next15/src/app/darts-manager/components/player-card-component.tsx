@@ -1,8 +1,8 @@
-import style from './page.module.scss';
-import { useDartsStore } from './darts-store';
-import { DartsPlayer, DartsPlayerPlace } from './types';
+import style from './player-card-component.module.scss';
+import { useDartsStore } from '../darts-store';
+import { DartsPlayer, DartsPlayerPlace } from '../types';
 import Image from 'next/image';
-import { PlayerScoresComponent } from './player-scores-component';
+import { UpdatePlayerPoints } from './update-player-points-component';
 import { useState } from 'react';
 
 type PlayerCardComponentProps = {
@@ -13,20 +13,18 @@ export const PlayerCardComponent = (props: PlayerCardComponentProps) => {
     const { players, currentPlayerIndex } = useDartsStore();
     const [showScoresForm, setShowScoresForm] = useState(false);
 
-    const latestThrows = props.player.throws.length ? props.player.throws.slice(-3) : '---';
+    const latestThrows = props.player.throws.length ? props.player.throws.slice(-3).join(' ') : '---';
 
     const isActive =
         props.player.place === DartsPlayerPlace.None &&
         players.findIndex((p) => p.name === props.player.name) === currentPlayerIndex;
 
-    console.log({ currentPlayerIndex });
-
     const wrapperClass = isActive
         ? `${style.playerCardWrapper} ${style.playerCardWrapperActive}`
         : `${style.playerCardWrapper}`;
 
-    const getPlaceIcon = () => {
-        switch (props.player.place) {
+    const getPlaceIcon = (place: DartsPlayerPlace) => {
+        switch (place) {
             case DartsPlayerPlace.First:
                 return '🥇';
             case DartsPlayerPlace.Second:
@@ -43,7 +41,7 @@ export const PlayerCardComponent = (props: PlayerCardComponentProps) => {
             <div className={wrapperClass}>
                 <div style={{ marginRight: '1.75rem' }}>
                     <h3 className="subtitle left bold" style={{ margin: '0.25rem 0' }}>
-                        {getPlaceIcon()} {props.player.name}
+                        {getPlaceIcon(props.player.place)} {props.player.name}
                     </h3>
                     <hr />
                     <p className="subtitle primary">{props.player.points}</p>
@@ -57,7 +55,7 @@ export const PlayerCardComponent = (props: PlayerCardComponentProps) => {
                 )}
             </div>
             {showScoresForm && (
-                <PlayerScoresComponent player={props.player} onCancel={() => setShowScoresForm(false)} />
+                <UpdatePlayerPoints player={props.player} onCancel={() => setShowScoresForm(false)} />
             )}
         </>
     );

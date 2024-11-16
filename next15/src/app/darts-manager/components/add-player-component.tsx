@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form';
-import { useDartsStore } from './darts-store';
-import { DartsPlayerPlace } from './types';
+import { useDartsStore } from '../darts-store';
+import { DartsPlayerPlace } from '../types';
 
 const DEFAULT_POINTS = 501;
 
@@ -20,6 +20,7 @@ export const AddPlayerComponent = (props: AddPlayerComponentProps) => {
         addPlayer({
             name: data.name,
             points: data.points,
+            startingPoints: data.points,
             throws: [],
             place: DartsPlayerPlace.None,
         });

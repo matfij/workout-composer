@@ -3,8 +3,8 @@ import style from './confirm-modal-component.module.scss';
 type ConfirmModalComponentProps = {
     text: string;
     textAlt?: string;
-    onAction: (confirmReset: boolean) => void;
-    onActionAlt?: (confirmReset: boolean) => void;
+    onAction: (confirm: boolean) => void;
+    onActionAlt?: (confirm: boolean) => void;
 };
 
 export const ConfirmModalComponent = (props: ConfirmModalComponentProps) => {
@@ -21,7 +21,7 @@ export const ConfirmModalComponent = (props: ConfirmModalComponentProps) => {
                     </button>
                 </div>
 
-                {props.textAlt && (
+                {props.textAlt && props.onActionAlt && (
                     <>
                         <p className="title dark" style={{ marginTop: '2rem' }}>
                             or
@@ -35,7 +35,7 @@ export const ConfirmModalComponent = (props: ConfirmModalComponentProps) => {
                                 Confirm
                             </button>
                             <button
-                                onClick={() => props.onAction(false)}
+                                onClick={() => props.onActionAlt && props.onActionAlt(false)}
                                 type="button"
                                 className="formBtnCancel">
                                 Cancel
