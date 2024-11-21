@@ -1,6 +1,7 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
-import { DartsGame, DartsPlayer, DartsPlayerPlace } from './types';
+import { dartsConfig, DartsGame, DartsPlayer, DartsPlayerPlace } from './types';
+import { Z_ASCII } from 'zlib';
 
 const initialState: DartsGame = {
     players: [],
@@ -14,6 +15,7 @@ type DartsStore = DartsGame & {
     incrementPlayerIndex: () => void;
     clearPoints: () => void;
     clearGame: () => void;
+    undoAction: () => void;
 };
 
 export const useDartsStore = create(
@@ -57,6 +59,37 @@ export const useDartsStore = create(
                 set({ ...initialState, players: resetPlayers });
             },
             clearGame: () => set({ ...get(), ...initialState }),
+            undoAction: () => {
+                const state = get();
+                let lastIndex = state.currentPlayerIndex - 1;
+                let iteration = 0;
+                while (true) {
+                    if (lastIndex < 0) {
+                        lastIndex = state.players.length - 1;
+                    }
+                    const lastPlayer = state.players[lastIndex];
+                    if (lastPlayer.place === DartsPlayerPlace.None) {
+                        break;
+                    }
+                    if (iteration > state.players.length) {
+                        lastIndex = state.currentPlayerIndex;
+                        break;
+                    }
+                    lastIndex--;
+                    iteration++;
+                }
+                const lastPlayer = state.players[lastIndex];
+                if (lastPlayer && lastPlayer.throws.length >= dartsConfig.throwsNumber) {
+                    const pointsToAdd = lastPlayer.throws
+                        .splice(lastPlayer.throws.length - dartsConfig.throwsNumber)
+                        .reduce((sum, curr) => sum + curr, 0);
+                    lastPlayer.points += pointsToAdd;
+                    set({
+                        currentPlayerIndex: lastIndex,
+                        players: [...get().players.map((p) => (p.name === lastPlayer.name ? lastPlayer : p))],
+                    });
+                }
+            },
         }),
         {
             name: 'workout-composer-darts-game',

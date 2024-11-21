@@ -11,7 +11,7 @@ import { ConfirmModalComponent } from '../../shared/components/confirm-modal-com
 export const dynamic = 'force-dynamic';
 
 export default function DartsManagerPage() {
-    const { players, currentTurn, clearPoints, clearGame } = useDartsStore();
+    const { players, currentTurn, clearPoints, clearGame, undoAction } = useDartsStore();
     const [showAddPlayerForm, setShowAddPlayerForm] = useState(false);
     const [showClearDialog, setShowClearDialog] = useState(false);
     const [showUndoPointsDialog, setShowUndoPointsDialog] = useState(false);
@@ -30,11 +30,20 @@ export default function DartsManagerPage() {
         setShowClearDialog(false);
     };
 
+    const onUndoAction = (confirm: boolean) => {
+        if (confirm) {
+            undoAction();
+        }
+        setShowUndoPointsDialog(false);
+    };
+
     return (
         <>
             <main className={style.mainWrapper}>
                 <h1 style={{ marginBottom: '0.5rem' }}>Game of Darts</h1>
-                <p className="subtitle" style={{ marginBottom: '1rem' }}>Turn: {currentTurn}</p>
+                <p className="subtitle" style={{ marginBottom: '1rem' }}>
+                    Turn: {currentTurn}
+                </p>
                 {players.map((player, ind) => (
                     <PlayerCardComponent player={player} key={ind} />
                 ))}
@@ -47,10 +56,16 @@ export default function DartsManagerPage() {
             {showAddPlayerForm && <AddPlayerComponent onCancel={() => setShowAddPlayerForm(false)} />}
             {showClearDialog && (
                 <ConfirmModalComponent
-                    text={'Do you want to clear user scores?'}
+                    text={'Do you want to reset points?'}
                     textAlt={'Do you want to clear all game data?'}
                     onAction={(confirm) => onClearPoints(confirm)}
                     onActionAlt={(confirm) => onClearGame(confirm)}
+                />
+            )}
+            {showUndoPointsDialog && (
+                <ConfirmModalComponent
+                    text="Do you want undo last action?"
+                    onAction={(confirm) => onUndoAction(confirm)}
                 />
             )}
         </>

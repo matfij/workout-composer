@@ -8,10 +8,13 @@ type ConfirmModalComponentProps = {
 };
 
 export const ConfirmModalComponent = (props: ConfirmModalComponentProps) => {
+    const hasAltSection = props.textAlt && props.onActionAlt !== undefined;
+
     return (
         <div className="modalBackdrop">
             <div className={`modalWrapper ${style.confirmWrapper}`}>
                 <p className="title dark">{props.text}</p>
+                {!hasAltSection && <br />}
                 <div className={style.btnWrapper}>
                     <button onClick={() => props.onAction(true)} type="button" className="formBtnSubmit">
                         Confirm
@@ -20,8 +23,7 @@ export const ConfirmModalComponent = (props: ConfirmModalComponentProps) => {
                         Cancel
                     </button>
                 </div>
-
-                {props.textAlt && props.onActionAlt && (
+                {hasAltSection && (
                     <>
                         <p className="title dark" style={{ marginTop: '2rem' }}>
                             or
