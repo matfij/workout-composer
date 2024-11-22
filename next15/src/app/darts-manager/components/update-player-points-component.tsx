@@ -4,6 +4,7 @@ import style from './update-player-points-component.module.scss';
 import { useForm } from 'react-hook-form';
 import { dartsConfig, DartsPlayer, DartsPlayerPlace, PlayerScoreForm } from '../types';
 import { useDartsStore } from '../darts-store';
+import { MusicManager } from '../../../shared/managers/music-manager';
 
 type UpdatePlayerPointsProps = {
     player: DartsPlayer;
@@ -49,7 +50,7 @@ export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
             }
             updatedPlayer.place = place;
             if (place !== DartsPlayerPlace.None) {
-                // TODO - notify new winner
+                MusicManager.playSound('victory-sound');
             }
         }
 

@@ -7,6 +7,7 @@ import { MenuComponent } from './components/menu-component';
 import { useState } from 'react';
 import { AddPlayerComponent } from './components/add-player-component';
 import { ConfirmModalComponent } from '../../shared/components/confirm-modal-component';
+import { MusicManager } from '../../shared/managers/music-manager';
 
 export const dynamic = 'force-dynamic';
 
@@ -40,7 +41,9 @@ export default function DartsManagerPage() {
     return (
         <>
             <main className={style.mainWrapper}>
-                <h1 className='title' style={{ marginBottom: '0.5rem' }}>Game of Darts</h1>
+                <h1 className="title" style={{ marginBottom: '0.5rem' }}>
+                    Game of Darts
+                </h1>
                 <p className="subtitle" style={{ marginBottom: '1rem' }}>
                     Turn: {currentTurn}
                 </p>

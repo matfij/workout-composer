@@ -9,6 +9,19 @@ type PlayerCardComponentProps = {
     player: DartsPlayer;
 };
 
+const getPlaceIcon = (place: DartsPlayerPlace) => {
+    switch (place) {
+        case DartsPlayerPlace.First:
+            return '🥇';
+        case DartsPlayerPlace.Second:
+            return '🥈';
+        case DartsPlayerPlace.Third:
+            return '🥉';
+        default:
+            return '';
+    }
+};
+
 export const PlayerCardComponent = (props: PlayerCardComponentProps) => {
     const { players, currentPlayerIndex } = useDartsStore();
     const [showScoresForm, setShowScoresForm] = useState(false);
@@ -22,19 +35,6 @@ export const PlayerCardComponent = (props: PlayerCardComponentProps) => {
     const wrapperClass = isActive
         ? `${style.playerCardWrapper} ${style.playerCardWrapperActive}`
         : `${style.playerCardWrapper}`;
-
-    const getPlaceIcon = (place: DartsPlayerPlace) => {
-        switch (place) {
-            case DartsPlayerPlace.First:
-                return '🥇';
-            case DartsPlayerPlace.Second:
-                return '🥈';
-            case DartsPlayerPlace.Third:
-                return '🥉';
-            default:
-                return '';
-        }
-    };
 
     return (
         <>
