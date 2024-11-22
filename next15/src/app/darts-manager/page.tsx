@@ -40,7 +40,7 @@ export default function DartsManagerPage() {
     return (
         <>
             <main className={style.mainWrapper}>
-                <h1 style={{ marginBottom: '0.5rem' }}>Game of Darts</h1>
+                <h1 className='title' style={{ marginBottom: '0.5rem' }}>Game of Darts</h1>
                 <p className="subtitle" style={{ marginBottom: '1rem' }}>
                     Turn: {currentTurn}
                 </p>
