@@ -1,7 +1,6 @@
 import { create } from 'zustand';
 import { createJSONStorage, persist } from 'zustand/middleware';
 import { dartsConfig, DartsGame, DartsPlayer, DartsPlayerPlace } from './types';
-import { Z_ASCII } from 'zlib';
 
 const initialState: DartsGame = {
     players: [],
@@ -61,6 +60,9 @@ export const useDartsStore = create(
             clearGame: () => set({ ...get(), ...initialState }),
             undoAction: () => {
                 const state = get();
+                if (!state.players.length) {
+                    return;
+                }
                 let lastIndex = state.currentPlayerIndex - 1;
                 let iteration = 0;
                 while (true) {

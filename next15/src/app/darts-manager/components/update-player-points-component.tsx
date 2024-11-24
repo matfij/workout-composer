@@ -5,6 +5,7 @@ import { useForm } from 'react-hook-form';
 import { dartsConfig, DartsPlayer, DartsPlayerPlace, PlayerScoreForm } from '../types';
 import { useDartsStore } from '../darts-store';
 import { MusicManager } from '../../../shared/managers/music-manager';
+import { ToastManager } from '../../../shared/managers/toast-manager';
 
 type UpdatePlayerPointsProps = {
     player: DartsPlayer;
@@ -51,6 +52,7 @@ export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
             updatedPlayer.place = place;
             if (place !== DartsPlayerPlace.None) {
                 MusicManager.playSound('victory-sound');
+                ToastManager.showInfo(`${props.player.name} has won!`);
             }
         }
 

@@ -8,6 +8,7 @@ import { useState } from 'react';
 import { AddPlayerComponent } from './components/add-player-component';
 import { ConfirmModalComponent } from '../../shared/components/confirm-modal-component';
 import { MusicManager } from '../../shared/managers/music-manager';
+import { ToastManager } from '../../shared/managers/toast-manager';
 
 export const dynamic = 'force-dynamic';
 
