@@ -1,5 +1,6 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
+import { useWorkoutStore } from '../workout-store';
 
 const imgSize = { width: 28, height: 28 };
 
@@ -9,12 +10,9 @@ type MenuComponentProps = {
 
 export const MenuComponent = (props: MenuComponentProps) => {
     const router = useRouter();
+    const { isLocked, lock, unlock } = useWorkoutStore();
 
     const onShare = () => {};
-
-    const onLock = () => {};
-
-    const onUnlock = () => {};
 
     return (
         <nav className="menuWrapper">
@@ -30,14 +28,18 @@ export const MenuComponent = (props: MenuComponentProps) => {
                 <Image src="/icons/share-icon.svg" alt="share" {...imgSize} />
                 <p>Share</p>
             </button>
-            <button onClick={onLock} className="menuItem">
-                <Image src="/icons/lock-icon.svg" alt="lock" {...imgSize} />
-                <p>Lock</p>
-            </button>
-            <button onClick={onUnlock} className="menuItem">
-                <Image src="/icons/unlock-icon.svg" alt="unlock" {...imgSize} />
-                <p>Unlock</p>
-            </button>
+            {!isLocked && (
+                <button onClick={lock} className="menuItem">
+                    <Image src="/icons/unlock-icon.svg" alt="lock" {...imgSize} />
+                    <p>Lock</p>
+                </button>
+            )}
+            {isLocked && (
+                <button onClick={unlock} className="menuItem">
+                    <Image src="/icons/lock-icon.svg" alt="unlock" {...imgSize} />
+                    <p>Unlock</p>
+                </button>
+            )}
         </nav>
     );
 };

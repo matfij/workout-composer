@@ -1,6 +1,6 @@
 import style from './player-card-component.module.scss';
 import { useDartsStore } from '../darts-store';
-import { DartsPlayer, DartsPlayerPlace } from '../types';
+import { dartsConfig, DartsPlayer, DartsPlayerPlace } from '../types';
 import Image from 'next/image';
 import { UpdatePlayerPoints } from './update-player-points-component';
 import { useState } from 'react';
@@ -26,7 +26,7 @@ export const PlayerCardComponent = (props: PlayerCardComponentProps) => {
     const { players, currentPlayerIndex } = useDartsStore();
     const [showScoresForm, setShowScoresForm] = useState(false);
 
-    const latestThrows = props.player.throws.length ? props.player.throws.slice(-3).join(' ') : '---';
+    const latestThrows = props.player.throws.length ? props.player.throws.slice(-dartsConfig.throwsNumber).join(' ') : '---';
 
     const isActive =
         props.player.place === DartsPlayerPlace.None &&
@@ -50,7 +50,7 @@ export const PlayerCardComponent = (props: PlayerCardComponentProps) => {
                 </div>
                 {isActive && (
                     <button onClick={() => setShowScoresForm(true)} className={style.updateScoresBtn}>
-                        <Image src="/icons/dart.svg" alt="score" width={18} height={18} />
+                        <Image src="/icons/dart-icon.svg" alt="score" width={28} height={28} />
                     </button>
                 )}
             </div>

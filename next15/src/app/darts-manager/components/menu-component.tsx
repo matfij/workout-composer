@@ -19,7 +19,7 @@ export const MenuComponent = (props: MenuComponentProps) => {
                 <p>Home</p>
             </button>
             <button onClick={props.showAddPlayerForm} className="menuItem">
-                <Image src="/icons/add-player-icon.svg" alt="add" {...imgSize} />
+                <Image src="/icons/add-icon.svg" alt="add" {...imgSize} />
                 <p>Add player</p>
             </button>
             <button onClick={props.showResetGameDialog} className="menuItem">
