@@ -29,7 +29,7 @@ export enum DartsPlayerPlace {
     Third = 'Third',
 }
 
-export type PlayerScoreForm = {
+export type PlayerUpdatePointsInput = {
     throw1: number;
     throw2: number;
     throw3: number;

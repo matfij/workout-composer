@@ -2,7 +2,7 @@
 
 import style from './update-player-points-component.module.scss';
 import { useForm } from 'react-hook-form';
-import { dartsConfig, DartsPlayer, DartsPlayerPlace, PlayerScoreForm } from '../types';
+import { dartsConfig, DartsPlayer, DartsPlayerPlace, PlayerUpdatePointsInput } from '../types';
 import { useDartsStore } from '../darts-store';
 import { MusicManager } from '../../../shared/managers/music-manager';
 import { ToastManager } from '../../../shared/managers/toast-manager';
@@ -14,7 +14,7 @@ type UpdatePlayerPointsProps = {
 
 export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
     const { players, updatePlayer, incrementPlayerIndex } = useDartsStore();
-    const { register, handleSubmit, watch, setValue } = useForm<PlayerScoreForm>({
+    const { register, handleSubmit, watch, setValue } = useForm<PlayerUpdatePointsInput>({
         defaultValues: {
             factor1: 1,
             factor2: 1,
@@ -22,7 +22,7 @@ export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
         },
     });
 
-    const updateScores = (data: PlayerScoreForm) => {
+    const updatePoints = (data: PlayerUpdatePointsInput) => {
         const point1 = data.factor1 * data.throw1;
         const point2 = data.factor2 * data.throw2;
         const point3 = data.factor3 * data.throw3;
@@ -66,9 +66,9 @@ export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
     return (
         <section className="modalBackdrop">
             <div className="modalWrapper">
-                <form onSubmit={handleSubmit(updateScores)} className="formWrapper">
-                    <h3 className="subtitle left dark">
-                        Update <b>{props.player.name}</b>&apos;s scores
+                <form onSubmit={handleSubmit(updatePoints)} className="formWrapper">
+                    <h3 className="subtitle left dark" style={{ marginBottom: '1rem' }}>
+                        Update <b>{props.player.name}</b>&apos;s points
                     </h3>
                     {dartsConfig.throws.map((throwIndex) => (
                         <fieldset key={throwIndex} className={style.formFieldset}>

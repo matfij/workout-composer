@@ -24,7 +24,7 @@ const getPlaceIcon = (place: DartsPlayerPlace) => {
 
 export const PlayerCardComponent = (props: PlayerCardComponentProps) => {
     const { players, currentPlayerIndex } = useDartsStore();
-    const [showScoresForm, setShowScoresForm] = useState(false);
+    const [showPointsForm, setShowPointsForm] = useState(false);
 
     const latestThrows = props.player.throws.length ? props.player.throws.slice(-dartsConfig.throwsNumber).join(' ') : '---';
 
@@ -49,13 +49,13 @@ export const PlayerCardComponent = (props: PlayerCardComponentProps) => {
                     <p>{latestThrows}</p>
                 </div>
                 {isActive && (
-                    <button onClick={() => setShowScoresForm(true)} className={style.updateScoresBtn}>
-                        <Image src="/icons/dart-icon.svg" alt="score" width={28} height={28} />
+                    <button onClick={() => setShowPointsForm(true)} className={style.updatePointsBtn}>
+                        <Image src="/icons/dart-icon.svg" alt="points" width={28} height={28} />
                     </button>
                 )}
             </div>
-            {showScoresForm && (
-                <UpdatePlayerPoints player={props.player} onCancel={() => setShowScoresForm(false)} />
+            {showPointsForm && (
+                <UpdatePlayerPoints player={props.player} onCancel={() => setShowPointsForm(false)} />
             )}
         </>
     );

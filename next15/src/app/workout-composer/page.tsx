@@ -3,9 +3,11 @@
 import style from './page.module.scss';
 import { useState } from 'react';
 import { MenuComponent } from './components/menu-component';
+import { TaskFormComponent } from './components/task-form-component';
 
 export default function WorkoutComposerPage() {
-    const [showAddForm, setShowAddForm] = useState(false);
+    const [showTaskForm, setShowTaskForm] = useState(false);
+    const [showDayForm, setShowDayForm] = useState(false);
 
     return (
         <>
@@ -14,7 +16,13 @@ export default function WorkoutComposerPage() {
                     Workout Composer
                 </h1>
             </main>
-            <MenuComponent showAddForm={() => setShowAddForm(true)} />
+            <MenuComponent showAddForm={() => setShowTaskForm(true)} />
+            {showTaskForm && (
+                <TaskFormComponent
+                    onAddDay={() => setShowDayForm(true)}
+                    onCancel={() => setShowTaskForm(false)}
+                />
+            )}
         </>
     );
 }

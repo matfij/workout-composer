@@ -31,12 +31,19 @@ export const AddPlayerComponent = (props: AddPlayerComponentProps) => {
         <section className="modalBackdrop">
             <div className="modalWrapper">
                 <form onSubmit={handleSubmit(onAddPlayer)} className="formWrapper">
-                    <h3 className="subtitle bold dark left">Add new player</h3>
+                    <h3 className="subtitle bold dark left" style={{ marginBottom: '1rem' }}>
+                        Add new player
+                    </h3>
                     <fieldset>
                         <label htmlFor="name" className="formLabel">
                             Name
                         </label>
-                        <input {...register('name', { required: true })} type="text" className="formInput" />
+                        <input
+                            {...register('name', { required: true })}
+                            id="name"
+                            type="text"
+                            className="formInput"
+                        />
                     </fieldset>
                     <fieldset>
                         <label htmlFor="points" className="formLabel">
@@ -45,6 +52,7 @@ export const AddPlayerComponent = (props: AddPlayerComponentProps) => {
                         <input
                             {...register('points', { required: true })}
                             defaultValue={DEFAULT_POINTS}
+                            id="points"
                             className="formInput"
                             type="number"
                         />

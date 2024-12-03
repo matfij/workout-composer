@@ -11,11 +11,12 @@
     fieldset {
         width: 100%;
         border: none;
+        margin-bottom: 0.5rem;
     }
 }
 
 .formLabel {
-    font-size: 16px;
+    font-size: 15px;
     margin-bottom: 0.5rem;
     font-weight: 600;
     display: block;
@@ -73,6 +74,7 @@
 }
 
 .formError {
+    margin: 0.25rem;
     font-size: 14px;
     font-weight: 600;
     color: $color-error;
