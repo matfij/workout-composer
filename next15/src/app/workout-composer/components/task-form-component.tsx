@@ -1,6 +1,7 @@
 import { useForm } from 'react-hook-form';
 import { Task } from '../types';
 import { useEffect } from 'react';
+import { useWorkoutStore } from '../workout-store';
 
 type TaskFormComponentProps = {
     task?: Task;
@@ -9,6 +10,7 @@ type TaskFormComponentProps = {
 };
 
 export const TaskFormComponent = (props: TaskFormComponentProps) => {
+    const { addTask } = useWorkoutStore();
     const {
         setValue,
         register,
@@ -26,7 +28,10 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
 
     const isEditMode = props.task !== undefined;
 
-    const onSubmit = () => {};
+    const onSubmit = (task: Task) => {
+        addTask(task);
+        props.onCancel();
+    };
 
     return (
         <section className="modalBackdrop">
