@@ -1,5 +1,5 @@
-@import './variables.scss';
-@import './mixins.scss';
+@use 'variables.scss';
+@use 'mixins.scss';
 
 .menuWrapper {
     height: 60px;
@@ -11,10 +11,10 @@
     justify-content: center;
     align-items: center;
     gap: 1rem;
-    background: $color-light;
-    color: $color-dark;
+    background: variables.$color-light;
+    color: variables.$color-dark;
     font-weight: 600;
-    border-top: 1px solid $color-dark;
+    border-top: 1px solid variables.$color-dark;
     padding: 0 10px;
 }
 

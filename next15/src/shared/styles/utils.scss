@@ -1,4 +1,4 @@
-@import './variables.scss';
+@use 'variables.scss';
 
 a {
     color: inherit;
@@ -39,15 +39,15 @@ button {
 }
 
 .primary {
-    color: $color-primary;
+    color: variables.$color-primary;
 }
 
 .dark {
-    color: $color-dark;
+    color: variables.$color-dark;
 }
 
 .light {
-    color: $color-light;
+    color: variables.$color-light;
 }
 
 .gone {

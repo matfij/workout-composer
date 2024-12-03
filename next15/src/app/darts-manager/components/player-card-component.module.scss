@@ -1,20 +1,20 @@
-@import '../../../shared/styles/variables.scss';
-@import '../../../shared/styles/mixins.scss';
+@use '../../../shared/styles/variables.scss';
+@use '../../../shared/styles/mixins.scss';
 
 .playerCardWrapper {
-    @include boxShadow;
+    @include mixins.boxShadow;
 
     width: 100%;
     position: relative;
     opacity: 0.9;
-    background: $color-dark;
-    color: $color-light;
-    border: 2px solid $color-light;
+    background: variables.$color-dark;
+    color: variables.$color-light;
+    border: 2px solid variables.$color-light;
     padding: 0.25rem 0.5rem;
 
     .playerCardWrapperActive {
         opacity: 1;
-        border: 3px solid $color-primary;
+        border: 3px solid variables.$color-primary;
     }
 
     .updatePointsBtn {

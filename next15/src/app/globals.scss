@@ -1,8 +1,9 @@
-@import '../shared/styles/variables.scss';
-@import '../shared/styles/utils.scss';
-@import '../shared/styles/forms.scss';
-@import '../shared/styles/modals.scss';
-@import '../shared/styles/menu.scss';
+@use "sass:color";
+@use '../shared/styles/variables.scss';
+@use '../shared/styles/utils.scss';
+@use '../shared/styles/forms.scss';
+@use '../shared/styles/modals.scss';
+@use '../shared/styles/menu.scss';
 
 @media (prefers-color-scheme: dark) {
     html {
@@ -17,8 +18,8 @@ body {
 }
 
 body {
-    color: $color-light;
-    background: lighten($color-dark, 5);
+    color: variables.$color-light;
+    background: color.adjust(variables.$color-dark, $lightness: 5);
     font-family: Arial, Helvetica, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
@@ -35,6 +36,6 @@ body {
 }
 
 *::selection {
-    color: $color-dark;
-    background-color: $color-primary;
+    color: variables.$color-dark;
+    background-color: variables.$color-primary;
 }

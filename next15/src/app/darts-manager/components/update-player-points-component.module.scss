@@ -1,4 +1,4 @@
-@import '../../../shared/styles/mixins.scss';
+@use '../../../shared/styles/mixins.scss';
 
 .formFieldset {
     display: grid;
@@ -13,7 +13,7 @@
 }
 
 .factorBtn {
-    @include boxShadowSmall;
+    @include mixins.boxShadowSmall;
 
     height: 42px;
 
@@ -39,14 +39,14 @@
 }
 
 .factorBtnActive {
-    @include boxShadow;
+    @include mixins.boxShadow;
 
     font-weight: bold;
     border-width: 4px;
 }
 
 .factorLabel {
-    @include textShadow;
+    @include mixins.textShadow;
 
     width: 30px;
     font-weight: 600;

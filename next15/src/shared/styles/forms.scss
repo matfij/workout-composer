@@ -1,9 +1,10 @@
-@import './variables.scss';
-@import './mixins.scss';
+@use "sass:color";
+@use 'variables.scss';
+@use 'mixins.scss';
 
 .formWrapper {
     padding: 2rem 1rem;
-    background: $color-light;
+    background: variables.$color-light;
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -23,12 +24,12 @@
 }
 
 .formInput {
-    @include boxShadowSmall;
+    @include mixins.boxShadowSmall;
 
     width: 100%;
     appearance: none;
     padding: 0.5rem;
-    border: 1px solid darken($color-light, 25);
+    border: 1px solid color.adjust(variables.$color-light, $lightness: -25);
 }
 
 .formActionsWrapper {
@@ -42,34 +43,34 @@
 }
 
 .formBtnSubmit {
-    @include boxShadowSmall;
+    @include mixins.boxShadowSmall;
 
     font-weight: 500;
     font-size: 1rem;
     padding: 0.5rem 1rem;
     text-align: center;
-    border: 1px solid lighten($color-dark, 20);
-    background: darken($color-primary, 10);
+    border: 1px solid color.adjust(variables.$color-dark, $lightness: 20);
+    background: color.adjust(variables.$color-primary, $lightness: -10);
 
     &:hover {
         cursor: pointer;
-        background: darken($color-primary, 15);
+        background: color.adjust(variables.$color-primary, $lightness: -15);
     }
 }
 
 .formBtnCancel {
-    @include boxShadowSmall;
+    @include mixins.boxShadowSmall;
 
     font-weight: 500;
     font-size: 1rem;
     padding: 0.5rem 1rem;
     text-align: center;
-    border: 1px solid lighten($color-dark, 20);
-    background: darken($color-light, 10);
+    border: 1px solid color.adjust(variables.$color-dark, $lightness: 20);
+    background: color.adjust(variables.$color-light, $lightness: -10);
 
     &:hover {
         cursor: pointer;
-        background: darken($color-light, 15);
+        background: color.adjust(variables.$color-light, $lightness: -15);
     }
 }
 
@@ -77,5 +78,5 @@
     margin: 0.25rem;
     font-size: 14px;
     font-weight: 600;
-    color: $color-error;
+    color: variables.$color-error;
 }

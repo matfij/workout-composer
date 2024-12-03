@@ -1,5 +1,6 @@
-@import './variables.scss';
-@import './mixins.scss';
+@use "sass:color";
+@use 'variables.scss';
+@use 'mixins.scss';
 
 .modalBackdrop {
     width: 100%;
@@ -11,16 +12,16 @@
     padding: 1rem;
     z-index: 50;
     overflow-x: hidden;
-    background: transparentize(darken($color-dark, 10), 0.05);
+    background: color.adjust(color.adjust(variables.$color-dark, $lightness: -10), $alpha: -0.05);
 }
 
 .modalWrapper {
-    @include boxShadow;
+    @include mixins.boxShadow;
 
     width: 100%;
     max-width: 56rem;
     margin: auto;
     padding: 1rem;
-    background: $color-light;
-    color: $color-dark;
+    background: variables.$color-light;
+    color: variables.$color-dark;
 }
