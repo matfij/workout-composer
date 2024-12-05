@@ -6,7 +6,7 @@ import { MenuComponent } from './components/menu-component';
 import { TaskFormComponent } from './components/task-form-component';
 import { useWorkoutStore } from './workout-store';
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
-import { TaskCardComponent } from './components/task-card-component';
+import { TaskItemComponent } from './components/task-item-component';
 
 export default function WorkoutComposerPage() {
     const { freeTasks } = useWorkoutStore();
@@ -28,7 +28,7 @@ export default function WorkoutComposerPage() {
                         {(dropProvider) => (
                             <div {...dropProvider.droppableProps} ref={dropProvider.innerRef}>
                                 {freeTasks.map((task, taskIndex) => (
-                                    <TaskCardComponent key={task.id} task={task} index={taskIndex} />
+                                    <TaskItemComponent key={task.id} task={task} index={taskIndex} />
                                 ))}
                             </div>
                         )}

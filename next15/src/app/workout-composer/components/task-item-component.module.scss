@@ -1,0 +1,24 @@
+@use '../../../shared/styles/variables.scss';
+@use '../../../shared/styles/mixins.scss';
+
+.taskItem {
+    @include mixins.boxShadow;
+
+    width: 10rem;
+    position: relative;
+    margin: 0.25rem 0;
+    padding: 0.25rem;
+    opacity: 0.92;
+    background: variables.$color-dark;
+    color: variables.$color-light;
+    border: 1px solid variables.$color-light;
+
+    &:hover {
+        opacity: 1;
+    }
+}
+
+.actionIcon {
+    position: absolute;
+    cursor: pointer;
+}
