@@ -4,7 +4,6 @@
 .taskItem {
     @include mixins.boxShadow;
 
-    width: 10rem;
     position: relative;
     margin: 0.25rem 0;
     padding: 0.25rem;
@@ -15,6 +14,7 @@
 
     &:hover {
         opacity: 1;
+        cursor: grab;
     }
 }
 

@@ -1,3 +1,5 @@
+'use client';
+
 import style from './task-item-component.module.scss';
 import { Draggable, DraggableProvided } from '@hello-pangea/dnd';
 import { Task } from '../types';
@@ -13,11 +15,8 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
     const { isLocked } = useWorkoutStore();
 
     return (
-        <Draggable
-            draggableId={props.task.id}
-            index={props.index}
-            isDragDisabled={isLocked}
-            children={(dragProvider) => (
+        <Draggable draggableId={props.task.id} index={props.index} isDragDisabled={isLocked}>
+            {(dragProvider) => (
                 <div
                     ref={dragProvider.innerRef}
                     {...dragProvider.draggableProps}
@@ -27,7 +26,7 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                     <p>
                         {props.task.sets} x {props.task.reps}
                     </p>
-                    <p className="thin">{props.task.description ?? '---'}</p>
+                    <p className="thin">{props.task.description || <br />}</p>
                     {!isLocked && (
                         <>
                             <div
@@ -46,6 +45,6 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                     )}
                 </div>
             )}
-        />
+        </Draggable>
     );
 };

@@ -4,6 +4,7 @@ import { useEffect } from 'react';
 import { useWorkoutStore } from '../workout-store';
 
 type TaskFormComponentProps = {
+    dayName: string;
     task?: Task;
     onAddDay: () => void;
     onCancel: () => void;
@@ -29,7 +30,7 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
     const isEditMode = props.task !== undefined;
 
     const onSubmit = (task: Task) => {
-        addTask(task);
+        addTask(props.dayName, task);
         props.onCancel();
     };
 

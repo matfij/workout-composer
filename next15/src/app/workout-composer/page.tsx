@@ -3,18 +3,23 @@
 import style from './page.module.scss';
 import { useState } from 'react';
 import { MenuComponent } from './components/menu-component';
-import { TaskFormComponent } from './components/task-form-component';
 import { useWorkoutStore } from './workout-store';
 import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
-import { TaskItemComponent } from './components/task-item-component';
+import { DayItemComponent } from './components/day-item-component';
 
 export default function WorkoutComposerPage() {
-    const { freeTasks } = useWorkoutStore();
-    const [showTaskForm, setShowTaskForm] = useState(false);
+    const { days, moveTask } = useWorkoutStore();
     const [showDayForm, setShowDayForm] = useState(false);
 
-    const onMoveTask = (e: DropResult) => {
-        console.log(e);
+    const onMoveTask = (result: DropResult) => {
+        if (result.destination) {
+            moveTask(
+                result.draggableId,
+                result.source.droppableId,
+                result.destination.droppableId,
+                result.destination.index,
+            );
+        }
     };
 
     return (
@@ -24,24 +29,14 @@ export default function WorkoutComposerPage() {
                     Workout Composer
                 </h1>
                 <DragDropContext onDragEnd={onMoveTask}>
-                    <Droppable droppableId="freeTasks">
-                        {(dropProvider) => (
-                            <div {...dropProvider.droppableProps} ref={dropProvider.innerRef}>
-                                {freeTasks.map((task, taskIndex) => (
-                                    <TaskItemComponent key={task.id} task={task} index={taskIndex} />
-                                ))}
-                            </div>
-                        )}
-                    </Droppable>
+                    <section className={style.daysWrapper}>
+                        {days.map((day) => (
+                            <DayItemComponent key={day.name} day={day} />
+                        ))}
+                    </section>
                 </DragDropContext>
             </main>
-            <MenuComponent showAddForm={() => setShowTaskForm(true)} />
-            {showTaskForm && (
-                <TaskFormComponent
-                    onAddDay={() => setShowDayForm(true)}
-                    onCancel={() => setShowTaskForm(false)}
-                />
-            )}
+            <MenuComponent showAddForm={() => setShowDayForm(true)} />
         </>
     );
 }

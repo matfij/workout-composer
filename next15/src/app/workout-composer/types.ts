@@ -1,6 +1,5 @@
 export type Plan = {
     days: Day[];
-    freeTasks: Task[];
     isLocked: boolean;
     editedTaskId?: string;
 };

@@ -1,0 +1,11 @@
+.dayWrapper {
+    width: 100%;
+    min-height: 80px;
+    margin: 0.25rem;
+    text-align: center;
+    position: relative;
+}
+
+.dayWrapper:nth-child(n) > div {
+    height: 100%;
+}

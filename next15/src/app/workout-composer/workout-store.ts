@@ -4,8 +4,22 @@ import { create } from 'zustand';
 import { UtilityManger } from '../../shared/managers/utility-manager';
 
 const initialState: Plan = {
-    days: [],
-    freeTasks: [],
+    days: [
+        {
+            name: 'KoksDat',
+            tasks: [
+                { id: 'heavy-press', name: 'Heavy Press', sets: '3', reps: '9' },
+                { id: 'long-stretch', name: 'Long Stretch', sets: '2', reps: '12' },
+            ],
+        },
+        {
+            name: 'RunDay',
+            tasks: [
+                { id: 'hill-sprint', name: 'Hill Sprint', sets: '4', reps: '120' },
+                { id: 'bike-squat', name: 'Bike Squat', sets: '3', reps: '10' },
+            ],
+        },
+    ],
     isLocked: false,
 };
 
@@ -14,7 +28,8 @@ type WorkoutStore = Plan & {
     setDays: (days: Day[]) => void;
     lock: () => void;
     unlock: () => void;
-    addTask: (task: Task) => void;
+    addTask: (dayName: string, task: Task) => void;
+    moveTask: (taskId: string, oldDayName: string, newDayName: string, dayIndex: number) => void;
 };
 
 export const useWorkoutStore = create(
@@ -25,13 +40,42 @@ export const useWorkoutStore = create(
             setDays: (days: Day[]) => set({ days }),
             lock: () => set({ isLocked: true }),
             unlock: () => set({ isLocked: false }),
-            addTask: (task: Omit<Task, 'id'>) => {
-                const freeTasks = get().freeTasks;
+            addTask: (dayName: string, task: Omit<Task, 'id'>) => {
+                const days = get().days;
                 const newTask = {
                     ...task,
                     id: UtilityManger.generateId(),
                 };
-                set({ freeTasks: [...freeTasks, newTask] });
+                set({
+                    days: days.map((day) =>
+                        day.name === dayName ? { ...day, tasks: [...day.tasks, newTask] } : day,
+                    ),
+                });
+            },
+            moveTask: (taskId: string, oldDayName: string, newDayName: string, dayIndex: number) => {
+                const days = get().days;
+                const task = days
+                    .map((d) => d.tasks)
+                    .flatMap((t) => t)
+                    .find((t) => t.id === taskId);
+                if (!task) {
+                    throw new Error(`Task ${taskId} not found`);
+                }
+                set({
+                    days: days.map((day) => {
+                        let tasks = day.tasks;
+                        if (day.name === oldDayName) {
+                            tasks = day.tasks.filter((task) => task.id !== taskId);
+                        }
+                        if (day.name === newDayName) {
+                            tasks = day.tasks.splice(dayIndex, 0, task);
+                        }
+                        return {
+                            ...day,
+                            tasks,
+                        };
+                    }),
+                });
             },
         }),
         {

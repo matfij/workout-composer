@@ -11,3 +11,18 @@
     align-items: center;
     padding: 3rem 0;
 }
+
+.daysWrapper {
+    width: 100%;
+    margin: auto;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: center;
+    gap: 0.5rem;
+
+    @media (min-width: 640px) {
+        flex-direction: row;
+    }
+}
