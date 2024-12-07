@@ -17,6 +17,7 @@ export default function WorkoutComposerPage() {
                 result.draggableId,
                 result.source.droppableId,
                 result.destination.droppableId,
+                result.source.index,
                 result.destination.index,
             );
         }

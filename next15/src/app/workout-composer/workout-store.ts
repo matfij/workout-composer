@@ -29,7 +29,13 @@ type WorkoutStore = Plan & {
     lock: () => void;
     unlock: () => void;
     addTask: (dayName: string, task: Task) => void;
-    moveTask: (taskId: string, oldDayName: string, newDayName: string, dayIndex: number) => void;
+    moveTask: (
+        taskId: string,
+        oldDayName: string,
+        newDayName: string,
+        oldNameIndex: number,
+        newDayIndex: number,
+    ) => void;
 };
 
 export const useWorkoutStore = create(
@@ -52,7 +58,13 @@ export const useWorkoutStore = create(
                     ),
                 });
             },
-            moveTask: (taskId: string, oldDayName: string, newDayName: string, dayIndex: number) => {
+            moveTask: (
+                taskId: string,
+                oldDayName: string,
+                newDayName: string,
+                oldDayIndex: number,
+                newDayIndex: number,
+            ) => {
                 const days = get().days;
                 const task = days
                     .map((d) => d.tasks)
@@ -63,17 +75,13 @@ export const useWorkoutStore = create(
                 }
                 set({
                     days: days.map((day) => {
-                        let tasks = day.tasks;
                         if (day.name === oldDayName) {
-                            tasks = day.tasks.filter((task) => task.id !== taskId);
+                            day.tasks.splice(oldDayIndex, 1);
                         }
                         if (day.name === newDayName) {
-                            tasks = day.tasks.splice(dayIndex, 0, task);
+                            day.tasks.splice(newDayIndex, 0, task);
                         }
-                        return {
-                            ...day,
-                            tasks,
-                        };
+                        return day;
                     }),
                 });
             },
