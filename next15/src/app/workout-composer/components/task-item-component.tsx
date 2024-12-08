@@ -10,7 +10,6 @@ import { TaskFormComponent } from './task-form-component';
 
 type TaskItemComponentProps = {
     task: Task;
-    dayName: string;
     index: number;
 };
 
@@ -43,7 +42,7 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                                 <div
                                     onDoubleClick={() => removeTask(props.task.id)}
                                     className={style.actionIcon}
-                                    style={{ bottom: '3px', right: '3px' }}>
+                                    style={{ bottom: '3px', right: '2px' }}>
                                     <Image src="/icons/remove-icon.svg" alt="remove" width={24} height={24} />
                                 </div>
                             </>
@@ -51,13 +50,7 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                     </div>
                 )}
             </Draggable>
-            {showTaskForm && (
-                <TaskFormComponent
-                    task={props.task}
-                    dayName={props.dayName}
-                    onCancel={() => setShowTaskForm(false)}
-                />
-            )}
+            {showTaskForm && <TaskFormComponent task={props.task} onCancel={() => setShowTaskForm(false)} />}
         </>
     );
 };

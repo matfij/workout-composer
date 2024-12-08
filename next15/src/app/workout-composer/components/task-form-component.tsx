@@ -3,7 +3,7 @@ import { Task } from '../types';
 import { useWorkoutStore } from '../workout-store';
 
 type TaskFormComponentProps = {
-    dayName: string;
+    dayName?: string;
     task?: Task;
     onCancel: () => void;
 };
@@ -30,7 +30,7 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
     const onSubmit = (task: Task) => {
         if (isEditMode) {
             editTask(task);
-        } else {
+        } else if (props.dayName) {
             addTask(props.dayName, task);
         }
         props.onCancel();

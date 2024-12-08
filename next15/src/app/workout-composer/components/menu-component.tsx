@@ -10,7 +10,7 @@ type MenuComponentProps = {
 
 export const MenuComponent = (props: MenuComponentProps) => {
     const router = useRouter();
-    const { isLocked, lock, unlock } = useWorkoutStore();
+    const { isLocked, setIsLocked } = useWorkoutStore();
 
     const onShare = () => {};
 
@@ -20,22 +20,26 @@ export const MenuComponent = (props: MenuComponentProps) => {
                 <Image src="/icons/home-icon.svg" alt="home" {...imgSize} />
                 <p>Home</p>
             </button>
-            <button onClick={props.showAddForm} className="menuItem">
-                <Image src="/icons/add-icon.svg" alt="add" {...imgSize} />
-                <p>Add</p>
-            </button>
-            <button onClick={onShare} className="menuItem">
-                <Image src="/icons/share-icon.svg" alt="share" {...imgSize} />
-                <p>Share</p>
-            </button>
             {!isLocked && (
-                <button onClick={lock} className="menuItem">
+                <button onClick={props.showAddForm} className="menuItem">
+                    <Image src="/icons/add-icon.svg" alt="add" {...imgSize} />
+                    <p>Add</p>
+                </button>
+            )}
+            {isLocked && (
+                <button onClick={onShare} className="menuItem">
+                    <Image src="/icons/share-icon.svg" alt="share" {...imgSize} />
+                    <p>Share</p>
+                </button>
+            )}
+            {!isLocked && (
+                <button onClick={() => setIsLocked(true)} className="menuItem">
                     <Image src="/icons/unlock-icon.svg" alt="lock" {...imgSize} />
                     <p>Lock</p>
                 </button>
             )}
             {isLocked && (
-                <button onClick={unlock} className="menuItem">
+                <button onClick={() => setIsLocked(false)} className="menuItem">
                     <Image src="/icons/lock-icon.svg" alt="unlock" {...imgSize} />
                     <p>Unlock</p>
                 </button>

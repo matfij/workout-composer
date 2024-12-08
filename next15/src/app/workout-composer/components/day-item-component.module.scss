@@ -1,11 +1,29 @@
+@use '../../../shared/styles/variables.scss';
+@use '../../../shared/styles/mixins.scss';
+
 .dayWrapper {
     width: 100%;
-    min-height: 80px;
     margin: 0.25rem;
     text-align: center;
     position: relative;
+
+    h3 {
+        margin-bottom: 0.5rem;
+        padding-bottom: 0.25rem;
+        border-bottom: 1px solid variables.$color-light;
+    }
 }
 
-.dayWrapper:nth-child(n) > div {
-    height: 100%;
+.addBtn {
+    width: 4rem;
+    height: 4rem;
+    margin: 0.5rem auto;
+    background-color: none;
+    border: none;
+    opacity: 0.8;
+
+    &:hover {
+        opacity: 0.9;
+        cursor: pointer;
+    }
 }

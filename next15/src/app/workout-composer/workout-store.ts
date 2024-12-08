@@ -21,13 +21,14 @@ const initialState: Plan = {
         },
     ],
     isLocked: false,
+    isDragging: false,
 };
 
 type WorkoutStore = Plan & {
     setPlan: (plan: Plan) => void;
     setDays: (days: Day[]) => void;
-    lock: () => void;
-    unlock: () => void;
+    setIsLocked: (isLocked: boolean) => void;
+    setIsDragging: (isDragging: boolean) => void;
     addTask: (dayName: string, task: Task) => void;
     moveTask: (
         taskId: string,
@@ -46,8 +47,8 @@ export const useWorkoutStore = create(
             ...initialState,
             setPlan: (plan: Plan) => set(plan),
             setDays: (days: Day[]) => set({ days }),
-            lock: () => set({ isLocked: true }),
-            unlock: () => set({ isLocked: false }),
+            setIsLocked: (isLocked: boolean) => set({ isLocked }),
+            setIsDragging: (isDragging: boolean) => set({ isDragging }),
             addTask: (dayName: string, task: Omit<Task, 'id'>) => {
                 const days = get().days;
                 const newTask = {

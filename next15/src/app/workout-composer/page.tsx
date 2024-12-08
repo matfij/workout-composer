@@ -8,7 +8,7 @@ import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { DayItemComponent } from './components/day-item-component';
 
 export default function WorkoutComposerPage() {
-    const { days, moveTask } = useWorkoutStore();
+    const { days, moveTask, setIsDragging } = useWorkoutStore();
     const [showDayForm, setShowDayForm] = useState(false);
 
     const onMoveTask = (result: DropResult) => {
@@ -21,6 +21,7 @@ export default function WorkoutComposerPage() {
                 result.destination.index,
             );
         }
+        setIsDragging(false);
     };
 
     return (
@@ -29,7 +30,7 @@ export default function WorkoutComposerPage() {
                 <h1 className="title" style={{ marginBottom: '0.5rem' }}>
                     Workout Composer
                 </h1>
-                <DragDropContext onDragEnd={onMoveTask}>
+                <DragDropContext onDragStart={() => setIsDragging(true)} onDragEnd={onMoveTask}>
                     <section className={style.daysWrapper}>
                         {days.map((day) => (
                             <DayItemComponent key={day.name} day={day} />

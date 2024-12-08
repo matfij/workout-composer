@@ -1,6 +1,7 @@
 export type Plan = {
     days: Day[];
     isLocked: boolean;
+    isDragging: boolean;
     editedTaskId?: string;
 };
 
