@@ -37,6 +37,7 @@ type WorkoutStore = Plan & {
         newDayIndex: number,
     ) => void;
     removeTask: (taskId: string) => void;
+    editTask: (task: Task) => void;
 };
 
 export const useWorkoutStore = create(
@@ -92,6 +93,15 @@ export const useWorkoutStore = create(
                     days: days.map((day) => ({
                         ...day,
                         tasks: day.tasks.filter((t) => t.id !== taskId),
+                    })),
+                });
+            },
+            editTask: (task: Task) => {
+                const days = get().days;
+                set({
+                    days: days.map((day) => ({
+                        ...day,
+                        tasks: day.tasks.map((t) => (t.id === task.id ? task : t)),
                     })),
                 });
             },

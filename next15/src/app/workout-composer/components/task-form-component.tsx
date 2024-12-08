@@ -1,17 +1,15 @@
 import { useForm } from 'react-hook-form';
 import { Task } from '../types';
-import { useEffect } from 'react';
 import { useWorkoutStore } from '../workout-store';
 
 type TaskFormComponentProps = {
     dayName: string;
     task?: Task;
-    onAddDay: () => void;
     onCancel: () => void;
 };
 
 export const TaskFormComponent = (props: TaskFormComponentProps) => {
-    const { addTask } = useWorkoutStore();
+    const { addTask, editTask } = useWorkoutStore();
     const {
         setValue,
         register,
@@ -30,7 +28,11 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
     const isEditMode = props.task !== undefined;
 
     const onSubmit = (task: Task) => {
-        addTask(props.dayName, task);
+        if (isEditMode) {
+            editTask(task);
+        } else {
+            addTask(props.dayName, task);
+        }
         props.onCancel();
     };
 
@@ -38,7 +40,7 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
         <section className="modalBackdrop">
             <div onClick={(e) => e.stopPropagation()} className="modalWrapper">
                 <form onSubmit={handleSubmit(onSubmit)} className="formWrapper">
-                    <h3 className="subtitle left dark" style={{ marginBottom: '1rem' }}>
+                    <h3 className="subtitle bold" style={{ marginBottom: '1rem' }}>
                         {isEditMode ? 'Edit exercise' : 'Add a new exercise'}
                     </h3>
                     <fieldset>
