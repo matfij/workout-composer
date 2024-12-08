@@ -1,7 +1,7 @@
 'use client';
 
 import style from './task-item-component.module.scss';
-import { Draggable, DraggableProvided } from '@hello-pangea/dnd';
+import { Draggable } from '@hello-pangea/dnd';
 import { Task } from '../types';
 import { useWorkoutStore } from '../workout-store';
 import Image from 'next/image';
@@ -12,7 +12,7 @@ type TaskItemComponentProps = {
 };
 
 export const TaskItemComponent = (props: TaskItemComponentProps) => {
-    const { isLocked } = useWorkoutStore();
+    const { isLocked, removeTask } = useWorkoutStore();
 
     return (
         <Draggable draggableId={props.task.id} index={props.index} isDragDisabled={isLocked}>
@@ -36,7 +36,7 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                                 <Image src="/icons/edit-icon.svg" alt="edit" width={23} height={23} />
                             </div>
                             <div
-                                // onDoubleClick={removeExercise}
+                                onDoubleClick={() => removeTask(props.task.id)}
                                 className={style.actionIcon}
                                 style={{ bottom: '3px', right: '3px' }}>
                                 <Image src="/icons/remove-icon.svg" alt="remove" width={24} height={24} />

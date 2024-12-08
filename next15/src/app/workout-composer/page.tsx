@@ -4,7 +4,7 @@ import style from './page.module.scss';
 import { useState } from 'react';
 import { MenuComponent } from './components/menu-component';
 import { useWorkoutStore } from './workout-store';
-import { DragDropContext, Droppable, DropResult } from '@hello-pangea/dnd';
+import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { DayItemComponent } from './components/day-item-component';
 
 export default function WorkoutComposerPage() {
