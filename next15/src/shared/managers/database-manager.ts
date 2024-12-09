@@ -8,4 +8,9 @@ export class DatabaseManager {
         await kv.hset(id, { days });
         return id;
     }
+
+    static async getWorkout(id: string) {
+        const workout = await kv.hget<Day[]>(id, 'days');
+        return workout;
+    }
 }

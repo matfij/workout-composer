@@ -5,9 +5,33 @@ import { MenuComponent } from './components/menu-component';
 import { useWorkoutStore } from './workout-store';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { DayItemComponent } from './components/day-item-component';
+import { useSearchParams } from 'next/navigation';
+import { useEffect, useState } from 'react';
+import { getWorkout } from './actions';
 
 export default function WorkoutComposerPage() {
-    const { days, moveTask, setIsDragging } = useWorkoutStore();
+    const { days, setDays, setIsLocked, moveTask, setIsDragging } = useWorkoutStore();
+    const [searchParams] = useSearchParams();
+
+    useEffect(() => {
+        void setupWorkout();
+    }, []);
+
+    const setupWorkout = async () => {
+        if (!searchParams) {
+            return;
+        }
+        const workoutId = searchParams[1];
+        if (!workoutId) {
+            return;
+        }
+        const workout = await getWorkout(workoutId);
+        if (!workout) {
+            return;
+        }
+        setDays(workout);
+        setIsLocked(true);
+    };
 
     const onMoveTask = (result: DropResult) => {
         if (result.destination) {

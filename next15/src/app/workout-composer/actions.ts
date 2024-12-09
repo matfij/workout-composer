@@ -7,3 +7,8 @@ export const saveWorkout = async (days: Day[]) => {
     const workoutId = await DatabaseManager.saveWorkout(days);
     return workoutId;
 };
+
+export const getWorkout = async (id: string) => {
+    const workout = await DatabaseManager.getWorkout(id);
+    return workout;
+};
