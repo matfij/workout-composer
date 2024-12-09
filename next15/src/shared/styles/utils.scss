@@ -8,6 +8,13 @@ a {
 button {
     border: none;
     cursor: pointer;
+
+    &:disabled {
+        img {
+            opacity: 0.7;
+            filter: grayscale(0.4);
+        }
+    }
 }
 
 .title {

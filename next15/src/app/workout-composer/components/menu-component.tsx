@@ -1,33 +1,43 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useWorkoutStore } from '../workout-store';
+import { DatabaseManager } from '../../../shared/managers/database-manager';
+import { ToastManager } from '../../../shared/managers/toast-manager';
+import { saveWorkout } from '../actions';
+import { useState } from 'react';
 
 const imgSize = { width: 28, height: 28 };
 
-type MenuComponentProps = {
-    showAddForm: () => void;
-};
-
-export const MenuComponent = (props: MenuComponentProps) => {
+export const MenuComponent = () => {
     const router = useRouter();
+    const { days } = useWorkoutStore();
     const { isLocked, setIsLocked } = useWorkoutStore();
+    const [isSharing, setIsSharing] = useState(false);
 
-    const onShare = () => {};
+    const onShare = async () => {
+        setIsSharing(true);
+        const workoutId = await saveWorkout(days);
+        window.history.pushState({}, document.title, '/');
+        navigator.clipboard.writeText(`${window.location.href}workout-composer?id=${workoutId}`);
+        window.history.pushState({}, document.title, `workout-composer?id=${workoutId}`);
+        ToastManager.showInfo('💫 Workout link copied!');
+        setIsSharing(false);
+    };
 
     return (
         <nav className="menuWrapper">
-            <button onClick={() => router.push('/')} className="menuItem">
+            <button onClick={() => router.push('/')} disabled={isSharing} className="menuItem">
                 <Image src="/icons/home-icon.svg" alt="home" {...imgSize} />
                 <p>Home</p>
             </button>
             {!isLocked && (
-                <button onClick={props.showAddForm} className="menuItem">
+                <button className="menuItem">
                     <Image src="/icons/add-icon.svg" alt="add" {...imgSize} />
                     <p>Add</p>
                 </button>
             )}
             {isLocked && (
-                <button onClick={onShare} className="menuItem">
+                <button onClick={onShare} disabled={isSharing} className="menuItem">
                     <Image src="/icons/share-icon.svg" alt="share" {...imgSize} />
                     <p>Share</p>
                 </button>
@@ -39,7 +49,7 @@ export const MenuComponent = (props: MenuComponentProps) => {
                 </button>
             )}
             {isLocked && (
-                <button onClick={() => setIsLocked(false)} className="menuItem">
+                <button onClick={() => setIsLocked(false)} disabled={isSharing} className="menuItem">
                     <Image src="/icons/lock-icon.svg" alt="unlock" {...imgSize} />
                     <p>Unlock</p>
                 </button>

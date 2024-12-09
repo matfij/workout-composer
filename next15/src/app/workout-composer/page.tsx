@@ -1,7 +1,6 @@
 'use client';
 
 import style from './page.module.scss';
-import { useState } from 'react';
 import { MenuComponent } from './components/menu-component';
 import { useWorkoutStore } from './workout-store';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
@@ -9,7 +8,6 @@ import { DayItemComponent } from './components/day-item-component';
 
 export default function WorkoutComposerPage() {
     const { days, moveTask, setIsDragging } = useWorkoutStore();
-    const [showDayForm, setShowDayForm] = useState(false);
 
     const onMoveTask = (result: DropResult) => {
         if (result.destination) {
@@ -38,7 +36,7 @@ export default function WorkoutComposerPage() {
                     </section>
                 </DragDropContext>
             </main>
-            <MenuComponent showAddForm={() => setShowDayForm(true)} />
+            <MenuComponent />
         </>
     );
 }
