@@ -31,6 +31,7 @@ type WorkoutStore = Plan & {
     setDays: (days: Day[]) => void;
     addDay: (day: Omit<Day, 'id'>) => void;
     editDay: (day: Day) => void;
+    removeDay: (dayId: string) => void;
     setIsLocked: (isLocked: boolean) => void;
     setIsDragging: (isDragging: boolean) => void;
     addTask: (dayName: string, task: Task) => void;
@@ -54,6 +55,7 @@ export const useWorkoutStore = create(
             addDay: (day: Omit<Day, 'id'>) =>
                 set({ days: [...get().days, { ...day, id: UtilityManger.generateId() }] }),
             editDay: (day: Day) => set({ days: get().days.map((d) => (d.id === day.id ? day : d)) }),
+            removeDay: (dayId: string) => set({ days: get().days.filter((d) => d.id !== dayId) }),
             setIsLocked: (isLocked: boolean) => set({ isLocked }),
             setIsDragging: (isDragging: boolean) => set({ isDragging }),
             addTask: (dayName: string, task: Omit<Task, 'id'>) => {

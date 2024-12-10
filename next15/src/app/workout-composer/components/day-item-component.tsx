@@ -14,15 +14,14 @@ type DayItemComponentProps = {
 };
 
 export const DayItemComponent = (props: DayItemComponentProps) => {
-    const { isLocked, isDragging, editDay } = useWorkoutStore();
+    const { isLocked, isDragging, editDay, removeDay } = useWorkoutStore();
     const [showTaskForm, setShowTaskForm] = useState(false);
     const [name, setName] = useState(props.day.name);
-    const [isEditingName, setIseEditingName] = useState(false);
+    const [isEditingName, setIsEditingName] = useState(false);
 
     const showAddButton = !isLocked && !isDragging;
 
     const onEditNameKeyDown = (event: KeyboardEvent) => {
-        console.log(event.key);
         if (event.key === 'Escape') {
             onEditNameBlur();
             return;
@@ -31,19 +30,19 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
             return;
         }
         editDay({ ...props.day, name });
-        setIseEditingName(false);
+        setIsEditingName(false);
     };
 
     const onEditNameBlur = () => {
         setName(props.day.name);
-        setIseEditingName(false);
+        setIsEditingName(false);
     };
 
     return (
         <>
             <section className={style.dayWrapper} onBlur={onEditNameBlur}>
                 {!isEditingName && (
-                    <h3 onDoubleClick={() => setIseEditingName(true)} className="subtitle center">
+                    <h3 onDoubleClick={() => setIsEditingName(true)} className="subtitle center">
                         {props.day.name}
                     </h3>
                 )}
@@ -53,7 +52,6 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
                         value={name}
                         onChange={(e) => setName(e.target.value)}
                         onKeyDown={(event) => onEditNameKeyDown(event)}
-                        onBlur={onEditNameBlur}
                         className={`${style.dayInput} subtitle light`}
                     />
                 )}
@@ -67,8 +65,19 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
                     )}
                 </Droppable>
                 {showAddButton && (
-                    <div onClick={() => setShowTaskForm(true)} className={style.addBtn}>
-                        <Image src="/icons/add-icon-light.svg" alt="add" width={40} height={40} />
+                    <div className={style.actionsBtn}>
+                        <div onClick={() => setShowTaskForm(true)} className={style.actionBtn}>
+                            <Image
+                                src="/icons/add-icon-light.svg"
+                                alt="add"
+                                width={38}
+                                height={38}
+                                style={{ paddingTop: '8px' }}
+                            />
+                        </div>
+                        <div onDoubleClick={() => removeDay(props.day.id)} className={style.actionBtn}>
+                            <Image src="/icons/remove-icon.svg" alt="remove" width={36} height={36} />
+                        </div>
                     </div>
                 )}
             </section>

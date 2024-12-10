@@ -24,13 +24,18 @@
     border-bottom: 1.5px dashed variables.$color-primary;
 }
 
-.addBtn {
+.actionsWrapper {
+    display: flex;
+}
+
+.actionBtn {
     width: 4rem;
     height: 4rem;
     margin: 0.5rem auto;
     background-color: none;
     border: none;
     opacity: 0.8;
+    display: inline;
 
     &:hover {
         opacity: 0.9;
