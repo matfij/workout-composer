@@ -6,6 +6,7 @@ import { UtilityManger } from '../../shared/managers/utility-manager';
 const initialState: Plan = {
     days: [
         {
+            id: 'koks-day',
             name: 'KoksDat',
             tasks: [
                 { id: 'heavy-press', name: 'Heavy Press', sets: '3', reps: '9' },
@@ -13,6 +14,7 @@ const initialState: Plan = {
             ],
         },
         {
+            id: 'run-day',
             name: 'RunDay',
             tasks: [
                 { id: 'hill-sprint', name: 'Hill Sprint', sets: '4', reps: '120' },
@@ -27,7 +29,8 @@ const initialState: Plan = {
 type WorkoutStore = Plan & {
     setPlan: (plan: Plan) => void;
     setDays: (days: Day[]) => void;
-    addDay: (days: Day) => void;
+    addDay: (day: Omit<Day, 'id'>) => void;
+    editDay: (day: Day) => void;
     setIsLocked: (isLocked: boolean) => void;
     setIsDragging: (isDragging: boolean) => void;
     addTask: (dayName: string, task: Task) => void;
@@ -48,7 +51,9 @@ export const useWorkoutStore = create(
             ...initialState,
             setPlan: (plan: Plan) => set(plan),
             setDays: (days: Day[]) => set({ days }),
-            addDay: (day: Day) => set({ days: [...get().days, day] }),
+            addDay: (day: Omit<Day, 'id'>) =>
+                set({ days: [...get().days, { ...day, id: UtilityManger.generateId() }] }),
+            editDay: (day: Day) => set({ days: get().days.map((d) => (d.id === day.id ? day : d)) }),
             setIsLocked: (isLocked: boolean) => set({ isLocked }),
             setIsDragging: (isDragging: boolean) => set({ isDragging }),
             addTask: (dayName: string, task: Omit<Task, 'id'>) => {

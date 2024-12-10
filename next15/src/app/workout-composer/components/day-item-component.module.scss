@@ -14,6 +14,16 @@
     }
 }
 
+.dayInput {
+    width: 100%;
+    margin-bottom: 0.25rem;
+    padding-bottom: 0.25rem;
+    text-align: center;
+    background: none;
+    border: none;
+    border-bottom: 1.5px dashed variables.$color-primary;
+}
+
 .addBtn {
     width: 4rem;
     height: 4rem;

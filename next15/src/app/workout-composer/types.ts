@@ -6,6 +6,7 @@ export type Plan = {
 };
 
 export type Day = {
+    id: string;
     name: string;
     tasks: Task[];
 };
