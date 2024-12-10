@@ -27,6 +27,7 @@ const initialState: Plan = {
 type WorkoutStore = Plan & {
     setPlan: (plan: Plan) => void;
     setDays: (days: Day[]) => void;
+    addDay: (days: Day) => void;
     setIsLocked: (isLocked: boolean) => void;
     setIsDragging: (isDragging: boolean) => void;
     addTask: (dayName: string, task: Task) => void;
@@ -47,6 +48,7 @@ export const useWorkoutStore = create(
             ...initialState,
             setPlan: (plan: Plan) => set(plan),
             setDays: (days: Day[]) => set({ days }),
+            addDay: (day: Day) => set({ days: [...get().days, day] }),
             setIsLocked: (isLocked: boolean) => set({ isLocked }),
             setIsDragging: (isDragging: boolean) => set({ isDragging }),
             addTask: (dayName: string, task: Omit<Task, 'id'>) => {

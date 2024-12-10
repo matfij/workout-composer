@@ -6,7 +6,7 @@ import { useWorkoutStore } from './workout-store';
 import { DragDropContext, DropResult } from '@hello-pangea/dnd';
 import { DayItemComponent } from './components/day-item-component';
 import { useSearchParams } from 'next/navigation';
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { getWorkout } from './actions';
 
 export default function WorkoutComposerPage() {
