@@ -4,4 +4,8 @@ export class UtilityManger {
             .toString(16)
             .substring(2)}`;
     }
+
+    public static getEnvVar<T extends string | number | boolean>(name: string): T {
+        return process.env[name] as T;
+    }
 }

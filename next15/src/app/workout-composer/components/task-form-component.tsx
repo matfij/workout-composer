@@ -11,7 +11,6 @@ type TaskFormComponentProps = {
 export const TaskFormComponent = (props: TaskFormComponentProps) => {
     const { addTask, editTask } = useWorkoutStore();
     const {
-        setValue,
         register,
         handleSubmit,
         formState: { errors },

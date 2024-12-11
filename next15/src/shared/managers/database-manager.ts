@@ -3,10 +3,10 @@ import { Day } from '../../app/workout-composer/types';
 import { UtilityManger } from './utility-manager';
 
 export class DatabaseManager {
-    static async saveWorkout(days: Day[]) {
-        const id = UtilityManger.generateId();
-        await kv.hset(id, { days });
-        return id;
+    static async saveWorkout({ id, days }: { id?: string; days: Day[] }) {
+        const key = id?.trim().length ? id : UtilityManger.generateId();
+        await kv.hset(key, { days });
+        return key;
     }
 
     static async getWorkout(id: string) {

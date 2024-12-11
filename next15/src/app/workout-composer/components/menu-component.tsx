@@ -1,34 +1,24 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { useWorkoutStore } from '../workout-store';
-import { ToastManager } from '../../../shared/managers/toast-manager';
-import { saveWorkout } from '../actions';
 import { useState } from 'react';
 import { DayFormComponent } from './day-form-component';
+import { ShareModalComponent } from './share-modal-component';
 
 const imgSize = { width: 28, height: 28 };
 
 export const MenuComponent = () => {
     const router = useRouter();
-    const { days, isLocked, setIsLocked } = useWorkoutStore();
-    const [isSharing, setIsSharing] = useState(false);
+    const { isLocked, setIsLocked } = useWorkoutStore();
     const [showDayForm, setShowDayForm] = useState(false);
-
-    const onShare = async () => {
-        setIsSharing(true);
-        const workoutId = await saveWorkout(days);
-        window.history.pushState({}, document.title, '/');
-        navigator.clipboard.writeText(`${window.location.href}workout-composer?id=${workoutId}`);
-        window.history.pushState({}, document.title, `workout-composer?id=${workoutId}`);
-        ToastManager.showInfo('💫 Workout link copied!');
-        setIsSharing(false);
-    };
+    const [showShareModal, setShowShareModal] = useState(false);
 
     return (
         <>
             {showDayForm && <DayFormComponent onCancel={() => setShowDayForm(false)} />}
+            {showShareModal && <ShareModalComponent onCancel={() => setShowShareModal(false)} />}
             <nav className="menuWrapper">
-                <button onClick={() => router.push('/')} disabled={isSharing} className="menuItem">
+                <button onClick={() => router.push('/')} className="menuItem">
                     <Image src="/icons/home-icon.svg" alt="home" {...imgSize} />
                     <p>Home</p>
                 </button>
@@ -39,7 +29,7 @@ export const MenuComponent = () => {
                     </button>
                 )}
                 {isLocked && (
-                    <button onClick={onShare} disabled={isSharing} className="menuItem">
+                    <button onClick={() => setShowShareModal(true)} className="menuItem">
                         <Image src="/icons/share-icon.svg" alt="share" {...imgSize} />
                         <p>Share</p>
                     </button>
@@ -51,7 +41,7 @@ export const MenuComponent = () => {
                     </button>
                 )}
                 {isLocked && (
-                    <button onClick={() => setIsLocked(false)} disabled={isSharing} className="menuItem">
+                    <button onClick={() => setIsLocked(false)} className="menuItem">
                         <Image src="/icons/lock-icon.svg" alt="unlock" {...imgSize} />
                         <p>Unlock</p>
                     </button>
