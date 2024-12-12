@@ -7,6 +7,7 @@ import { useWorkoutStore } from '../workout-store';
 import Image from 'next/image';
 import { useState } from 'react';
 import { TaskFormComponent } from './task-form-component';
+import { TaskVideoModalComponent } from './task-video-modal-component';
 
 type TaskItemComponentProps = {
     task: Task;
@@ -16,9 +17,19 @@ type TaskItemComponentProps = {
 export const TaskItemComponent = (props: TaskItemComponentProps) => {
     const { isLocked, removeTask } = useWorkoutStore();
     const [showTaskForm, setShowTaskForm] = useState(false);
+    const [showVideoModal, setShowVideoModal] = useState(false);
+
+    const showVideoButton = isLocked && props.task.videoUrl;
 
     return (
         <>
+            {showTaskForm && <TaskFormComponent task={props.task} onCancel={() => setShowTaskForm(false)} />}
+            {showVideoModal && (
+                <TaskVideoModalComponent
+                    videoUrl={props.task.videoUrl!}
+                    onCancel={() => setShowVideoModal(false)}
+                />
+            )}
             <Draggable draggableId={props.task.id} index={props.index} isDragDisabled={isLocked}>
                 {(dragProvider) => (
                     <div
@@ -31,6 +42,14 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                             {props.task.sets} x {props.task.reps}
                         </p>
                         <p className="thin">{props.task.description || <br />}</p>
+                        {showVideoButton && (
+                            <div
+                                onClick={() => setShowVideoModal(true)}
+                                className={style.actionIcon}
+                                style={{ top: '3px', right: '3px' }}>
+                                <Image src="/icons/video-icon.svg" alt="edit" width={30} height={30} />
+                            </div>
+                        )}
                         {!isLocked && (
                             <>
                                 <div
@@ -50,7 +69,6 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                     </div>
                 )}
             </Draggable>
-            {showTaskForm && <TaskFormComponent task={props.task} onCancel={() => setShowTaskForm(false)} />}
         </>
     );
 };

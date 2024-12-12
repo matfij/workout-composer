@@ -17,4 +17,5 @@ export type Task = {
     reps?: string;
     sets?: string;
     description?: string;
+    videoUrl?: string;
 };

@@ -3,6 +3,7 @@ import { ToastManager } from '../../../shared/managers/toast-manager';
 import { saveWorkout } from '../actions';
 import { useWorkoutStore } from '../workout-store';
 import { useForm } from 'react-hook-form';
+import { useSearchParams } from 'next/navigation';
 
 type ShareModalComponentProps = {
     onCancel: () => void;
@@ -15,11 +16,16 @@ type ShareForm = {
 
 export const ShareModalComponent = (props: ShareModalComponentProps) => {
     const { days } = useWorkoutStore();
+    const [searchParams] = useSearchParams();
     const {
         register,
         handleSubmit,
         formState: { errors },
-    } = useForm<ShareForm>();
+    } = useForm<ShareForm>({
+        defaultValues: {
+            id: (searchParams ?? [])[1] ?? '',
+        },
+    });
     const [shareLoading, setShareLoading] = useState(false);
 
     const onShare = async (data: ShareForm) => {
@@ -60,6 +66,7 @@ export const ShareModalComponent = (props: ShareModalComponentProps) => {
                         <input
                             {...register('secret', { required: true })}
                             id="secret"
+                            type="password"
                             className="formInput"
                         />
                         {errors.secret && <p className="formError">Secret is required</p>}

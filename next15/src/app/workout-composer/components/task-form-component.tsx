@@ -21,6 +21,7 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
             reps: props.task?.reps,
             sets: props.task?.sets,
             description: props.task?.description,
+            videoUrl: props.task?.videoUrl,
         },
     });
 
@@ -73,6 +74,12 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
                             className="formInput"
                             type="text"
                         />
+                    </fieldset>
+                    <fieldset>
+                        <label className="formLabel" htmlFor="videoUrl">
+                            Video
+                        </label>
+                        <input {...register('videoUrl')} id="videoUrl" className="formInput" type="text" />
                     </fieldset>
                     <div className="formActionsWrapper">
                         <button className="formBtnSubmit">{isEditMode ? 'Update' : 'Add'}</button>
