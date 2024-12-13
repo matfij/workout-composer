@@ -1,16 +1,32 @@
+import { useMemo } from 'react';
 import style from './task-video-modal-component.module.scss';
 
 type TaskFormComponentProps = {
     videoUrl: string;
     onCancel: () => void;
+    options?: {
+        autoplay?: boolean;
+        loop?: boolean;
+    };
 };
 
 export const TaskVideoModalComponent = (props: TaskFormComponentProps) => {
+    let url = useMemo(() => {
+        let url = props.videoUrl;
+        if (props.options?.autoplay) {
+            url += `&autoplay=1`;
+        }
+        if (props.options?.loop) {
+            url += `&loop=1`;
+        }
+        return url;
+    }, []);
+
     return (
         <div className="modalBackdrop">
             <div className="modalWrapper">
                 <div>
-                    <iframe src={props.videoUrl} className={style.iframeItem} allowFullScreen />
+                    <iframe src={url} className={style.iframeItem} allowFullScreen />
                 </div>
                 <button
                     onClick={() => props.onCancel()}

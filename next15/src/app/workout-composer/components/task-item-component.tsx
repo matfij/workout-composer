@@ -27,6 +27,7 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
             {showVideoModal && (
                 <TaskVideoModalComponent
                     videoUrl={props.task.videoUrl!}
+                    options={{ autoplay: true, loop: true }}
                     onCancel={() => setShowVideoModal(false)}
                 />
             )}
@@ -55,14 +56,14 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                                 <div
                                     onClick={() => setShowTaskForm(true)}
                                     className={style.actionIcon}
-                                    style={{ top: '3px', right: '4px' }}>
-                                    <Image src="/icons/edit-icon.svg" alt="edit" width={23} height={23} />
+                                    style={{ top: '6px', right: '36px' }}>
+                                    <Image src="/icons/edit-icon.svg" alt="edit" width={25} height={25} />
                                 </div>
                                 <div
                                     onDoubleClick={() => removeTask(props.task.id)}
                                     className={style.actionIcon}
-                                    style={{ bottom: '3px', right: '2px' }}>
-                                    <Image src="/icons/remove-icon.svg" alt="remove" width={24} height={24} />
+                                    style={{ top: '3px', right: '3px' }}>
+                                    <Image src="/icons/remove-icon.svg" alt="remove" width={28} height={28} />
                                 </div>
                             </>
                         )}
