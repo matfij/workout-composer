@@ -4,24 +4,7 @@ import { create } from 'zustand';
 import { UtilityManger } from '../../shared/managers/utility-manager';
 
 const initialState: Plan = {
-    days: [
-        {
-            id: 'koks-day',
-            name: 'KoksDat',
-            tasks: [
-                { id: 'heavy-press', name: 'Heavy Press', sets: '3', reps: '9' },
-                { id: 'long-stretch', name: 'Long Stretch', sets: '2', reps: '12' },
-            ],
-        },
-        {
-            id: 'run-day',
-            name: 'RunDay',
-            tasks: [
-                { id: 'hill-sprint', name: 'Hill Sprint', sets: '4', reps: '120' },
-                { id: 'bike-squat', name: 'Bike Squat', sets: '3', reps: '10' },
-            ],
-        },
-    ],
+    days: [],
     isLocked: false,
     isDragging: false,
 };

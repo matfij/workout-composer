@@ -4,23 +4,30 @@ import { useWorkoutStore } from '../workout-store';
 import { useState } from 'react';
 import { DayFormComponent } from './day-form-component';
 import { ShareModalComponent } from './share-modal-component';
+import { LoadFormComponent } from './load-form-component';
 
 const imgSize = { width: 28, height: 28 };
 
 export const MenuComponent = () => {
     const router = useRouter();
     const { isLocked, setIsLocked } = useWorkoutStore();
+    const [showLoadForm, setShowLoadForm] = useState(false);
     const [showDayForm, setShowDayForm] = useState(false);
     const [showShareModal, setShowShareModal] = useState(false);
 
     return (
         <>
+            {showLoadForm && <LoadFormComponent onCancel={() => setShowLoadForm(false)} />}
             {showDayForm && <DayFormComponent onCancel={() => setShowDayForm(false)} />}
             {showShareModal && <ShareModalComponent onCancel={() => setShowShareModal(false)} />}
             <nav className="menuWrapper">
                 <button onClick={() => router.push('/')} className="menuItem">
                     <Image src="/icons/home-icon.svg" alt="home" {...imgSize} />
                     <p>Home</p>
+                </button>
+                <button onClick={() => setShowLoadForm(true)} className="menuItem">
+                    <Image src="/icons/load-icon.svg" alt="load" {...imgSize} />
+                    <p>Load</p>
                 </button>
                 {!isLocked && (
                     <button onClick={() => setShowDayForm(true)} className="menuItem">

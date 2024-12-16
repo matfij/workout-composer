@@ -35,7 +35,6 @@ export const ShareModalComponent = (props: ShareModalComponentProps) => {
         try {
             setShareLoading(true);
             const workoutId = await saveWorkout({ id: data.id, secret: data.secret, days });
-            window.history.pushState({}, document.title, '/');
             navigator.clipboard.writeText(`${window.location.href}workout-composer?id=${workoutId}`);
             window.history.pushState({}, document.title, `workout-composer?id=${workoutId}`);
             ToastManager.showInfo('💫 Workout link copied!');
