@@ -19,7 +19,7 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
     const [name, setName] = useState(props.day.name);
     const [isEditingName, setIsEditingName] = useState(false);
 
-    const showAddButton = !isLocked && !isDragging;
+    const showActions = !isLocked && !isDragging;
 
     const onEditNameKeyDown = (event: KeyboardEvent) => {
         if (event.key === 'Escape') {
@@ -57,14 +57,17 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
                 )}
                 <Droppable droppableId={props.day.name}>
                     {(dropProvider) => (
-                        <div {...dropProvider.droppableProps} ref={dropProvider.innerRef}>
-                            {props.day.tasks.map((task, taskIndex) => (
-                                <TaskItemComponent key={task.id} index={taskIndex} task={task} />
-                            ))}
-                        </div>
+                        <>
+                            <div {...dropProvider.droppableProps} ref={dropProvider.innerRef}>
+                                {props.day.tasks.map((task, taskIndex) => (
+                                    <TaskItemComponent key={task.id} index={taskIndex} task={task} />
+                                ))}
+                            </div>
+                            {dropProvider.placeholder}
+                        </>
                     )}
                 </Droppable>
-                {showAddButton && (
+                {showActions && (
                     <div className={style.actionsBtn}>
                         <div onClick={() => setShowTaskForm(true)} className={style.actionBtn}>
                             <Image
@@ -80,6 +83,7 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
                         </div>
                     </div>
                 )}
+                {!showActions && <div style={{ marginTop: '46px' }}></div>}
             </section>
             {showTaskForm && (
                 <TaskFormComponent dayName={props.day.name} onCancel={() => setShowTaskForm(false)} />
