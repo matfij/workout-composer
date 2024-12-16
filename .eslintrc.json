@@ -1,17 +1,18 @@
 {
-  "env": {
-    "browser": true,
-    "es2021": true,
-    "node": true
-  },
-  "extends": [
-    "next/core-web-vitals",
-    "plugin:@typescript-eslint/recommended",
-    "prettier"
-  ],
-  "settings": {
-    "react": {
-      "version": "detect"
+    "root": true,
+    "env": { "browser": true, "es2020": true },
+    "extends": [
+        "next/core-web-vitals",
+        "next/typescript",
+        "eslint:recommended",
+        "plugin:@typescript-eslint/recommended",
+        "plugin:react-hooks/recommended",
+        "plugin:css/recommended"
+    ],
+    "ignorePatterns": ["dist", ".eslintrc.cjs"],
+    "parser": "@typescript-eslint/parser",
+    "plugins": ["react-refresh", "css"],
+    "rules": {
+        "react-refresh/only-export-components": ["warn", { "allowConstantExport": true }]
     }
-  }
 }
