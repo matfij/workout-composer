@@ -5,6 +5,7 @@ import { Suspense } from 'react';
 
 export const metadata: Metadata = {
     title: 'Workout Composer',
+    manifest: 'manifest.json',
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
