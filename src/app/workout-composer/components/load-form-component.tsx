@@ -25,7 +25,7 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
         }
         setPlan({
             days: workout,
-            isLocked: false,
+            isLocked: true,
             isDragging: false,
         });
         window.history.pushState({}, document.title, `workout-composer?id=${id}`);
