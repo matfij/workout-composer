@@ -21,6 +21,12 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
 
     const showActions = !isLocked && !isDragging;
 
+    const onStartEditDay = () => {
+        if (!isLocked) {
+            setIsEditingName(true);
+        }
+    };
+
     const onEditNameKeyDown = (event: KeyboardEvent) => {
         if (event.key === 'Escape') {
             onEditNameBlur();
@@ -42,7 +48,7 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
         <>
             <section className={style.dayWrapper} onBlur={onEditNameBlur}>
                 {!isEditingName && (
-                    <h3 onDoubleClick={() => setIsEditingName(true)} className="subtitle center">
+                    <h3 onDoubleClick={onStartEditDay} className="subtitle center">
                         {props.day.name}
                     </h3>
                 )}
