@@ -2,6 +2,7 @@
 
 import style from './page.module.scss';
 import { MenuComponent } from './components/menu-component';
+import { TreadmillCalculatorComponent } from './components/treadmill-calculator-component';
 
 export default function CalculatorsPage() {
     return (
@@ -10,9 +11,7 @@ export default function CalculatorsPage() {
                 <h1 className="title" style={{ marginBottom: '0.5rem' }}>
                     Calculators
                 </h1>
-                <p className="subtitle" style={{ marginBottom: '1rem' }}>
-                    Coming soon...
-                </p>
+                <TreadmillCalculatorComponent />
             </main>
             <MenuComponent />
         </>

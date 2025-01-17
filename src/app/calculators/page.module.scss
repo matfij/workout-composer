@@ -1,3 +1,4 @@
+@use 'sass:color';
 @use '../../shared/styles/variables.scss';
 @use '../../shared/styles/mixins.scss';
 
@@ -10,4 +11,22 @@
     gap: 1.25rem;
     align-items: center;
     padding: 3rem 0;
+}
+
+.sectionWrapper {
+    overflow: hidden;
+    width: 100%;
+    padding: 1rem;
+    background: color.adjust(variables.$color-dark, $lightness: -1%);
+
+    h2 {
+        text-align: center;
+    }
+}
+
+.sectionHeader {
+    &:hover {
+        color: variables.$color-primary;
+        cursor: pointer;
+    }
 }
