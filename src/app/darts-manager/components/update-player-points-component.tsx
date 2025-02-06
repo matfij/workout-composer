@@ -73,10 +73,11 @@ export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
                     {dartsConfig.throws.map((throwIndex) => (
                         <fieldset key={throwIndex} className={style.formFieldset}>
                             <input
-                                {...register(`throw${throwIndex}`, { pattern: /^(1[0-9]|20|[1-9]|25)$/ })}
+                                {...register(`throw${throwIndex}`, { pattern: /^(1[0-9]|20|[0-9]|25)$/ })}
                                 onKeyUp={() => setValue(`factor${throwIndex}`, 1)}
                                 className="formInput"
                                 type="number"
+                                placeholder="0"
                                 min={0}
                                 max={25}
                             />
