@@ -1,3 +1,4 @@
+import Image from 'next/image';
 import style from '../page.module.scss';
 import { useState } from 'react';
 
@@ -5,16 +6,31 @@ export const TreadmillCalculatorComponent = () => {
     const [open, setOpen] = useState(false);
     const [speed, setSpeed] = useState<string>('');
     const [pace, setPace] = useState<string>('');
+    const [inputMode, setInputMode] = useState<'speed' | 'pace'>('speed');
 
-    const onSpeedChange = (speed: string) => {
-        setSpeed(speed);
-        const speedValue = parseFloat(speed);
-        if (!speed || !speedValue || isNaN(speedValue)) {
+    const inputLabel = inputMode === 'speed' ? 'Speed [km/h]:' : 'Pace [min/km]:';
+    const outputLabel = inputMode === 'pace' ? 'Speed [km/h]:' : 'Pace [min/km]:';
+
+    const onToggleMode = () => setInputMode((prev) => (prev === 'speed' ? 'pace' : 'speed'));
+
+    const onInputChange = (input: string) => {
+        const inputValue = parseFloat(input);
+        if (!input || !inputValue || isNaN(inputValue)) {
+            setSpeed('');
+            setPace('');
             return;
         }
-        const pace = (60 * 1) / speedValue;
-        const paceDecimals = (pace % 1) * (60 / 100);
-        setPace((Math.floor(pace) + paceDecimals).toFixed(2));
+
+        const output = (60 * 1) / inputValue;
+        const outputDecimals = (output % 1) * (60 / 100);
+
+        if (inputMode === 'speed') {
+            setSpeed(input);
+            setPace((Math.floor(output) + outputDecimals).toFixed(2));
+        } else {
+            setPace(input);
+            setSpeed((Math.floor(output) + outputDecimals).toFixed(2));
+        }
     };
 
     return (
@@ -22,21 +38,30 @@ export const TreadmillCalculatorComponent = () => {
             <h2 className={style.sectionHeader} onClick={() => setOpen((prev) => !prev)}>
                 Treadmill Calculator
             </h2>
+            {open && (
+                <Image
+                    className={style.modeIcon}
+                    src="/icons/rotate-icon-light.svg"
+                    alt="mode"
+                    width={32}
+                    height={32}
+                    onClick={onToggleMode}
+                />
+            )}
             <section className="formWrapper" style={{ display: open ? 'block' : 'none', background: 'none' }}>
                 <fieldset>
-                    <label className="formLabel">Speed [km/h]:</label>
+                    <label className="formLabel">{inputLabel}</label>
                     <input
-                        value={speed}
+                        value={inputMode === 'speed' ? speed : pace}
                         type="number"
                         className="formInput"
-                        onChange={(e) => onSpeedChange(e.target.value)}
+                        onChange={(e) => onInputChange(e.target.value)}
                     />
                 </fieldset>
-                <fieldset style={{ marginTop: '1rem' }}>
-                    <label>
-                        Pace [min/km]: <b>{pace}</b>
-                    </label>
-                </fieldset>
+                <hr style={{ margin: '1rem 0' }} />
+                <p className="subtitle">
+                    {outputLabel} <b>{inputMode === 'speed' ? pace : speed}</b>
+                </p>
             </section>
         </div>
     );
