@@ -9,6 +9,7 @@ import { useSearchParams } from 'next/navigation';
 import { useEffect } from 'react';
 import { getWorkout } from './actions';
 import { ToastContainer } from 'react-toastify';
+import { SAMPLE_WORKOUT } from './data/sample-workout';
 
 export default function WorkoutComposerPage() {
     const { days, setDays, setIsLocked, moveTask, setIsDragging } = useWorkoutStore();
@@ -20,6 +21,7 @@ export default function WorkoutComposerPage() {
 
     const setupWorkout = async () => {
         if (!searchParams) {
+            setDays(SAMPLE_WORKOUT);
             return;
         }
         const workoutId = searchParams[1];
