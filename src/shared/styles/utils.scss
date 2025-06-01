@@ -66,3 +66,9 @@ button {
     opacity: 0.7;
     filter: grayscale(0.4);
 }
+
+.flex {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}

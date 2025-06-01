@@ -3,6 +3,7 @@
 import style from './page.module.scss';
 import { MenuComponent } from './components/menu-component';
 import { TreadmillCalculatorComponent } from './components/treadmill-calculator-component';
+import { PaceDistanceCalculator } from './components/pace-distance-calculator';
 
 export default function CalculatorsPage() {
     return (
@@ -12,6 +13,7 @@ export default function CalculatorsPage() {
                     Calculators
                 </h1>
                 <TreadmillCalculatorComponent />
+                <PaceDistanceCalculator />
             </main>
             <MenuComponent />
         </>
