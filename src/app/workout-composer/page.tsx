@@ -21,7 +21,9 @@ export default function WorkoutComposerPage() {
 
     const setupWorkout = async () => {
         if (!searchParams) {
-            setDays(SAMPLE_WORKOUT);
+            if (days.length === 0) {
+                setDays(SAMPLE_WORKOUT);
+            }
             return;
         }
         const workoutId = searchParams[1];
