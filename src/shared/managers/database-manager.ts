@@ -1,18 +1,25 @@
-import { Redis } from '@upstash/redis';
 import { Day } from '../../app/workout-composer/types';
 import { UtilityManger } from './utility-manager';
+import { createClient } from '@supabase/supabase-js';
 
-const redis = Redis.fromEnv();
+const dbTable = 'workouts';
+const dbUrl = UtilityManger.getEnvVar<string>('DB_URL');
+const dbKey = UtilityManger.getEnvVar<string>('DB_KEY');
+const dbclient = createClient(dbUrl, dbKey);
 
 export class DatabaseManager {
     static async saveWorkout({ id, days }: { id?: string; days: Day[] }) {
         const key = id?.trim().length ? id : UtilityManger.generateId();
-        await redis.set(key, days);
+        if (id) {
+            await dbclient.from(dbTable).update({ workout: days }).eq('id', key);
+        } else {
+            await dbclient.from(dbTable).insert({ id: key, workout: days });
+        }
         return key;
     }
 
-    static async getWorkout(id: string) {
-        const workout = await redis.get<Day[]>(id);
-        return workout;
+    static async getWorkout(id: string): Promise<Day[] | null> {
+        const { data } = await dbclient.from(dbTable).select('workout').eq('id', id).maybeSingle();
+        return data?.workout;
     }
 }
