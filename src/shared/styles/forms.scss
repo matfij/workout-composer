@@ -55,6 +55,7 @@
 
     &:hover {
         cursor: pointer;
+        font-weight: 600;
         background: color.adjust(variables.$color-primary, $lightness: -15%);
     }
 }
@@ -71,6 +72,7 @@
 
     &:hover {
         cursor: pointer;
+        font-weight: 600;
         background: color.adjust(variables.$color-light, $lightness: -15%);
     }
 }

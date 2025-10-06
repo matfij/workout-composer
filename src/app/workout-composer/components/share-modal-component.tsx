@@ -45,6 +45,35 @@ export const ShareModalComponent = (props: ShareModalComponentProps) => {
         }
     };
 
+    const onExportText = async () => {
+        let textData = '';
+        for (const day of days) {
+            if (textData.length > 0) {
+                textData += '\n\n';
+            }
+            textData += `${day.name}`;
+            for (const task of day.tasks) {
+                textData += `\n\t${task.name} ${task.sets} x ${task.reps}`;
+                if (task.description) {
+                    textData += ` (${task.description})`;
+                }
+            }
+        }
+        if (navigator.share) {
+            await navigator.share({ title: 'Workout', text: textData });
+        } else {
+            const element = document.createElement('a');
+            const textFile = new Blob([textData], { type: 'text/plain' });
+            const url = URL.createObjectURL(textFile);
+            element.href = url;
+            element.download = 'workout.txt';
+            document.body.appendChild(element);
+            element.click();
+            document.body.removeChild(element);
+            URL.revokeObjectURL(url);
+        }
+    };
+
     return (
         <div className="modalBackdrop">
             <div className="modalWrapper">
@@ -75,11 +104,23 @@ export const ShareModalComponent = (props: ShareModalComponentProps) => {
                             Confirm
                         </button>
                         <button
-                            onClick={() => props.onCancel()}
+                            onClick={props.onCancel}
                             disabled={shareLoading}
                             type="button"
                             className="formBtnCancel">
                             Cancel
+                        </button>
+                    </div>
+                    <p className="formLabel" style={{ margin: '1rem 0 0 0', textAlign: 'center' }}>
+                        or
+                    </p>
+                    <div className="formActionsWrapper">
+                        <button
+                            onClick={onExportText}
+                            disabled={shareLoading}
+                            type="button"
+                            className="formBtnSubmit">
+                            Export as text
                         </button>
                     </div>
                 </form>
