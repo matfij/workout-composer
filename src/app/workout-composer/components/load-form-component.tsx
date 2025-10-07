@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { getWorkout } from '../actions';
 import { useWorkoutStore } from '../workout-store';
 import { ToastManager } from '../../../shared/managers/toast-manager';
+import { WorkoutParser } from '../services/workout-parser';
 
 type LoadFormComponentProps = {
     onCancel: () => void;
@@ -11,8 +12,10 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
     const { setPlan } = useWorkoutStore();
     const [id, setId] = useState('');
     const [idError, setIdError] = useState('');
+    const [rawWorkout, setRawWorkout] = useState('');
+    const [rawWorkoutError, setRawWorkoutError] = useState('');
 
-    const loadWorkout = async () => {
+    const loadFromCloud = async () => {
         setIdError('');
         if (!id) {
             setIdError('ID is required');
@@ -31,6 +34,22 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
         window.history.pushState({}, document.title, `workout-composer?id=${id}`);
         ToastManager.showSuccess('Workout loaded');
         props.onCancel();
+    };
+
+    const loadFromText = async () => {
+        setRawWorkoutError('');
+        try {
+            const workout = WorkoutParser.deserializeWorkout(rawWorkout);
+            setPlan({
+                days: workout,
+                isLocked: true,
+                isDragging: false,
+            });
+            ToastManager.showSuccess('Workout loaded');
+            props.onCancel();
+        } catch {
+            setRawWorkoutError('Unable to load workout');
+        }
     };
 
     return (
@@ -53,11 +72,34 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
                         {idError && <p className="formError">{idError}</p>}
                     </fieldset>
                     <div className="formActionsWrapper">
-                        <button onClick={loadWorkout} className="formBtnSubmit">
+                        <button onClick={loadFromCloud} className="formBtnSubmit">
                             Load
                         </button>
                         <button onClick={() => props.onCancel()} type="button" className="formBtnCancel">
                             Cancel
+                        </button>
+                    </div>
+                    <p className="formLabel" style={{ margin: '1rem 0 0 0', textAlign: 'center' }}>
+                        or
+                    </p>
+                    <fieldset>
+                        <label className="formLabel" htmlFor="id">
+                            Workout data
+                        </label>
+                        <textarea
+                            className="formInput"
+                            value={rawWorkout}
+                            onChange={(e) => setRawWorkout(e.target.value)}
+                        />
+                        {rawWorkoutError && <p className="formError">{rawWorkoutError}</p>}
+                    </fieldset>
+                    <div className="formActionsWrapper">
+                        <button
+                            onClick={loadFromText}
+                            // disabled={}
+                            type="button"
+                            className="formBtnSubmit">
+                            Load from text
                         </button>
                     </div>
                 </div>

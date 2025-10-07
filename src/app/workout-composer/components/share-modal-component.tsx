@@ -4,6 +4,7 @@ import { saveWorkout } from '../actions';
 import { useWorkoutStore } from '../workout-store';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'next/navigation';
+import { WorkoutParser } from '../services/workout-parser';
 
 type ShareModalComponentProps = {
     onCancel: () => void;
@@ -46,32 +47,15 @@ export const ShareModalComponent = (props: ShareModalComponentProps) => {
     };
 
     const onExportText = async () => {
-        let textData = '';
-        for (const day of days) {
-            if (textData.length > 0) {
-                textData += '\n\n';
-            }
-            textData += `${day.name}`;
-            for (const task of day.tasks) {
-                textData += `\n\t${task.name} ${task.sets} x ${task.reps}`;
-                if (task.description) {
-                    textData += ` (${task.description})`;
-                }
-            }
-        }
+        const workout = WorkoutParser.serializeWorkout(days);
+
         if (navigator.share) {
-            await navigator.share({ title: 'Workout', text: textData });
+            await navigator.share({ text: workout });
         } else {
-            const element = document.createElement('a');
-            const textFile = new Blob([textData], { type: 'text/plain' });
-            const url = URL.createObjectURL(textFile);
-            element.href = url;
-            element.download = 'workout.txt';
-            document.body.appendChild(element);
-            element.click();
-            document.body.removeChild(element);
-            URL.revokeObjectURL(url);
+            ToastManager.showError('This device does not support local sharing');
         }
+
+        props.onCancel();
     };
 
     return (
