@@ -25,7 +25,7 @@ type WorkoutStore = Plan & {
         oldNameIndex: number,
         newDayIndex: number,
     ) => void;
-    removeTaskGroup: (taskId: string) => void;
+    removeTaskGroup: (id: string) => void;
     editTask: (task: Task) => void;
 };
 
@@ -88,12 +88,12 @@ export const useWorkoutStore = create(
                     }),
                 });
             },
-            removeTaskGroup: (removedTaskGroup: string) => {
+            removeTaskGroup: (id: string) => {
                 const days = get().days;
                 set({
                     days: days.map((day) => ({
                         ...day,
-                        tasks: day.taskGroups.filter((group) => group.id !== removedTaskGroup),
+                        taskGroups: day.taskGroups.filter((group) => group.id !== id),
                     })),
                 });
             },

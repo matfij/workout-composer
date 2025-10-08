@@ -4,7 +4,7 @@ import style from './day-item-component.module.scss';
 import { KeyboardEvent, useState } from 'react';
 import { Droppable } from '@hello-pangea/dnd';
 import { Day } from '../types';
-import { TaskItemComponent } from './task-item-component';
+import { TaskGroupComponent } from './task-group-component';
 import { TaskFormComponent } from './task-form-component';
 import Image from 'next/image';
 import { useWorkoutStore } from '../workout-store';
@@ -65,11 +65,9 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
                     {(dropProvider) => (
                         <>
                             <div {...dropProvider.droppableProps} ref={dropProvider.innerRef}>
-                                {props.day.taskGroups
-                                    .flatMap((group) => group.tasks)
-                                    .map((task, taskIndex) => (
-                                        <TaskItemComponent key={task.id} index={taskIndex} task={task} />
-                                    ))}
+                                {props.day.taskGroups.map((group, groupIndex) => (
+                                    <TaskGroupComponent key={group.id} index={groupIndex} taskGroup={group} />
+                                ))}
                             </div>
                             {dropProvider.placeholder}
                         </>
