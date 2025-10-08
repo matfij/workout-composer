@@ -65,9 +65,11 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
                     {(dropProvider) => (
                         <>
                             <div {...dropProvider.droppableProps} ref={dropProvider.innerRef}>
-                                {props.day.tasks.map((task, taskIndex) => (
-                                    <TaskItemComponent key={task.id} index={taskIndex} task={task} />
-                                ))}
+                                {props.day.taskGroups
+                                    .flatMap((group) => group.tasks)
+                                    .map((task, taskIndex) => (
+                                        <TaskItemComponent key={task.id} index={taskIndex} task={task} />
+                                    ))}
                             </div>
                             {dropProvider.placeholder}
                         </>

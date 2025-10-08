@@ -1,5 +1,5 @@
 import { UtilityManger } from '../../../shared/managers/utility-manager';
-import { Day, Task } from '../types';
+import { Day, Task, TaskGroup } from '../types';
 
 export class WorkoutParser {
     private static readonly DAY_SEPARATOR = '\n\n';
@@ -9,58 +9,62 @@ export class WorkoutParser {
     private static readonly DESCRIPTION_SEPARATOR_START = ' (';
     private static readonly DESCRIPTION_SEPARATOR_END = ')';
 
-    public static serializeWorkout(days: Day[]) {
-        let textData = '';
+    // public static serializeWorkout(days: Day[]) {
+    //     let textData = '';
 
-        for (const day of days) {
-            if (textData.length > 0) {
-                textData += this.DAY_SEPARATOR;
-            }
-            textData += `${day.name}`;
+    //     for (const day of days) {
+    //         if (textData.length > 0) {
+    //             textData += this.DAY_SEPARATOR;
+    //         }
+    //         textData += `${day.name}`;
 
-            for (const task of day.tasks) {
-                textData +=
-                    this.TASK_SEPARATOR +
-                    task.name +
-                    this.SETS_SEPARATOR +
-                    task.sets +
-                    this.REPS_SEPARATOR +
-                    task.reps;
-                if (task.description) {
-                    textData +=
-                        this.DESCRIPTION_SEPARATOR_START + task.description + this.DESCRIPTION_SEPARATOR_END;
-                }
-            }
-        }
+    //         for (const task of day.taskGroups) {
+    //             textData +=
+    //                 this.TASK_SEPARATOR +
+    //                 task.name +
+    //                 this.SETS_SEPARATOR +
+    //                 task.sets +
+    //                 this.REPS_SEPARATOR +
+    //                 task.reps;
+    //             if (task.description) {
+    //                 textData +=
+    //                     this.DESCRIPTION_SEPARATOR_START + task.description + this.DESCRIPTION_SEPARATOR_END;
+    //             }
+    //         }
+    //     }
 
-        return textData;
-    }
+    //     return textData;
+    // }
 
     public static deserializeWorkout(workout: string) {
         const days: Day[] = [];
 
         const rawDays = workout.split(this.DAY_SEPARATOR);
         for (const rawDay of rawDays) {
-            const rawTasks = rawDay.split(this.TASK_SEPARATOR);
-            const tasks: Task[] = [];
+            const rawTaskGroups = rawDay.split(this.TASK_SEPARATOR);
+            const taskGroups: TaskGroup[] = [];
 
-            for (const rawTask of rawTasks.slice(1)) {
+            for (const rawTask of rawTaskGroups.slice(1)) {
                 const [name, setsLeft] = rawTask.split(this.SETS_SEPARATOR);
                 const [sets, repsLeft] = setsLeft.split(this.REPS_SEPARATOR);
                 const [reps, description] = repsLeft.split(this.DESCRIPTION_SEPARATOR_START);
-                tasks.push({
+                const newTask: Task = {
                     id: UtilityManger.generateId(),
                     name: name,
                     reps: reps.trim(),
                     sets: sets.trim(),
                     ...(description && { description: description.split(this.DESCRIPTION_SEPARATOR_END)[0] }),
+                };
+                taskGroups.push({
+                    id: UtilityManger.generateId(),
+                    tasks: [newTask],
                 });
             }
 
             days.push({
                 id: UtilityManger.generateId(),
-                name: rawTasks[0],
-                tasks: tasks,
+                name: rawTaskGroups[0],
+                taskGroups: taskGroups,
             });
         }
 

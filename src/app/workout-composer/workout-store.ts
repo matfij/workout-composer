@@ -17,15 +17,15 @@ type WorkoutStore = Plan & {
     removeDay: (dayId: string) => void;
     setIsLocked: (isLocked: boolean) => void;
     setIsDragging: (isDragging: boolean) => void;
-    addTask: (dayName: string, task: Task) => void;
-    moveTask: (
+    addTaskGroup: (dayName: string, task: Task) => void;
+    moveTaskGroup: (
         taskId: string,
         oldDayName: string,
         newDayName: string,
         oldNameIndex: number,
         newDayIndex: number,
     ) => void;
-    removeTask: (taskId: string) => void;
+    removeTaskGroup: (taskId: string) => void;
     editTask: (task: Task) => void;
 };
 
@@ -41,7 +41,7 @@ export const useWorkoutStore = create(
             removeDay: (dayId: string) => set({ days: get().days.filter((d) => d.id !== dayId) }),
             setIsLocked: (isLocked: boolean) => set({ isLocked }),
             setIsDragging: (isDragging: boolean) => set({ isDragging }),
-            addTask: (dayName: string, task: Omit<Task, 'id'>) => {
+            addTaskGroup: (dayName: string, task: Omit<Task, 'id'>) => {
                 const days = get().days;
                 const newTask = {
                     ...task,
@@ -49,52 +49,63 @@ export const useWorkoutStore = create(
                 };
                 set({
                     days: days.map((day) =>
-                        day.name === dayName ? { ...day, tasks: [...day.tasks, newTask] } : day,
+                        day.name === dayName
+                            ? {
+                                  ...day,
+                                  taskGroups: [
+                                      ...day.taskGroups,
+                                      { id: UtilityManger.generateId(), tasks: [newTask] },
+                                  ],
+                              }
+                            : day,
                     ),
                 });
             },
-            moveTask: (
-                taskId: string,
+            moveTaskGroup: (
+                taskGroupId: string,
                 oldDayName: string,
                 newDayName: string,
                 oldDayIndex: number,
                 newDayIndex: number,
             ) => {
                 const days = get().days;
-                const task = days
-                    .map((d) => d.tasks)
-                    .flatMap((t) => t)
-                    .find((t) => t.id === taskId);
-                if (!task) {
-                    throw new Error(`Task ${taskId} not found`);
+                const taskGroup = days
+                    .map((day) => day.taskGroups)
+                    .flatMap((group) => group)
+                    .find((group) => group.id === taskGroupId);
+                if (!taskGroup) {
+                    throw new Error(`Task group ${taskGroupId} not found`);
                 }
                 set({
                     days: days.map((day) => {
                         if (day.name === oldDayName) {
-                            day.tasks.splice(oldDayIndex, 1);
+                            day.taskGroups.splice(oldDayIndex, 1);
                         }
                         if (day.name === newDayName) {
-                            day.tasks.splice(newDayIndex, 0, task);
+                            day.taskGroups.splice(newDayIndex, 0, taskGroup);
                         }
                         return day;
                     }),
                 });
             },
-            removeTask: (taskId: string) => {
+            removeTaskGroup: (removedTaskGroup: string) => {
                 const days = get().days;
                 set({
                     days: days.map((day) => ({
                         ...day,
-                        tasks: day.tasks.filter((t) => t.id !== taskId),
+                        tasks: day.taskGroups.filter((group) => group.id !== removedTaskGroup),
                     })),
                 });
             },
-            editTask: (task: Task) => {
+            editTask: (editedTask: Task) => {
                 const days = get().days;
                 set({
                     days: days.map((day) => ({
                         ...day,
-                        tasks: day.tasks.map((t) => (t.id === task.id ? task : t)),
+                        taskGroups: day.taskGroups.map((group) => ({
+                            ...group,
+                            tasks: group.tasks.map((task) => (task.id === editedTask.id ? editedTask : task)),
+                        })),
                     })),
                 });
             },

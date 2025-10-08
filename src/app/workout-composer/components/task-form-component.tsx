@@ -9,7 +9,7 @@ type TaskFormComponentProps = {
 };
 
 export const TaskFormComponent = (props: TaskFormComponentProps) => {
-    const { addTask, editTask } = useWorkoutStore();
+    const { addTaskGroup, editTask } = useWorkoutStore();
     const {
         register,
         handleSubmit,
@@ -31,7 +31,7 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
         if (isEditMode) {
             editTask(task);
         } else if (props.dayName) {
-            addTask(props.dayName, task);
+            addTaskGroup(props.dayName, task);
         }
         props.onCancel();
     };

@@ -8,8 +8,13 @@ export type Plan = {
 export type Day = {
     id: string;
     name: string;
-    tasks: Task[];
+    taskGroups: TaskGroup[];
 };
+
+export type TaskGroup = {
+    id: string;
+    tasks: Task[];
+}
 
 export type Task = {
     id: string;

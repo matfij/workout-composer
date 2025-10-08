@@ -16,7 +16,7 @@ export const DayFormComponent = (props: DayFormComponentProps) => {
             return;
         } else {
             setNameError(undefined);
-            addDay({ name, tasks: [] });
+            addDay({ name, taskGroups: [] });
             props.onCancel();
         }
     };

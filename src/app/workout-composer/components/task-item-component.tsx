@@ -15,7 +15,7 @@ type TaskItemComponentProps = {
 };
 
 export const TaskItemComponent = (props: TaskItemComponentProps) => {
-    const { isLocked, removeTask } = useWorkoutStore();
+    const { isLocked, removeTaskGroup } = useWorkoutStore();
     const [showTaskForm, setShowTaskForm] = useState(false);
     const [showVideoModal, setShowVideoModal] = useState(false);
 
@@ -60,7 +60,7 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                                     <Image src="/icons/edit-icon.svg" alt="edit" width={25} height={25} />
                                 </div>
                                 <div
-                                    onDoubleClick={() => removeTask(props.task.id)}
+                                    onDoubleClick={() => removeTaskGroup(props.task.id)}
                                     className={style.actionIcon}
                                     style={{ top: '3px', right: '3px' }}>
                                     <Image src="/icons/remove-icon.svg" alt="remove" width={28} height={28} />
