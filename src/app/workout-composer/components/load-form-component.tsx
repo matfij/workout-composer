@@ -2,7 +2,6 @@ import { useState } from 'react';
 import { getWorkout } from '../actions';
 import { useWorkoutStore } from '../workout-store';
 import { ToastManager } from '../../../shared/managers/toast-manager';
-import { WorkoutParser } from '../services/workout-parser';
 
 type LoadFormComponentProps = {
     onCancel: () => void;
@@ -12,8 +11,8 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
     const { setPlan } = useWorkoutStore();
     const [id, setId] = useState('');
     const [idError, setIdError] = useState('');
-    const [rawWorkout, setRawWorkout] = useState('');
-    const [rawWorkoutError, setRawWorkoutError] = useState('');
+    // const [rawWorkout, setRawWorkout] = useState('');
+    // const [rawWorkoutError, setRawWorkoutError] = useState('');
 
     const loadFromCloud = async () => {
         setIdError('');
@@ -34,22 +33,6 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
         window.history.pushState({}, document.title, `workout-composer?id=${id}`);
         ToastManager.showSuccess('Workout loaded');
         props.onCancel();
-    };
-
-    const loadFromText = async () => {
-        setRawWorkoutError('');
-        try {
-            const workout = WorkoutParser.deserializeWorkout(rawWorkout);
-            setPlan({
-                days: workout,
-                isLocked: true,
-                isDragging: false,
-            });
-            ToastManager.showSuccess('Workout loaded');
-            props.onCancel();
-        } catch {
-            setRawWorkoutError('Unable to load workout');
-        }
     };
 
     return (
@@ -79,10 +62,7 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
                             Cancel
                         </button>
                     </div>
-                    <p className="formLabel" style={{ margin: '1rem 0 0 0', textAlign: 'center' }}>
-                        or
-                    </p>
-                    <fieldset>
+                    {/* <fieldset>
                         <label className="formLabel" htmlFor="id">
                             Workout data
                         </label>
@@ -101,7 +81,7 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
                             className="formBtnSubmit">
                             Load from text
                         </button>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </section>

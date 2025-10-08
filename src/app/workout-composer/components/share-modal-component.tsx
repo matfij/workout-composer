@@ -4,7 +4,6 @@ import { saveWorkout } from '../actions';
 import { useWorkoutStore } from '../workout-store';
 import { useForm } from 'react-hook-form';
 import { useSearchParams } from 'next/navigation';
-import { WorkoutParser } from '../services/workout-parser';
 
 type ShareModalComponentProps = {
     onCancel: () => void;
@@ -46,17 +45,17 @@ export const ShareModalComponent = (props: ShareModalComponentProps) => {
         }
     };
 
-    const onExportText = async () => {
-        const workout = WorkoutParser.serializeWorkout(days);
+    // const onExportText = async () => {
+    //     const workout = WorkoutParser.serializeWorkout(days);
 
-        if (navigator.share) {
-            await navigator.share({ text: workout });
-        } else {
-            ToastManager.showError('This device does not support local sharing');
-        }
+    //     if (navigator.share) {
+    //         await navigator.share({ text: workout });
+    //     } else {
+    //         ToastManager.showError('This device does not support local sharing');
+    //     }
 
-        props.onCancel();
-    };
+    //     props.onCancel();
+    // };
 
     return (
         <div className="modalBackdrop">
@@ -95,7 +94,7 @@ export const ShareModalComponent = (props: ShareModalComponentProps) => {
                             Cancel
                         </button>
                     </div>
-                    <p className="formLabel" style={{ margin: '1rem 0 0 0', textAlign: 'center' }}>
+                    {/* <p className="formLabel" style={{ margin: '1rem 0 0 0', textAlign: 'center' }}>
                         or
                     </p>
                     <div className="formActionsWrapper">
@@ -106,7 +105,7 @@ export const ShareModalComponent = (props: ShareModalComponentProps) => {
                             className="formBtnSubmit">
                             Export as text
                         </button>
-                    </div>
+                    </div> */}
                 </form>
             </div>
         </div>

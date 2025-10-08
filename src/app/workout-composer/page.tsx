@@ -12,7 +12,7 @@ import { ToastContainer } from 'react-toastify';
 import { SAMPLE_WORKOUT } from './data/sample-workout';
 
 export default function WorkoutComposerPage() {
-    const { days, setDays, setIsLocked, moveTask, setIsDragging } = useWorkoutStore();
+    const { days, setDays, setIsLocked, moveTaskGroup, setIsDragging } = useWorkoutStore();
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
@@ -40,7 +40,7 @@ export default function WorkoutComposerPage() {
 
     const onMoveTask = (result: DropResult) => {
         if (result.destination) {
-            moveTask(
+            moveTaskGroup(
                 result.draggableId,
                 result.source.droppableId,
                 result.destination.droppableId,
