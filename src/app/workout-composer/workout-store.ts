@@ -18,8 +18,9 @@ type WorkoutStore = Plan & {
     setIsLocked: (isLocked: boolean) => void;
     setIsDragging: (isDragging: boolean) => void;
     addTaskGroup: (dayName: string, task: Task) => void;
+    moveTask: (taskId: string, targetGroupId: string, targetIndex: number) => void;
     moveTaskGroup: (
-        taskId: string,
+        groupId: string,
         oldDayName: string,
         newDayName: string,
         oldNameIndex: number,
@@ -60,6 +61,31 @@ export const useWorkoutStore = create(
                               }
                             : day,
                     ),
+                });
+            },
+            moveTask: (taskId: string, targetGroupId: string, targetIndex: number) => {
+                const taskToMove = get()
+                    .days.flatMap((day) => day.taskGroups.flatMap((group) => group.tasks))
+                    .find((task) => task.id === taskId);
+                if (!taskToMove) {
+                    return;
+                }
+                const updatedDays = get().days.map((day) => ({
+                    ...day,
+                    taskGroups: day.taskGroups.map((group) => ({
+                        ...group,
+                        tasks: group.tasks.filter((task) => task.id !== taskId),
+                    })),
+                }));
+                updatedDays.forEach((day) => {
+                    day.taskGroups.forEach(
+                        (group) =>
+                            group.id === targetGroupId && group.tasks.splice(targetIndex, 0, taskToMove),
+                    );
+                    day.taskGroups = day.taskGroups.filter((group) => group.tasks.length > 0);
+                });
+                set({
+                    days: updatedDays,
                 });
             },
             moveTaskGroup: (

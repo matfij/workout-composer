@@ -13,7 +13,7 @@ import { SAMPLE_WORKOUT } from './data/sample-workout';
 import { DroppableKind } from './types';
 
 export default function WorkoutComposerPage() {
-    const { days, setDays, setIsLocked, moveTaskGroup, setIsDragging } = useWorkoutStore();
+    const { days, setDays, setIsLocked, moveTask, moveTaskGroup, setIsDragging } = useWorkoutStore();
     const [searchParams] = useSearchParams();
 
     useEffect(() => {
@@ -48,6 +48,8 @@ export default function WorkoutComposerPage() {
                 result.source.index,
                 result.destination.index,
             );
+        } else if (result.destination && result.type === DroppableKind.Group) {
+            moveTask(result.draggableId, result.destination.droppableId, result.destination.index);
         }
         setIsDragging(false);
     };
