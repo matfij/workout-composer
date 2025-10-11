@@ -3,7 +3,7 @@
 import style from './day-item-component.module.scss';
 import { KeyboardEvent, useState } from 'react';
 import { Droppable } from '@hello-pangea/dnd';
-import { Day } from '../types';
+import { Day, DroppableKind } from '../types';
 import { TaskGroupComponent } from './task-group-component';
 import { TaskFormComponent } from './task-form-component';
 import Image from 'next/image';
@@ -61,7 +61,7 @@ export const DayItemComponent = (props: DayItemComponentProps) => {
                         className={`${style.dayInput} subtitle light`}
                     />
                 )}
-                <Droppable droppableId={props.day.name}>
+                <Droppable droppableId={props.day.name} type={DroppableKind.Day}>
                     {(dropProvider) => (
                         <>
                             <div {...dropProvider.droppableProps} ref={dropProvider.innerRef}>

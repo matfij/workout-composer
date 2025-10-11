@@ -1,7 +1,10 @@
 'use client';
 
-import { TaskGroup } from '../types';
+import style from './task-group-component.module.scss';
+import { Draggable, Droppable } from '@hello-pangea/dnd';
+import { DroppableKind, TaskGroup } from '../types';
 import { TaskItemComponent } from './task-item-component';
+import { useWorkoutStore } from '../workout-store';
 
 type TaskGroupComponentProps = {
     index: number;
@@ -9,11 +12,27 @@ type TaskGroupComponentProps = {
 };
 
 export const TaskGroupComponent = (props: TaskGroupComponentProps) => {
+    const { isLocked } = useWorkoutStore();
     return (
-        <>
-            {props.taskGroup.tasks.map((task, taskIndex) => (
-                <TaskItemComponent key={task.id} index={taskIndex} task={task} />
-            ))}
-        </>
+        <Draggable index={props.index} draggableId={props.taskGroup.id}>
+            {(dragProvider) => (
+                <div
+                    ref={dragProvider.innerRef}
+                    {...dragProvider.draggableProps}
+                    {...dragProvider.dragHandleProps}
+                    className={isLocked ? '' : style.taskGroupWrapperEdit}>
+                    <Droppable droppableId={props.taskGroup.id} type={DroppableKind.Group}>
+                        {(dropProvider) => (
+                            <div {...dropProvider.droppableProps} ref={dropProvider.innerRef}>
+                                {props.taskGroup.tasks.map((task, taskIndex) => (
+                                    <TaskItemComponent key={task.id} index={taskIndex} task={task} />
+                                ))}
+                                {dropProvider.placeholder}
+                            </div>
+                        )}
+                    </Droppable>
+                </div>
+            )}
+        </Draggable>
     );
 };

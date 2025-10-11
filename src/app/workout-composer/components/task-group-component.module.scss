@@ -1,0 +1,7 @@
+@use '../../../shared/styles/variables.scss';
+@use '../../../shared/styles/mixins.scss';
+
+.taskGroupWrapperEdit {
+    padding: 1rem;
+    border: 1px dashed variables.$color-light;
+}

@@ -14,7 +14,7 @@ export type Day = {
 export type TaskGroup = {
     id: string;
     tasks: Task[];
-}
+};
 
 export type Task = {
     id: string;
@@ -24,3 +24,8 @@ export type Task = {
     description?: string;
     videoUrl?: string;
 };
+
+export enum DroppableKind {
+    Day = 'Day',
+    Group = 'Group',
+}

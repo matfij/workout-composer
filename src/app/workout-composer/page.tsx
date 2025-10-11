@@ -10,6 +10,7 @@ import { useEffect } from 'react';
 import { getWorkout } from './actions';
 import { ToastContainer } from 'react-toastify';
 import { SAMPLE_WORKOUT } from './data/sample-workout';
+import { DroppableKind } from './types';
 
 export default function WorkoutComposerPage() {
     const { days, setDays, setIsLocked, moveTaskGroup, setIsDragging } = useWorkoutStore();
@@ -39,7 +40,7 @@ export default function WorkoutComposerPage() {
     };
 
     const onMoveTask = (result: DropResult) => {
-        if (result.destination) {
+        if (result.destination && result.type === DroppableKind.Day) {
             moveTaskGroup(
                 result.draggableId,
                 result.source.droppableId,
