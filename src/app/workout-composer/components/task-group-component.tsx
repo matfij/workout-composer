@@ -13,6 +13,13 @@ type TaskGroupComponentProps = {
 
 export const TaskGroupComponent = (props: TaskGroupComponentProps) => {
     const { isLocked } = useWorkoutStore();
+
+    const wrapperClassName = !isLocked
+        ? style.taskGroupWrapperEdit
+        : props.taskGroup.tasks.length > 1
+        ? style.taskGroupWrapperMultiple
+        : '';
+
     return (
         <Draggable index={props.index} draggableId={props.taskGroup.id}>
             {(dragProvider) => (
@@ -20,7 +27,7 @@ export const TaskGroupComponent = (props: TaskGroupComponentProps) => {
                     ref={dragProvider.innerRef}
                     {...dragProvider.draggableProps}
                     {...dragProvider.dragHandleProps}
-                    className={isLocked ? '' : style.taskGroupWrapperEdit}>
+                    className={wrapperClassName}>
                     <Droppable droppableId={props.taskGroup.id} type={DroppableKind.Group}>
                         {(dropProvider) => (
                             <div {...dropProvider.droppableProps} ref={dropProvider.innerRef}>
