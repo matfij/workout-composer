@@ -21,7 +21,7 @@ export const TaskGroupComponent = (props: TaskGroupComponentProps) => {
         : '';
 
     return (
-        <Draggable index={props.index} draggableId={props.taskGroup.id}>
+        <Draggable index={props.index} draggableId={props.taskGroup.id} isDragDisabled={isLocked}>
             {(dragProvider) => (
                 <div
                     ref={dragProvider.innerRef}
