@@ -3,38 +3,46 @@ import { Day, Task, TaskGroup } from '../types';
 
 export class WorkoutParser {
     private static readonly DAY_SEPARATOR = '\n\n';
-    private static readonly TASK_SEPARATOR = '\n\t';
+    private static readonly TASK_GROUP_SEPARATOR = '\n\t';
+    private static readonly TASK_SEPARATOR = ' + ';
     private static readonly SETS_SEPARATOR = ' | ';
     private static readonly REPS_SEPARATOR = ' x ';
     private static readonly DESCRIPTION_SEPARATOR_START = ' (';
     private static readonly DESCRIPTION_SEPARATOR_END = ')';
 
-    // public static serializeWorkout(days: Day[]) {
-    //     let textData = '';
+    public static serializeWorkout(days: Day[]) {
+        let textData = '';
 
-    //     for (const day of days) {
-    //         if (textData.length > 0) {
-    //             textData += this.DAY_SEPARATOR;
-    //         }
-    //         textData += `${day.name}`;
+        for (const day of days) {
+            if (textData.length > 0) {
+                textData += this.DAY_SEPARATOR;
+            }
+            textData += `${day.name}`;
 
-    //         for (const task of day.taskGroups) {
-    //             textData +=
-    //                 this.TASK_SEPARATOR +
-    //                 task.name +
-    //                 this.SETS_SEPARATOR +
-    //                 task.sets +
-    //                 this.REPS_SEPARATOR +
-    //                 task.reps;
-    //             if (task.description) {
-    //                 textData +=
-    //                     this.DESCRIPTION_SEPARATOR_START + task.description + this.DESCRIPTION_SEPARATOR_END;
-    //             }
-    //         }
-    //     }
+            for (const taskGroup of day.taskGroups) {
+                textData += this.TASK_GROUP_SEPARATOR;
 
-    //     return textData;
-    // }
+                for (let taskIndex = 0; taskIndex < taskGroup.tasks.length; taskIndex++) {
+                    const task = taskGroup.tasks[taskIndex];
+                    textData +=
+                        (taskIndex > 0 ? this.TASK_SEPARATOR : '') +
+                        task.name +
+                        this.SETS_SEPARATOR +
+                        task.sets +
+                        this.REPS_SEPARATOR +
+                        task.reps;
+                    if (task.description) {
+                        textData +=
+                            this.DESCRIPTION_SEPARATOR_START +
+                            task.description +
+                            this.DESCRIPTION_SEPARATOR_END;
+                    }
+                }
+            }
+        }
+
+        return textData;
+    }
 
     public static deserializeWorkout(workout: string) {
         const days: Day[] = [];
