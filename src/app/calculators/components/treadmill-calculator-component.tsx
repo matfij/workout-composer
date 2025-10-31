@@ -43,8 +43,8 @@ export const TreadmillCalculatorComponent = () => {
                     className={style.modeIcon}
                     src="/icons/rotate-icon-light.svg"
                     alt="mode"
-                    width={32}
-                    height={32}
+                    width={40}
+                    height={40}
                     onClick={onToggleMode}
                 />
             )}

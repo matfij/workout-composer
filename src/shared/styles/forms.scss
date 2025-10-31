@@ -3,6 +3,7 @@
 @use 'mixins.scss';
 
 .formWrapper {
+    position: relative;
     padding: 2rem 1rem;
     background: variables.$color-light;
     display: flex;

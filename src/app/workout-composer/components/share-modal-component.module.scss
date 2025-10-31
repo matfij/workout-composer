@@ -1,0 +1,12 @@
+.modeIcon {
+    position: absolute;
+    right: 0;
+    top: 0;
+    transition: transform 0.2s ease-in-out;
+    z-index: 1000;
+
+    &:hover {
+        cursor: pointer;
+        transform: rotate(10deg) scale(1.1);
+    }
+}

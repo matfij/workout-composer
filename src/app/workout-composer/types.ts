@@ -29,8 +29,3 @@ export enum DroppableKind {
     Day = 'Day',
     Group = 'Group',
 }
-
-export enum ShareOption {
-    Local = 'Local',
-    Global = 'Global',
-}
