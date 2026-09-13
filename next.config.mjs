@@ -2,7 +2,7 @@
 
 const nextConfig = {
     experimental: {
-        dynamicIO: true,
+        cacheComponents: false,
     },
 };
 
