@@ -16,6 +16,9 @@ export default async function App() {
                 <Link href={'/darts-manager'} className={style.navItem}>
                     Darts Manager
                 </Link>
+                <Link href={'/note-guesser'} className={style.navItem}>
+                    Note Guesser
+                </Link>
                 <Link href={'/calculators'} className={style.navItem}>
                     Calculators
                 </Link>

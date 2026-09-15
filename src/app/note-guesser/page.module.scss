@@ -1,0 +1,13 @@
+@use '../../shared/styles/variables.scss';
+@use '../../shared/styles/mixins.scss';
+
+.mainWrapper {
+    width: 90%;
+    max-width: 36rem;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1.25rem;
+    align-items: center;
+    padding: 3rem 0;
+}
