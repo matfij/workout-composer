@@ -1,5 +1,5 @@
-@use '../../../shared/styles/variables.scss';
-@use '../../../shared/styles/mixins.scss';
+@use "../../../shared/styles/variables.scss";
+@use "../../../shared/styles/mixins.scss";
 
 .playerCardWrapper {
     @include mixins.boxShadow;

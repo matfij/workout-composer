@@ -1,0 +1,20 @@
+{
+    "$schema": "./node_modules/oxlint/configuration_schema.json",
+    "plugins": ["typescript", "oxc", "nextjs", "react"],
+    "rules": {
+        "no-debugger": "error",
+        "no-console": "warn",
+        "eqeqeq": "error",
+        "curly": "error",
+        "typescript/no-explicit-any": "warn",
+        "typescript/no-unused-vars": [
+            "warn",
+            {
+                "argsIgnorePattern": "^_",
+                "varsIgnorePattern": "^_"
+            }
+        ],
+        "react/set-state-in-effect": "allow",
+        "nextjs/no-typos": "error"
+    }
+}

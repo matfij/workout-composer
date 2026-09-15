@@ -1,9 +1,9 @@
-@use 'sass:color';
-@use '../shared/styles/variables.scss';
-@use '../shared/styles/utils.scss';
-@use '../shared/styles/forms.scss';
-@use '../shared/styles/modals.scss';
-@use '../shared/styles/menu.scss';
+@use "sass:color";
+@use "../shared/styles/variables.scss";
+@use "../shared/styles/utils.scss";
+@use "../shared/styles/forms.scss";
+@use "../shared/styles/modals.scss";
+@use "../shared/styles/menu.scss";
 
 @media (prefers-color-scheme: dark) {
     html {

@@ -1,13 +1,15 @@
-'use client';
+"use client";
 
-import style from './task-item-component.module.scss';
-import Image from 'next/image';
-import { useState } from 'react';
-import { Draggable } from '@hello-pangea/dnd';
-import { useWorkoutStore } from '../workout-store';
-import { TaskFormComponent } from './task-form-component';
-import { TaskVideoModalComponent } from './task-video-modal-component';
-import { Task } from '../types';
+import { Draggable } from "@hello-pangea/dnd";
+import Image from "next/image";
+import { useState } from "react";
+
+import { Task } from "../types";
+import { useWorkoutStore } from "../workout-store";
+import { TaskFormComponent } from "./task-form-component";
+import { TaskVideoModalComponent } from "./task-video-modal-component";
+
+import style from "./task-item-component.module.scss";
 
 type TaskItemComponentProps = {
     index: number;
@@ -23,7 +25,9 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
 
     return (
         <>
-            {showTaskForm && <TaskFormComponent task={props.task} onCancel={() => setShowTaskForm(false)} />}
+            {showTaskForm && (
+                <TaskFormComponent task={props.task} onCancel={() => setShowTaskForm(false)} />
+            )}
             {showVideoModal && (
                 <TaskVideoModalComponent
                     videoUrl={props.task.videoUrl!}
@@ -37,7 +41,8 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                         ref={dragProvider.innerRef}
                         {...dragProvider.draggableProps}
                         {...dragProvider.dragHandleProps}
-                        className={style.taskItem}>
+                        className={style.taskItem}
+                    >
                         <p className="bold primary">{props.task.name}</p>
                         <p>
                             {props.task.sets} x {props.task.reps}
@@ -47,8 +52,14 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                             <div
                                 onClick={() => setShowVideoModal(true)}
                                 className={style.actionIcon}
-                                style={{ top: '3px', right: '3px' }}>
-                                <Image src="/icons/video-icon.svg" alt="edit" width={30} height={30} />
+                                style={{ top: "3px", right: "3px" }}
+                            >
+                                <Image
+                                    src="/icons/video-icon.svg"
+                                    alt="edit"
+                                    width={30}
+                                    height={30}
+                                />
                             </div>
                         )}
                         {!isLocked && (
@@ -56,14 +67,26 @@ export const TaskItemComponent = (props: TaskItemComponentProps) => {
                                 <div
                                     onClick={() => setShowTaskForm(true)}
                                     className={style.actionIcon}
-                                    style={{ top: '6px', right: '36px' }}>
-                                    <Image src="/icons/edit-icon.svg" alt="edit" width={25} height={25} />
+                                    style={{ top: "6px", right: "36px" }}
+                                >
+                                    <Image
+                                        src="/icons/edit-icon.svg"
+                                        alt="edit"
+                                        width={25}
+                                        height={25}
+                                    />
                                 </div>
                                 <div
                                     onDoubleClick={() => removeTask(props.task.id)}
                                     className={style.actionIcon}
-                                    style={{ top: '3px', right: '3px' }}>
-                                    <Image src="/icons/remove-icon.svg" alt="remove" width={28} height={28} />
+                                    style={{ top: "3px", right: "3px" }}
+                                >
+                                    <Image
+                                        src="/icons/remove-icon.svg"
+                                        alt="remove"
+                                        width={28}
+                                        height={28}
+                                    />
                                 </div>
                             </>
                         )}

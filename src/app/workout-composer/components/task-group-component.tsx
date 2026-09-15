@@ -1,10 +1,12 @@
-'use client';
+"use client";
 
-import style from './task-group-component.module.scss';
-import { Draggable, Droppable } from '@hello-pangea/dnd';
-import { DroppableKind, TaskGroup } from '../types';
-import { TaskItemComponent } from './task-item-component';
-import { useWorkoutStore } from '../workout-store';
+import { Draggable, Droppable } from "@hello-pangea/dnd";
+
+import { DroppableKind, TaskGroup } from "../types";
+import { useWorkoutStore } from "../workout-store";
+import { TaskItemComponent } from "./task-item-component";
+
+import style from "./task-group-component.module.scss";
 
 type TaskGroupComponentProps = {
     index: number;
@@ -17,8 +19,8 @@ export const TaskGroupComponent = (props: TaskGroupComponentProps) => {
     const wrapperClassName = !isLocked
         ? style.taskGroupWrapperEdit
         : props.taskGroup.tasks.length > 1
-        ? style.taskGroupWrapperMultiple
-        : '';
+          ? style.taskGroupWrapperMultiple
+          : "";
 
     return (
         <Draggable index={props.index} draggableId={props.taskGroup.id} isDragDisabled={isLocked}>
@@ -27,12 +29,17 @@ export const TaskGroupComponent = (props: TaskGroupComponentProps) => {
                     ref={dragProvider.innerRef}
                     {...dragProvider.draggableProps}
                     {...dragProvider.dragHandleProps}
-                    className={wrapperClassName}>
+                    className={wrapperClassName}
+                >
                     <Droppable droppableId={props.taskGroup.id} type={DroppableKind.Group}>
                         {(dropProvider) => (
                             <div {...dropProvider.droppableProps} ref={dropProvider.innerRef}>
                                 {props.taskGroup.tasks.map((task, taskIndex) => (
-                                    <TaskItemComponent key={task.id} index={taskIndex} task={task} />
+                                    <TaskItemComponent
+                                        key={task.id}
+                                        index={taskIndex}
+                                        task={task}
+                                    />
                                 ))}
                                 {dropProvider.placeholder}
                             </div>

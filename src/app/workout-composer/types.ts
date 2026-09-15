@@ -26,6 +26,6 @@ export type Task = {
 };
 
 export enum DroppableKind {
-    Day = 'Day',
-    Group = 'Group',
+    Day = "Day",
+    Group = "Group",
 }

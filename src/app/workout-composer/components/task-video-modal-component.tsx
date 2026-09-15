@@ -1,5 +1,6 @@
-import { useMemo } from 'react';
-import style from './task-video-modal-component.module.scss';
+import { useMemo } from "react";
+
+import style from "./task-video-modal-component.module.scss";
 
 type TaskFormComponentProps = {
     videoUrl: string;
@@ -20,7 +21,7 @@ export const TaskVideoModalComponent = (props: TaskFormComponentProps) => {
             url += `&loop=1`;
         }
         return url;
-    }, []);
+    }, [props.videoUrl, props.options]);
 
     return (
         <div className="modalBackdrop">
@@ -32,7 +33,8 @@ export const TaskVideoModalComponent = (props: TaskFormComponentProps) => {
                     onClick={() => props.onCancel()}
                     type="button"
                     className="formBtnCancel"
-                    style={{ width: '100%' }}>
+                    style={{ width: "100%" }}
+                >
                     Close
                 </button>
             </div>

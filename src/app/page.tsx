@@ -1,6 +1,7 @@
-import Link from 'next/link';
-import style from './page.module.scss';
-import Image from 'next/image';
+import Image from "next/image";
+import Link from "next/link";
+
+import style from "./page.module.scss";
 
 export default async function App() {
     return (
@@ -10,16 +11,16 @@ export default async function App() {
                     <Image src="/brand/brand-256x256.png" alt="brand" width="256" height="256" />
                     <h1 className={style.brandItem}>Workout Composer</h1>
                 </div>
-                <Link href={'../workout-composer'} className={style.navItem}>
+                <Link href={"../workout-composer"} className={style.navItem}>
                     Workout Composer
                 </Link>
-                <Link href={'/darts-manager'} className={style.navItem}>
+                <Link href={"/darts-manager"} className={style.navItem}>
                     Darts Manager
                 </Link>
-                <Link href={'/note-guesser'} className={style.navItem}>
+                <Link href={"/note-guesser"} className={style.navItem}>
                     Note Guesser
                 </Link>
-                <Link href={'/calculators'} className={style.navItem}>
+                <Link href={"/calculators"} className={style.navItem}>
                     Calculators
                 </Link>
             </main>

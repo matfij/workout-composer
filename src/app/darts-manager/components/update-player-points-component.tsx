@@ -1,11 +1,13 @@
-'use client';
+"use client";
 
-import style from './update-player-points-component.module.scss';
-import { useForm } from 'react-hook-form';
-import { dartsConfig, DartsPlayer, DartsPlayerPlace, PlayerUpdatePointsInput } from '../types';
-import { useDartsStore } from '../darts-store';
-import { MusicManager } from '../../../shared/managers/music-manager';
-import { ToastManager } from '../../../shared/managers/toast-manager';
+import { useForm } from "react-hook-form";
+
+import { MusicManager } from "../../../shared/managers/music-manager";
+import { ToastManager } from "../../../shared/managers/toast-manager";
+import { useDartsStore } from "../darts-store";
+import { dartsConfig, DartsPlayer, DartsPlayerPlace, PlayerUpdatePointsInput } from "../types";
+
+import style from "./update-player-points-component.module.scss";
 
 type UpdatePlayerPointsProps = {
     player: DartsPlayer;
@@ -51,7 +53,7 @@ export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
             }
             updatedPlayer.place = place;
             if (place !== DartsPlayerPlace.None) {
-                MusicManager.playSound('victory-sound');
+                MusicManager.playSound("victory-sound");
                 ToastManager.showInfo(`${props.player.name} has won!`);
             }
         }
@@ -67,13 +69,15 @@ export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
         <section className="modalBackdrop">
             <div className="modalWrapper">
                 <form onSubmit={handleSubmit(updatePoints)} className="formWrapper">
-                    <h3 className="subtitle left dark" style={{ marginBottom: '1rem' }}>
+                    <h3 className="subtitle left dark" style={{ marginBottom: "1rem" }}>
                         Update <b>{props.player.name}</b>&apos;s points
                     </h3>
                     {dartsConfig.throws.map((throwIndex) => (
                         <fieldset key={throwIndex} className={style.formFieldset}>
                             <input
-                                {...register(`throw${throwIndex}`, { pattern: /^(1[0-9]|20|[0-9]|25)$/ })}
+                                {...register(`throw${throwIndex}`, {
+                                    pattern: /^(1[0-9]|20|[0-9]|25)$/,
+                                })}
                                 onKeyUp={() => setValue(`factor${throwIndex}`, 1)}
                                 className="formInput"
                                 type="number"
@@ -88,13 +92,14 @@ export const UpdatePlayerPoints = (props: UpdatePlayerPointsProps) => {
                                     className={`${style.factorBtn} ${style[`factorBtn${factorIndex}`]} ${
                                         watch(`factor${throwIndex}`) === factorIndex
                                             ? style.factorBtnActive
-                                            : ''
+                                            : ""
                                     }`}
                                     onClick={() => setValue(`factor${throwIndex}`, factorIndex)}
                                     disabled={
                                         factorIndex === dartsConfig.factorsNumber &&
                                         watch(`throw${throwIndex}`) >= dartsConfig.maximumPoint
-                                    }>
+                                    }
+                                >
                                     ×{factorIndex}
                                 </button>
                             ))}

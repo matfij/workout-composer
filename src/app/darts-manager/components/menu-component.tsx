@@ -1,5 +1,5 @@
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
 const imgSize = { width: 28, height: 28 };
 
@@ -14,7 +14,7 @@ export const MenuComponent = (props: MenuComponentProps) => {
 
     return (
         <nav className="menuWrapper">
-            <button onClick={() => router.push('/')} className="menuItem">
+            <button onClick={() => router.push("/")} className="menuItem">
                 <Image src="/icons/home-icon.svg" alt="home" {...imgSize} />
                 <p>Home</p>
             </button>

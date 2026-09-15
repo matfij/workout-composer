@@ -1,17 +1,16 @@
-import style from '../page.module.scss';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from "react";
+
+import style from "../page.module.scss";
 
 export const PaceDistanceCalculator = () => {
     const [open, setOpen] = useState(false);
-    const [distanceMeters, setDistanceMeters] = useState<string>('');
-    const [distanceKilometers, setDistanceKilometers] = useState<string>('');
-    const [timeHours, setTimeHours] = useState<string>('');
-    const [timeMinutes, setTimeMinutes] = useState<string>('');
-    const [pace, setPace] = useState<string>('');
+    const [distanceMeters, setDistanceMeters] = useState<string>("");
+    const [distanceKilometers, setDistanceKilometers] = useState<string>("");
+    const [timeHours, setTimeHours] = useState<string>("");
+    const [timeMinutes, setTimeMinutes] = useState<string>("");
+    const [pace, setPace] = useState<string>("");
 
-    useEffect(() => recalculatePace(), [distanceMeters, distanceKilometers, timeHours, timeMinutes]);
-
-    const recalculatePace = () => {
+    const recalculatePace = useCallback(() => {
         const totalDistanceMeters =
             (!isNaN(parseFloat(distanceMeters)) ? parseFloat(distanceMeters) : 0) +
             1000 * (!isNaN(parseFloat(distanceKilometers)) ? parseFloat(distanceKilometers) : 0);
@@ -21,7 +20,7 @@ export const PaceDistanceCalculator = () => {
             60 * (!isNaN(parseFloat(timeHours)) ? parseFloat(timeHours) : 0);
 
         if (totalDistanceMeters === 0 || totalTimeMinutes === 0) {
-            setPace('');
+            setPace("");
             return;
         }
 
@@ -34,14 +33,19 @@ export const PaceDistanceCalculator = () => {
         }
 
         setPace(`${newPaceMinutes}:${newPaceSeconds} [min/km]`);
-    };
+    }, [distanceMeters, distanceKilometers, timeHours, timeMinutes]);
+
+    useEffect(recalculatePace, [recalculatePace]);
 
     return (
         <div className={style.sectionWrapper}>
             <h2 className={style.sectionHeader} onClick={() => setOpen((prev) => !prev)}>
                 Target Pace Calculator
             </h2>
-            <section className="formWrapper" style={{ display: open ? 'block' : 'none', background: 'none' }}>
+            <section
+                className="formWrapper"
+                style={{ display: open ? "block" : "none", background: "none" }}
+            >
                 <div className="flex">
                     <fieldset>
                         <label className="formLabel">Distance [km]</label>
@@ -62,7 +66,7 @@ export const PaceDistanceCalculator = () => {
                         />
                     </fieldset>
                 </div>
-                <hr style={{ margin: '1rem 0' }} />
+                <hr style={{ margin: "1rem 0" }} />
                 <div className="flex">
                     <fieldset>
                         <label className="formLabel">Time [h]</label>
@@ -83,7 +87,7 @@ export const PaceDistanceCalculator = () => {
                         />
                     </fieldset>
                 </div>
-                <hr style={{ margin: '1rem 0' }} />
+                <hr style={{ margin: "1rem 0" }} />
                 <p className="subtitle">
                     Target pace: <b>{pace}</b>
                 </p>

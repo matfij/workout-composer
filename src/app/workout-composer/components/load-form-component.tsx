@@ -1,7 +1,8 @@
-import { useState } from 'react';
-import { getWorkout } from '../actions';
-import { useWorkoutStore } from '../workout-store';
-import { ToastManager } from '../../../shared/managers/toast-manager';
+import { useState } from "react";
+
+import { ToastManager } from "../../../shared/managers/toast-manager";
+import { getWorkout } from "../actions";
+import { useWorkoutStore } from "../workout-store";
 
 type LoadFormComponentProps = {
     onCancel: () => void;
@@ -9,20 +10,20 @@ type LoadFormComponentProps = {
 
 export const LoadFormComponent = (props: LoadFormComponentProps) => {
     const { setPlan } = useWorkoutStore();
-    const [id, setId] = useState('');
-    const [idError, setIdError] = useState('');
+    const [id, setId] = useState("");
+    const [idError, setIdError] = useState("");
     // const [rawWorkout, setRawWorkout] = useState('');
     // const [rawWorkoutError, setRawWorkoutError] = useState('');
 
     const loadFromCloud = async () => {
-        setIdError('');
+        setIdError("");
         if (!id) {
-            setIdError('ID is required');
+            setIdError("ID is required");
             return;
         }
         const workout = await getWorkout(id);
         if (!workout) {
-            ToastManager.showError('Workout not found');
+            ToastManager.showError("Workout not found");
             return;
         }
         setPlan({
@@ -31,7 +32,7 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
             isDragging: false,
         });
         window.history.pushState({}, document.title, `workout-composer?id=${id}`);
-        ToastManager.showSuccess('Workout loaded');
+        ToastManager.showSuccess("Workout loaded");
         props.onCancel();
     };
 
@@ -39,7 +40,7 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
         <section className="modalBackdrop">
             <div onClick={(e) => e.stopPropagation()} className="modalWrapper">
                 <div className="formWrapper">
-                    <h3 className="subtitle bold" style={{ marginBottom: '1rem' }}>
+                    <h3 className="subtitle bold" style={{ marginBottom: "1rem" }}>
                         Load Workout
                     </h3>
                     <fieldset>
@@ -58,7 +59,11 @@ export const LoadFormComponent = (props: LoadFormComponentProps) => {
                         <button onClick={loadFromCloud} className="formBtnSubmit">
                             Load
                         </button>
-                        <button onClick={() => props.onCancel()} type="button" className="formBtnCancel">
+                        <button
+                            onClick={() => props.onCancel()}
+                            type="button"
+                            className="formBtnCancel"
+                        >
                             Cancel
                         </button>
                     </div>

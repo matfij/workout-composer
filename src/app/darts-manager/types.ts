@@ -23,10 +23,10 @@ export type DartsPlayer = {
 };
 
 export enum DartsPlayerPlace {
-    None = 'None',
-    First = 'First',
-    Second = 'Second',
-    Third = 'Third',
+    None = "None",
+    First = "First",
+    Second = "Second",
+    Third = "Third",
 }
 
 export type PlayerUpdatePointsInput = {

@@ -1,5 +1,6 @@
-import { useState } from 'react';
-import { useWorkoutStore } from '../workout-store';
+import { useState } from "react";
+
+import { useWorkoutStore } from "../workout-store";
 
 type DayFormComponentProps = {
     onCancel: () => void;
@@ -7,12 +8,12 @@ type DayFormComponentProps = {
 
 export const DayFormComponent = (props: DayFormComponentProps) => {
     const { addDay } = useWorkoutStore();
-    const [name, setName] = useState('');
+    const [name, setName] = useState("");
     const [nameError, setNameError] = useState<string>();
 
     const onAddDay = () => {
         if (!name.trim().length) {
-            setNameError('Name required');
+            setNameError("Name required");
             return;
         } else {
             setNameError(undefined);
@@ -25,7 +26,7 @@ export const DayFormComponent = (props: DayFormComponentProps) => {
         <section className="modalBackdrop">
             <div onClick={(e) => e.stopPropagation()} className="modalWrapper">
                 <div className="formWrapper">
-                    <h3 className="subtitle bold" style={{ marginBottom: '1rem' }}>
+                    <h3 className="subtitle bold" style={{ marginBottom: "1rem" }}>
                         Add a new day
                     </h3>
                     <fieldset>

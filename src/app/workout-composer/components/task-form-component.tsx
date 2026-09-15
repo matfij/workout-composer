@@ -1,6 +1,7 @@
-import { useForm } from 'react-hook-form';
-import { Task } from '../types';
-import { useWorkoutStore } from '../workout-store';
+import { useForm } from "react-hook-form";
+
+import { Task } from "../types";
+import { useWorkoutStore } from "../workout-store";
 
 type TaskFormComponentProps = {
     dayName?: string;
@@ -40,28 +41,32 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
         <section className="modalBackdrop">
             <div onClick={(e) => e.stopPropagation()} className="modalWrapper">
                 <form onSubmit={handleSubmit(onSubmit)} className="formWrapper">
-                    <h3 className="subtitle bold" style={{ marginBottom: '1rem' }}>
-                        {isEditMode ? 'Edit exercise' : 'Add a new exercise'}
+                    <h3 className="subtitle bold" style={{ marginBottom: "1rem" }}>
+                        {isEditMode ? "Edit exercise" : "Add a new exercise"}
                     </h3>
                     <fieldset>
                         <label className="formLabel" htmlFor="name">
                             Name
                         </label>
-                        <input {...register('name', { required: true })} id="name" className="formInput" />
+                        <input
+                            {...register("name", { required: true })}
+                            id="name"
+                            className="formInput"
+                        />
                         {errors.name && <p className="formError">Name is required</p>}
                     </fieldset>
-                    <div style={{ display: 'flex', gap: '1rem' }}>
+                    <div style={{ display: "flex", gap: "1rem" }}>
                         <fieldset>
                             <label className="formLabel" htmlFor="sets">
                                 Sets
                             </label>
-                            <input {...register('sets')} id="sets" className="formInput" />
+                            <input {...register("sets")} id="sets" className="formInput" />
                         </fieldset>
                         <fieldset>
                             <label className="formLabel" htmlFor="reps">
                                 Reps
                             </label>
-                            <input {...register('reps')} id="reps" className="formInput" />
+                            <input {...register("reps")} id="reps" className="formInput" />
                         </fieldset>
                     </div>
                     <fieldset>
@@ -69,7 +74,7 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
                             Description
                         </label>
                         <input
-                            {...register('description')}
+                            {...register("description")}
                             id="description"
                             className="formInput"
                             type="text"
@@ -79,11 +84,20 @@ export const TaskFormComponent = (props: TaskFormComponentProps) => {
                         <label className="formLabel" htmlFor="videoUrl">
                             Video
                         </label>
-                        <input {...register('videoUrl')} id="videoUrl" className="formInput" type="text" />
+                        <input
+                            {...register("videoUrl")}
+                            id="videoUrl"
+                            className="formInput"
+                            type="text"
+                        />
                     </fieldset>
                     <div className="formActionsWrapper">
-                        <button className="formBtnSubmit">{isEditMode ? 'Update' : 'Add'}</button>
-                        <button onClick={() => props.onCancel()} type="button" className="formBtnCancel">
+                        <button className="formBtnSubmit">{isEditMode ? "Update" : "Add"}</button>
+                        <button
+                            onClick={() => props.onCancel()}
+                            type="button"
+                            className="formBtnCancel"
+                        >
                             Cancel
                         </button>
                     </div>

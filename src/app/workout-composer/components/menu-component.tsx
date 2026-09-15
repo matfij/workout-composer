@@ -1,10 +1,11 @@
-import Image from 'next/image';
-import { useRouter } from 'next/navigation';
-import { useWorkoutStore } from '../workout-store';
-import { useState } from 'react';
-import { DayFormComponent } from './day-form-component';
-import { ShareModalComponent } from './share-modal-component';
-import { LoadFormComponent } from './load-form-component';
+import Image from "next/image";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+
+import { useWorkoutStore } from "../workout-store";
+import { DayFormComponent } from "./day-form-component";
+import { LoadFormComponent } from "./load-form-component";
+import { ShareModalComponent } from "./share-modal-component";
 
 const imgSize = { width: 28, height: 28 };
 
@@ -21,7 +22,7 @@ export const MenuComponent = () => {
             {showDayForm && <DayFormComponent onCancel={() => setShowDayForm(false)} />}
             {showShareModal && <ShareModalComponent onCancel={() => setShowShareModal(false)} />}
             <nav className="menuWrapper">
-                <button onClick={() => router.push('/')} className="menuItem">
+                <button onClick={() => router.push("/")} className="menuItem">
                     <Image src="/icons/home-icon.svg" alt="home" {...imgSize} />
                     <p>Home</p>
                 </button>

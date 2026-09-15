@@ -1,8 +1,8 @@
-import { toast, ToastOptions } from 'react-toastify';
+import { toast, ToastOptions } from "react-toastify";
 
 export class ToastManager {
     private static readonly defaultOptions: ToastOptions = {
-        position: 'bottom-center',
+        position: "bottom-center",
         autoClose: 3000,
         hideProgressBar: false,
         closeOnClick: true,

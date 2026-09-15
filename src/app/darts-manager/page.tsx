@@ -1,13 +1,15 @@
-'use client';
+"use client";
 
-import style from './page.module.scss';
-import { useDartsStore } from './darts-store';
-import { PlayerCardComponent } from './components/player-card-component';
-import { MenuComponent } from './components/menu-component';
-import { useState } from 'react';
-import { AddPlayerComponent } from './components/add-player-component';
-import { ConfirmModalComponent } from '../../shared/components/confirm-modal-component';
-import { ToastContainer } from 'react-toastify';
+import { useState } from "react";
+import { ToastContainer } from "react-toastify";
+
+import { ConfirmModalComponent } from "../../shared/components/confirm-modal-component";
+import { AddPlayerComponent } from "./components/add-player-component";
+import { MenuComponent } from "./components/menu-component";
+import { PlayerCardComponent } from "./components/player-card-component";
+import { useDartsStore } from "./darts-store";
+
+import style from "./page.module.scss";
 
 export default function DartsManagerPage() {
     const { players, currentTurn, clearPoints, clearGame, undoAction } = useDartsStore();
@@ -39,10 +41,10 @@ export default function DartsManagerPage() {
     return (
         <>
             <main className={style.mainWrapper}>
-                <h1 className="title" style={{ marginBottom: '0.5rem' }}>
+                <h1 className="title" style={{ marginBottom: "0.5rem" }}>
                     Game of Darts
                 </h1>
-                <p className="subtitle" style={{ marginBottom: '1rem' }}>
+                <p className="subtitle" style={{ marginBottom: "1rem" }}>
                     Turn: {currentTurn}
                 </p>
                 {players.map((player, ind) => (
@@ -54,11 +56,13 @@ export default function DartsManagerPage() {
                 showResetGameDialog={() => setShowClearDialog(true)}
                 showUndoDialog={() => setShowUndoPointsDialog(true)}
             />
-            {showAddPlayerForm && <AddPlayerComponent onCancel={() => setShowAddPlayerForm(false)} />}
+            {showAddPlayerForm && (
+                <AddPlayerComponent onCancel={() => setShowAddPlayerForm(false)} />
+            )}
             {showClearDialog && (
                 <ConfirmModalComponent
-                    text={'Do you want to reset points?'}
-                    textAlt={'Do you want to clear all game data?'}
+                    text={"Do you want to reset points?"}
+                    textAlt={"Do you want to clear all game data?"}
                     onAction={(confirm) => onClearPoints(confirm)}
                     onActionAlt={(confirm) => onClearGame(confirm)}
                 />

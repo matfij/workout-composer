@@ -1,7 +1,8 @@
-import { createJSONStorage, persist } from 'zustand/middleware';
-import { Day, Plan, Task } from './types';
-import { create } from 'zustand';
-import { UtilityManger } from '../../shared/managers/utility-manager';
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+
+import { UtilityManger } from "../../shared/managers/utility-manager";
+import { Day, Plan, Task } from "./types";
 
 const initialState: Plan = {
     days: [],
@@ -12,7 +13,7 @@ const initialState: Plan = {
 type WorkoutStore = Plan & {
     setPlan: (plan: Plan) => void;
     setDays: (days: Day[]) => void;
-    addDay: (day: Omit<Day, 'id'>) => void;
+    addDay: (day: Omit<Day, "id">) => void;
     editDay: (day: Day) => void;
     removeDay: (dayId: string) => void;
     setIsLocked: (isLocked: boolean) => void;
@@ -37,13 +38,14 @@ export const useWorkoutStore = create(
             ...initialState,
             setPlan: (plan: Plan) => set(plan),
             setDays: (days: Day[]) => set({ days }),
-            addDay: (day: Omit<Day, 'id'>) =>
+            addDay: (day: Omit<Day, "id">) =>
                 set({ days: [...get().days, { ...day, id: UtilityManger.generateId() }] }),
-            editDay: (day: Day) => set({ days: get().days.map((d) => (d.id === day.id ? day : d)) }),
+            editDay: (day: Day) =>
+                set({ days: get().days.map((d) => (d.id === day.id ? day : d)) }),
             removeDay: (dayId: string) => set({ days: get().days.filter((d) => d.id !== dayId) }),
             setIsLocked: (isLocked: boolean) => set({ isLocked }),
             setIsDragging: (isDragging: boolean) => set({ isDragging }),
-            addTaskGroup: (dayName: string, task: Omit<Task, 'id'>) => {
+            addTaskGroup: (dayName: string, task: Omit<Task, "id">) => {
                 const days = get().days;
                 const newTask = {
                     ...task,
@@ -80,7 +82,8 @@ export const useWorkoutStore = create(
                 updatedDays.forEach((day) => {
                     day.taskGroups.forEach(
                         (group) =>
-                            group.id === targetGroupId && group.tasks.splice(targetIndex, 0, taskToMove),
+                            group.id === targetGroupId &&
+                            group.tasks.splice(targetIndex, 0, taskToMove),
                     );
                     day.taskGroups = day.taskGroups.filter((group) => group.tasks.length > 0);
                 });
@@ -145,14 +148,16 @@ export const useWorkoutStore = create(
                         ...day,
                         taskGroups: day.taskGroups.map((group) => ({
                             ...group,
-                            tasks: group.tasks.map((task) => (task.id === editedTask.id ? editedTask : task)),
+                            tasks: group.tasks.map((task) =>
+                                task.id === editedTask.id ? editedTask : task,
+                            ),
                         })),
                     })),
                 });
             },
         }),
         {
-            name: 'workout-composer-workout',
+            name: "workout-composer-workout",
             storage: createJSONStorage(() => localStorage),
         },
     ),

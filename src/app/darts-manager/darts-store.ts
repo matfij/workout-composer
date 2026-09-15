@@ -1,6 +1,7 @@
-import { create } from 'zustand';
-import { createJSONStorage, persist } from 'zustand/middleware';
-import { dartsConfig, DartsGame, DartsPlayer, DartsPlayerPlace } from './types';
+import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
+
+import { dartsConfig, DartsGame, DartsPlayer, DartsPlayerPlace } from "./types";
 
 const MAX_ITERATION = 10_000;
 
@@ -25,7 +26,9 @@ export const useDartsStore = create(
             ...initialState,
             addPlayer: (player: DartsPlayer) => set({ players: [...get().players, player] }),
             updatePlayer: (player: DartsPlayer) =>
-                set({ players: [...get().players.map((p) => (p.name === player.name ? player : p))] }),
+                set({
+                    players: [...get().players.map((p) => (p.name === player.name ? player : p))],
+                }),
             incrementPlayerIndex: () => {
                 const state = get();
                 let nextIndex = state.currentPlayerIndex + 1;
@@ -90,13 +93,17 @@ export const useDartsStore = create(
                     lastPlayer.points += pointsToAdd;
                     set({
                         currentPlayerIndex: lastIndex,
-                        players: [...get().players.map((p) => (p.name === lastPlayer.name ? lastPlayer : p))],
+                        players: [
+                            ...get().players.map((p) =>
+                                p.name === lastPlayer.name ? lastPlayer : p,
+                            ),
+                        ],
                     });
                 }
             },
         }),
         {
-            name: 'workout-composer-darts-game',
+            name: "workout-composer-darts-game",
             storage: createJSONStorage(() => localStorage),
         },
     ),

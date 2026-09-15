@@ -1,6 +1,7 @@
-import { useForm } from 'react-hook-form';
-import { useDartsStore } from '../darts-store';
-import { DartsPlayerPlace } from '../types';
+import { useForm } from "react-hook-form";
+
+import { useDartsStore } from "../darts-store";
+import { DartsPlayerPlace } from "../types";
 
 const DEFAULT_POINTS = 501;
 
@@ -10,10 +11,7 @@ type AddPlayerComponentProps = {
 
 export const AddPlayerComponent = (props: AddPlayerComponentProps) => {
     const { addPlayer } = useDartsStore();
-    const {
-        register,
-        handleSubmit,
-    } = useForm<{ name: string; points: number }>();
+    const { register, handleSubmit } = useForm<{ name: string; points: number }>();
 
     const onAddPlayer = (data: { name: string; points: number }) => {
         addPlayer({
@@ -30,7 +28,7 @@ export const AddPlayerComponent = (props: AddPlayerComponentProps) => {
         <section className="modalBackdrop">
             <div className="modalWrapper">
                 <form onSubmit={handleSubmit(onAddPlayer)} className="formWrapper">
-                    <h3 className="subtitle bold dark left" style={{ marginBottom: '1rem' }}>
+                    <h3 className="subtitle bold dark left" style={{ marginBottom: "1rem" }}>
                         Add new player
                     </h3>
                     <fieldset>
@@ -38,7 +36,7 @@ export const AddPlayerComponent = (props: AddPlayerComponentProps) => {
                             Name
                         </label>
                         <input
-                            {...register('name', { required: true })}
+                            {...register("name", { required: true })}
                             id="name"
                             type="text"
                             className="formInput"
@@ -49,7 +47,7 @@ export const AddPlayerComponent = (props: AddPlayerComponentProps) => {
                             Starting points
                         </label>
                         <input
-                            {...register('points', { required: true })}
+                            {...register("points", { required: true })}
                             defaultValue={DEFAULT_POINTS}
                             id="points"
                             className="formInput"
