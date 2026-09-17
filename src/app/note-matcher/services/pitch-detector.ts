@@ -1,6 +1,8 @@
 export class PitchDetector {
     private static readonly FFT_WINDOW = 2048;
     private static readonly NOISE_THRESHOLD = 0.01;
+    private static readonly MIN_FREQUENCY = 20;
+    private static readonly MAX_FREQUENCY = 2000;
 
     private static audioContext?: AudioContext;
     private static analyser?: AnalyserNode;
@@ -41,14 +43,29 @@ export class PitchDetector {
 
         let bestOffset = -1;
         let bestCorrelation = 0;
-        for (let offset = 20; offset < this.buffer.length / 2; offset++) {
-            let correlation = 0;
+
+        const minOffset = Math.floor(this.audioContext.sampleRate / this.MAX_FREQUENCY);
+        const maxOffset = Math.ceil(this.audioContext.sampleRate / this.MIN_FREQUENCY);
+
+        for (
+            let offset = minOffset;
+            offset <= maxOffset && offset < this.buffer.length / 2;
+            offset++
+        ) {
+            let sum = 0;
+            let sum1 = 0;
+            let sum2 = 0;
 
             for (let i = 0; i < this.buffer.length / 2; i++) {
-                correlation += this.buffer[i] * this.buffer[i + offset];
+                const a = this.buffer[i];
+                const b = this.buffer[i + offset];
+
+                sum += a * b;
+                sum1 += a * a;
+                sum2 += b * b;
             }
 
-            correlation /= this.buffer.length / 2;
+            const correlation = sum / Math.sqrt(sum1 * sum2);
 
             if (correlation > bestCorrelation) {
                 bestCorrelation = correlation;
