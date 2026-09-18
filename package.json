@@ -13,10 +13,12 @@
     "dependencies": {
         "@hello-pangea/dnd": "^18.0.1",
         "@supabase/supabase-js": "^2.116.0",
+        "chart.js": "^4.5.1",
         "next": "^16.3.5",
         "oxfmt": "^0.68.0",
         "oxlint": "^1.83.0",
         "react": "^19.3.0",
+        "react-chartjs-2": "^5.3.1",
         "react-dom": "^19.3.0",
         "react-hook-form": "^7.88.0",
         "react-toastify": "^11.1.0",

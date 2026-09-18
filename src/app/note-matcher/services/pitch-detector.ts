@@ -26,7 +26,7 @@ export class PitchDetector {
 
     public static getPitch() {
         if (!this.analyser || !this.buffer || !this.audioContext) {
-            return;
+            return 0;
         }
 
         this.analyser.getFloatTimeDomainData(this.buffer);
@@ -38,7 +38,7 @@ export class PitchDetector {
         rms = Math.sqrt(rms / this.buffer.length);
 
         if (rms < this.NOISE_THRESHOLD) {
-            return;
+            return 0;
         }
 
         let bestOffset = -1;
@@ -74,7 +74,7 @@ export class PitchDetector {
         }
 
         if (bestOffset === -1 || bestCorrelation < this.NOISE_THRESHOLD) {
-            return;
+            return 0;
         }
 
         return this.audioContext.sampleRate / bestOffset;

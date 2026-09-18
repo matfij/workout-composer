@@ -1,4 +1,4 @@
-import { MonoSynth } from "tone";
+import { Frequency, MonoSynth } from "tone";
 
 import { UtilityManger } from "../../../shared/managers/utility-manager";
 
@@ -29,5 +29,9 @@ export class SoundManager {
 
     public static playNote(note: MusicNote, duration = "8n") {
         this.getSynth().triggerAttackRelease(note, duration);
+    }
+
+    public static getNoteFrequency(note: MusicNote) {
+        return Frequency(note).toFrequency();
     }
 }
