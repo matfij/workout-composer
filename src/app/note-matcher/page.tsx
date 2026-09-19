@@ -32,6 +32,7 @@ export default function NoteGuesserPage() {
         const nextNote = SoundManager.getRandomNote();
         setNote(nextNote);
         setTargetPitch(SoundManager.getNoteFrequency(nextNote));
+        SoundManager.playNote(nextNote);
     };
 
     const playNote = () => {
@@ -41,16 +42,18 @@ export default function NoteGuesserPage() {
     return (
         <>
             <main className={styles.mainWrapper}>
-                <h1 className="title" style={{ marginBottom: "0.5rem" }}>
-                    Note matcher 2
+                <h1 className="title" style={{ marginBottom: "1rem" }}>
+                    Note matcher
                 </h1>
-                <div>
-                    <div>Pitch: {pitch}</div>
-                    <div>Target: {`${note}: ${targetPitch}`}</div>
-                </div>
                 <PitchChart pitch={pitch} targetPitch={targetPitch} tolerance={PITCH_TOLERANCE} />
-                <button onClick={playNote}>Play</button>
-                <button onClick={getNextNote}>Next</button>
+                <div className={styles.actionsWrapper}>
+                    <button onClick={playNote} className={styles.actionButton}>
+                        Play
+                    </button>
+                    <button onClick={getNextNote} className={styles.actionButton}>
+                        Next
+                    </button>
+                </div>
             </main>
             <MenuComponent />
         </>

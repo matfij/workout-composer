@@ -1,3 +1,4 @@
+@use "sass:color";
 @use "../../shared/styles/variables.scss";
 @use "../../shared/styles/mixins.scss";
 
@@ -10,4 +11,30 @@
     gap: 1.25rem;
     align-items: center;
     padding: 3rem 0;
+}
+
+.actionsWrapper {
+    width: 80%;
+    margin-top: 2rem;
+    display: flex;
+    gap: 1rem;
+}
+
+.actionButton {
+    @include mixins.boxShadowSmall;
+
+    height: 3rem;
+    flex: 1;
+    font-weight: 500;
+    font-size: 1rem;
+    padding: 0.5rem 1rem;
+    text-align: center;
+    border: 1px solid color.adjust(variables.$color-dark, $lightness: 20%);
+    background: color.adjust(variables.$color-primary, $lightness: -10%);
+
+    &:hover {
+        cursor: pointer;
+        font-weight: 600;
+        background: color.adjust(variables.$color-primary, $lightness: -15%);
+    }
 }
