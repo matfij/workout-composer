@@ -1,6 +1,6 @@
 export class PitchDetector {
     private static readonly FFT_WINDOW = 2048;
-    private static readonly NOISE_THRESHOLD = 0.01;
+    private static readonly NOISE_THRESHOLD = 0.06;
     private static readonly MIN_FREQUENCY = 20;
     private static readonly MAX_FREQUENCY = 2000;
 
@@ -77,7 +77,7 @@ export class PitchDetector {
             return 0;
         }
 
-        return this.audioContext.sampleRate / bestOffset;
+        return Math.round(this.audioContext.sampleRate / bestOffset);
     }
 
     public static stop() {

@@ -32,6 +32,6 @@ export class SoundManager {
     }
 
     public static getNoteFrequency(note: MusicNote) {
-        return Frequency(note).toFrequency();
+        return Math.round(Frequency(note).toFrequency());
     }
 }
