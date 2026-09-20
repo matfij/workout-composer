@@ -17,8 +17,8 @@
 .noteWrapper {
     z-index: 1000;
     position: absolute;
-    top: 8rem;
-    width: 90%;
+    top: 7rem;
+    width: 100%;
     max-width: 700px;
     max-height: 70vh;
     aspect-ratio: 1.54;
@@ -41,7 +41,7 @@
 }
 
 .actionsWrapper {
-    width: 80%;
+    width: 100%;
     margin-top: 2rem;
     display: flex;
     gap: 1rem;

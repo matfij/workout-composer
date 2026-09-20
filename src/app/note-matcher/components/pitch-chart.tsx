@@ -26,8 +26,14 @@ export const PitchChart = (props: PitchChartProps) => {
         <BarChart
             responsive
             data={data}
-            style={{ width: "100%", maxWidth: "700px", maxHeight: "70vh", aspectRatio: 1.618 }}
-            margin={{ top: 10, bottom: 10, left: 10, right: 60 }}
+            style={{
+                width: "100%",
+                maxWidth: "700px",
+                maxHeight: "70vh",
+                aspectRatio: 1.618,
+                background: "rgba(77, 77, 77, 0.1)",
+            }}
+            margin={{ top: 20, bottom: 20, left: 10, right: 60 }}
         >
             <Bar dataKey="pitch" fill={chartConfig.pitchColor} isAnimationActive={false} />
             <YAxis
