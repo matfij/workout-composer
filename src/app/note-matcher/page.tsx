@@ -80,16 +80,19 @@ export default function NoteGuesserPage() {
         <>
             <main className={styles.mainWrapper}>
                 <h1 className="title" style={{ marginBottom: "1rem" }}>
-                    Note matcher {pitchMatch}
+                    Note matcher
                 </h1>
                 {showNote && (
-                    <div className={styles.noteWrapper}>
+                    <div onClick={() => setShowNote(false)} className={styles.noteWrapper}>
                         <p>{note}</p>
                         <b>{targetPitch} Hz</b>
                     </div>
                 )}
                 <PitchChart pitch={pitch} targetPitch={targetPitch} />
                 <div className={styles.actionsWrapper}>
+                    <button onClick={() => setShowNote(true)} className={styles.actionButton}>
+                        Reveal
+                    </button>
                     <button onClick={playNote} className={styles.actionButton}>
                         Play
                     </button>
