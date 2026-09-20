@@ -3,6 +3,7 @@
 @use "../../shared/styles/mixins.scss";
 
 .mainWrapper {
+    position: relative;
     width: 90%;
     max-width: 36rem;
     margin: auto;
@@ -11,6 +12,28 @@
     gap: 1.25rem;
     align-items: center;
     padding: 3rem 0;
+}
+
+.noteWrapper {
+    z-index: 1000;
+    position: absolute;
+    top: 10rem;
+    padding: 1rem;
+    text-align: center;
+    color: variables.$color-secondary;
+    background: rgba(variables.$color-dark, 0.6);
+
+    p {
+        margin-bottom: 1rem;
+        font-size: 256px;
+        line-height: 200px;
+        text-shadow: 12px 8px 8px variables.$color-dark;
+    }
+
+    b {
+        font-size: 24px;
+        text-shadow: 4px 2px 2px variables.$color-dark;
+    }
 }
 
 .actionsWrapper {

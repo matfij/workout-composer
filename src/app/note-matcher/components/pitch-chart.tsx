@@ -1,23 +1,25 @@
 import { Bar, BarChart, CartesianGrid, ReferenceArea, YAxis } from "recharts";
 
+import { noteMatcherConfig } from "../config";
+
+const chartConfig = {
+    ticks: 6,
+    pitchColor: "#ffa500",
+    targetColor: "#20c997",
+    mutedColor: "rgba(237, 237, 237, 0.7)",
+};
+
 type PitchChartProps = {
     pitch: number;
     targetPitch: number;
-    tolerance: number;
 };
-
-const TICKS_COUNT = 6;
-
-const BAR_COLOR = "#ffa500";
-const TOLERANCE_COLOR = "#20c997";
-const MUTED_COLOR = "rgba(237, 237, 237, 0.7)";
 
 export const PitchChart = (props: PitchChartProps) => {
     const data = [{ time: 0, pitch: props.pitch }];
 
     const max = 2 * props.targetPitch;
-    const ticks = Array.from({ length: TICKS_COUNT }, (_, i) =>
-        Math.round((max / (TICKS_COUNT - 1)) * i),
+    const ticks = Array.from({ length: chartConfig.ticks }, (_, i) =>
+        Math.round((max / (chartConfig.ticks - 1)) * i),
     );
 
     return (
@@ -27,7 +29,7 @@ export const PitchChart = (props: PitchChartProps) => {
             style={{ width: "100%", maxWidth: "700px", maxHeight: "70vh", aspectRatio: 1.618 }}
             margin={{ top: 10, bottom: 10, left: 10, right: 60 }}
         >
-            <Bar dataKey="pitch" fill={BAR_COLOR} isAnimationActive={false} />
+            <Bar dataKey="pitch" fill={chartConfig.pitchColor} isAnimationActive={false} />
             <YAxis
                 allowDataOverflow
                 width="auto"
@@ -36,21 +38,21 @@ export const PitchChart = (props: PitchChartProps) => {
                 axisLine={false}
                 tickLine={false}
                 ticks={ticks}
-                tick={{ fill: MUTED_COLOR }}
+                tick={{ fill: chartConfig.mutedColor }}
                 label={{
                     angle: -90,
                     value: "Pitch [Hz]",
                     position: "insideLeft",
-                    style: { textAnchor: "middle", fill: MUTED_COLOR },
+                    style: { textAnchor: "middle", fill: chartConfig.mutedColor },
                 }}
             />
-            <CartesianGrid stroke={MUTED_COLOR} vertical={false} />
+            <CartesianGrid stroke={chartConfig.mutedColor} vertical={false} />
             <ReferenceArea
-                y1={props.targetPitch - props.tolerance}
-                y2={props.targetPitch + props.tolerance}
-                fill={TOLERANCE_COLOR}
-                fillOpacity={0.25}
                 stroke="none"
+                fillOpacity={0.25}
+                fill={chartConfig.targetColor}
+                y1={props.targetPitch - props.targetPitch * noteMatcherConfig.pitchTolerance}
+                y2={props.targetPitch + props.targetPitch * noteMatcherConfig.pitchTolerance}
             />
         </BarChart>
     );
